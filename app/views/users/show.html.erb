@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <% if @user.avatar.attached? %>
+  <strong>Avatar:</strong>
+  <%= image_tag url_for(@user.avatar) %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>User type:</strong>
+  <%= @user.user_type %>
+</p>
+
+<p>
+  <strong>Credit:</strong>
+  <%= @user.credit %>
+</p>
+
+<p>
+  <strong>Followers count:</strong>
+  <%= @user.followers_count %>
+</p>
+
+<%= form_for :user, url: set_avatar_user_path(@user.id), local: true do |f| %>
+  <%= f.label :avatar %>
+  <%= f.file_field :avatar %>
+  <%= f.submit :attach %>
+<% end %>
+
+<%= form_for :user, url: set_topics_user_path(@user.id), local: true do |f| %>
+  <%= f.label :topics %>
+  <%= f.select :topic_ids, Topic.all.collect { |c| [ c.name, c.id ] }, {}, multiple: true %>
+  <%= f.submit :attach_topics %>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
