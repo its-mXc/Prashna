@@ -25,10 +25,11 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        UserMailer.send_confirmation_mail(@user).deliver_later
+        format.html { redirect_to login_path, notice: 'Check you email for confirmation mail' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -66,11 +67,9 @@ class UsersController < ApplicationController
     if user
       user.email_activate
       user.credit_activate
-      flash[:success] = "Welcome to the Sample App! Your email has been confirmed.\nPlease sign in to continue."
-      redirect_to login_url
+      redirect_to login_path, notice: "Welcome to the Sample App! Your email has been confirmed.\nPlease sign in to continue."
     else
-      flash[:error] = "Sorry. User does not exist"
-      # redirect_to root_url
+      redirect_to login_path, notice: "Sorry. User does not exist"
     end
   end
 
