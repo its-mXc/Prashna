@@ -66,7 +66,6 @@ class UsersController < ApplicationController
     user = User.find_by_confirm_token(params[:id])
     if user
       user.email_activate
-      user.credit_activate
       redirect_to login_path, notice: "Welcome to the Sample App! Your email has been confirmed.\nPlease sign in to continue."
     else
       redirect_to login_path, notice: "Sorry. User does not exist"
