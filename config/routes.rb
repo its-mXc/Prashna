@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     post :reset_password
     member do
       get :confirm_email
+      get :change_password
       post :set_avatar
       post :set_topics
     end
@@ -16,6 +17,6 @@ Rails.application.routes.draw do
   get 'forgot-password', to: "users#forgot_password"
   post 'reset-password', to: "users#reset_password"
   
-  Rails.application.routes.default_url_options[:host] = "XXX"
+  Rails.application.routes.default_url_options[:host] = "prashna"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

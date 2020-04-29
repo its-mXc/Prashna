@@ -73,6 +73,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_password
+    @user = User.find_by_confirm_token(params[:id])
+  end
+
   def set_avatar
     user = User.find(params[:id])
     user.avatar = user_params[:avatar]

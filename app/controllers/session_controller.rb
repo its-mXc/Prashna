@@ -1,6 +1,6 @@
 class SessionController < ApplicationController
   def new
-
+    redirect_to User.find(session[:user_id]) if session[:user_id]
   end
   def create
     user = User.find_by(name: params[:name])
@@ -13,8 +13,7 @@ class SessionController < ApplicationController
   end
   
   def destroy
-    # Counter.find_by(user_id:session[:user_id]).destroy_all
     session[:user_id] = nil
-    # redirect_to store_index_url, notice: 'Logged out'
+    redirect_to login_url, notice: 'Logged out'
   end
 end
