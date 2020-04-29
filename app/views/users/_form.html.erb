@@ -1,4 +1,7 @@
 <%= form_with(model: user, local: true) do |form| %>
+
+  <% #FIXME_AB: make a partial file in views/shared/_errors.html.erb and move this code to show erros. -%>
+
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>

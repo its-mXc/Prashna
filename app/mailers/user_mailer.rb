@@ -7,13 +7,13 @@ class UserMailer < ApplicationMailer
   #
   def send_confirmation_mail(user)
     @user = user
-    
+    #FIXME_AB: send mail only if user is not verified
     mail to: @user.email, subject: 'Confirm your account'
   end
-  
+
   def send_password_reset_mail(user)
     @user = user
-    
+
     mail to: @user.email, subject: 'Password reset request'
   end
 end
