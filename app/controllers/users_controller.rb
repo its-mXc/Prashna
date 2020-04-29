@@ -80,6 +80,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.avatar = user_params[:avatar]
     user.save
+    redirect_to user
   end
 
   def set_topics

@@ -32,10 +32,9 @@
   <%= @user.followers_count %>
 </p>
 
-<%= form_for :user, url: set_avatar_user_path(@user.id), local: true do |f| %>
+<%= form_for :user, url: set_avatar_user_path(@user.id), local: true, html:{id: 'avatar_form' } do |f| %>
   <%= f.label :avatar %>
   <%= f.file_field :avatar %>
-  <%= f.submit :attach %>
 <% end %>
 
 <%= form_for :user, url: set_topics_user_path(@user.id), local: true do |f| %>
@@ -47,3 +46,5 @@
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
 <%= link_to 'Logout', logout_path, method: :delete %>
+
+<%= javascript_include_tag 'user_dashboard' %>
