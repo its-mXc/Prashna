@@ -1,19 +1,17 @@
+<%= render 'shared/errors', object: @user %>
 <%= form_with(model: @user, url: update_password_path, local: true) do |form| %>
 
-  <%= render 'shared/errors', object: @user %>
-
   <%= form.hidden_field :user_id, :value => @user.id %>
-  <div class="field">
+
+  <div class="form-field">
     <%= form.label :password %>
-    <%= form.password_field :password %>
+    <%= form.password_field :password, class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-field">
     <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
+    <%= form.password_field :password_confirmation,class: "form-control"  %>
   </div>
 
-  <div class="actions">
-    <%= form.submit 'Update' %>
-  </div>
+  <%= form.submit 'Update' %>
 <% end %>
