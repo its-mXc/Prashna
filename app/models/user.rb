@@ -1,33 +1,32 @@
 class User < ApplicationRecord
   has_secure_password
   has_one_attached :avatar
+  has_many :credit_transactions
 
   validates :email, uniqueness: {casesensitive: false}
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
-  #FIXME_AB: password length validations
+  validates :password, length: {minimum: 4}
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
 
   before_create :generate_confirmation_token
+  after_commit :send_confirmation_mail, on: :create
 
-  def email_activate
-    unless self.email_confirmed
-      #FIXME_AB: verified_at = Time.current
-      self.email_confirmed = true
-      #FIXME_AB: we would need credit_transations table and corrosponding Model.
-      #FIXME_AB: rename it to credit_balance, we will never be updatign this value directly. it will be automatically updated everytime a new entry is created in the credit_transations table for the user
-      self.credit = 5
-      #FIXME_AB: don't need to skip validations
-      save!(:validate => false)
+  def verify!
+    unless self.verified_at
+      self.verified_at = Time.current      
+      self.credit_balance = CreditTransaction.create(user_id: self.id, amount:5, transaction_type:0, credit_balance: self.credit_balance + 5).credit_balance
+      save(validate: false)
     end
   end
 
+  private def send_confirmation_mail
+    UserMailer.send_confirmation_mail(self.id).deliver_now
+  end
+
   private  def generate_confirmation_token
-    #FIXME_AB: you can ignore this if condition
-    #FIXME_AB: now onwards, lets not use inline if-unless
-    #FIXME_AB: add uniqueness validation
-      self.confirm_token = SecureRandom.urlsafe_base64.to_s if self.confirm_token.blank?
+      self.confirmation_token = SecureRandom.urlsafe_base64.to_s
     end
 
 end

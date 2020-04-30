@@ -1,12 +1,10 @@
 <section class="depot_form">
-  <% if notice %>
-    <aside class="notice"><%= notice %></aside>
-  <% end %>
+  <%= render 'shared/notice' %>
   <%= form_tag do %>
     <h2>Please Log In</h2>
     <div class="field">
-      <%= label_tag :name, 'Name:' %>
-      <%= text_field_tag :name, params[:name] %>
+      <%= label_tag :email, 'Email:' %>
+      <%= text_field_tag :email, params[:email] %>
     </div>
     <div class="field">
       <%= label_tag :password, 'Password:' %>

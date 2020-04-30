@@ -1,50 +1,48 @@
-<p id="notice"><%= notice %></p>
-
+<%= render 'shared/notice' %>
+<%= render 'shared/errors', object: @current_user %>
 <p>
-  <% if @user.avatar.attached? %>
+  <% if @current_user.avatar.attached? %>
   <strong>Avatar:</strong>
-  <%= image_tag url_for(@user.avatar) %>
+  <%= image_tag url_for(@current_user.avatar) %>
   <% end %>
 </p>
 
 <p>
   <strong>Name:</strong>
-  <%= @user.name %>
+  <%= @current_user.name %>
 </p>
 
 <p>
   <strong>Email:</strong>
-  <%= @user.email %>
+  <%= @current_user.email %>
 </p>
 
 <p>
   <strong>User type:</strong>
-  <%= @user.user_type %>
+  <%= @current_user.user_type %>
 </p>
 
 <p>
   <strong>Credit:</strong>
-  <%= @user.credit %>
+  <%= @current_user.credit_balance %>
 </p>
 
 <p>
   <strong>Followers count:</strong>
-  <%= @user.followers_count %>
+  <%= @current_user.followers_count %>
 </p>
 
-<%= form_for :user, url: set_avatar_user_path(@user.id), local: true, html:{id: 'avatar_form' } do |f| %>
+<%= form_for :user, url: set_avatar_user_path(@current_user.id), local: true, html:{id: 'avatar_form' } do |f| %>
   <%= f.label :avatar %>
   <%= f.file_field :avatar %>
 <% end %>
 
-<%= form_for :user, url: set_topics_user_path(@user.id), local: true do |f| %>
+<%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
   <%= f.label :topics %>
   <%= f.select :topic_ids, Topic.all.collect { |c| [ c.name, c.id ] }, {}, multiple: true %>
   <%= f.submit :attach_topics %>
 <% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
 <%= link_to 'Logout', logout_path, method: :delete %>
 
 <%= javascript_include_tag 'user_dashboard' %>
