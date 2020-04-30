@@ -13,9 +13,9 @@ class PasswordController < ApplicationController
   end
 
   def update
-    user = User.find_by(id: params[:user][:user_id])
+    @user = User.find_by(id: params[:user][:user_id])
     respond_to do |format|
-      if user.update(password_params)
+      if @user.update(password_params)
         format.html { redirect_to login_url, notice: 'User was successfully updated.' }
       else
         format.html { render :reset }

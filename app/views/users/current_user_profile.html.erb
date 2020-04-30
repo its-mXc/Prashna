@@ -1,11 +1,11 @@
+<div>
 <%= render 'shared/notice' %>
 <%= render 'shared/errors', object: @current_user %>
-<p>
   <% if @current_user.avatar.attached? %>
   <strong>Avatar:</strong>
   <%= image_tag url_for(@current_user.avatar) %>
   <% end %>
-</p>
+</div>
 
 <p>
   <strong>Name:</strong>
