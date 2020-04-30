@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics]
 
   def new
+    #FIXME_AB: before action  ensure not logged in. new, create verify  and others applicable
     @user = User.new
   end
 
@@ -11,12 +12,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        #FIXME_AB: use I18n for messages.
         format.html { redirect_to login_path, notice: t('confirmation_mail_sent_message') }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
-        #FIXME_AB: read about status: :unprocessable_entity
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -27,8 +26,10 @@ class UsersController < ApplicationController
   end
 
 
+  #FIXME_AB:  non logged in user
   def verify
     user = User.find_by(confirmation_token: params[:token])
+    #FIXME_AB: if user && user.verify!
     if user
       user.verify!
       redirect_to login_path, notice: "Welcome to the Pransh! Your email has been confirmed.

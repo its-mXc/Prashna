@@ -57,5 +57,8 @@ gem 'solargraph'
 
 gem 'bcrypt'
 
+#FIXME_AB: use letter opener web
+#FIXME_AB: group development is already there, above
+#FIXME_AB: whenever we add any gem, ensure to specify version
 gem "letter_opener", :group => :development
 gem "figaro"

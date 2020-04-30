@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   controller :users do
     get :verify
   end
-  
+
+  #FIXME_AB: add this to application.rb and the value should be taken from figaro
   Rails.application.routes.default_url_options[:host] = "prashna"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
