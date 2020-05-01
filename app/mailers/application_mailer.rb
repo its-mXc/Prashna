@@ -1,6 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  #FIXME_AB:  use ENV[]
 
-  default from: Figaro.env.from_email!
+  default from: ENV['from_email']
   layout 'mailer'
 end

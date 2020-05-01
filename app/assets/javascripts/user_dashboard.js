@@ -1,19 +1,20 @@
+//= require jquery
 class AutoSubmitForm {
   constructor(options) {
-    this.fileField = options['fileField']
     this.form = options['form']
+    this.fileField = this.form.find(options['fileFieldId'])
   }
   init() {
-    this.fileField.onchange = () => { this.form.submit(); };
+    this.fileField.on('change',() => { this.form.submit(); })
   }
 }
 
-let options = {
-  // FIXME_AB: avoid two full page query. make a container and find inside container
-  fileField: document.getElementById('user_avatar'),
-  form: document.getElementById('avatar_form')
-}
 
-// FIXME_AB: should be done on page load, else html elements may not be available
+$(document).ready(function() {
+  let options = {
+    form: $('#avatar_form'),
+    fileFieldId: '#user_avatar'
+  }
 let autoSubmitForm = new AutoSubmitForm(options)
 autoSubmitForm.init()
+})

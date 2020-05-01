@@ -6,15 +6,17 @@ class SessionController < ApplicationController
   end
 
   def create
-    #FIXME_AB: only verfied user can login
     user = User.find_by(email: params[:email])
     if user.try(:authenticate, params[:password])
-      session[:user_id] = user.id
-      if params[:remember]
-        #FIXME_AB: take remember_me_expiry_days from figaro
-        cookies.signed[:user_id] = { value: user.id, expires: Time.current + 15.days }
+      if user.verified?
+        session[:user_id] = user.id
+        if params[:remember]
+          cookies.signed[:user_id] = { value: user.id, expires: Time.current + ENV['remember_me_expiry_days'].to_i.days }
+        end
+        redirect_to my_profile_path
+      else
+        redirect_to login_path, alert: 'Please verify your email first'
       end
-      redirect_to my_profile_path
     else
       redirect_to login_url, alert: 'Invalid credentials'
     end

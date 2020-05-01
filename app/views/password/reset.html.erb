@@ -1,8 +1,7 @@
 <%= render 'shared/errors', object: @user %>
 <%= form_with(model: @user, url: update_password_path, local: true) do |form| %>
 
-  <% #FIXME_AB: use reset token that we received in the params -%>
-  <%= form.hidden_field :user_id, value: @user.id %>
+  <%= form.hidden_field :password_reset_token, value: @user.password_reset_token%>
 
   <div class="form-field">
     <%= form.label :password %>

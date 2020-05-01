@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
   before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics]
+  before_action :ensure_not_logged_in, only:[:new, :create, :verify]
 
   def new
-    #FIXME_AB: before action  ensure not logged in. new, create verify  and others applicable
     @user = User.new
   end
 
@@ -26,14 +26,15 @@ class UsersController < ApplicationController
   end
 
 
-  #FIXME_AB:  non logged in user
   def verify
     user = User.find_by(confirmation_token: params[:token])
-    #FIXME_AB: if user && user.verify!
     if user
-      user.verify!
-      redirect_to login_path, notice: "Welcome to the Pransh! Your email has been confirmed.
-      Please sign in to continue."
+      if user.verified?
+        redirect_to login_path, notice: "Welcome to the Pransh! Your email is already confirmed. Please sign in to continue."
+      else
+        user.verify!
+        redirect_to login_path, notice: "Welcome to the Pransh! Your email has been confirmed. Please sign in to continue."
+      end
     else
       redirect_to login_path, notice: "Sorry. User does not exist"
     end
@@ -43,9 +44,6 @@ class UsersController < ApplicationController
   def set_avatar
     user = current_user
     user.avatar = user_params[:avatar]
-    #FIXME_AB: wrap user.save in if else and redirect with alert message accordingly
-    user.save(validate: false)
-    p user.errors
     redirect_to my_profile_path
   end
 

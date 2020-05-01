@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in?
-    #FIXME_AB: you can also do "!!current_user" or current_user.nil?
-    current_user != nil
+    !!current_user
   end
 
   private def ensure_not_logged_in

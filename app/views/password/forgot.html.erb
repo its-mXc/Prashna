@@ -1,6 +1,9 @@
+<%= render 'shared/notice' %>
+<div class="row"> 
 <h3>Enter your email to send password reset email </h3>
 <%= form_for :user, url: find_user_path, local: true do |f| %>
   <%= f.label 'email' %>
   <%= f.text_field 'email' %>
   <%= f.submit 'reset' %>
 <% end %>
+</div>
