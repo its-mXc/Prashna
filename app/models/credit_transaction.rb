@@ -13,7 +13,7 @@ class CreditTransaction < ApplicationRecord
 
   private def set_user_credit_balance
     self.user.credit_balance = self.credit_balance
-    self.user.save( false)
+    self.user.save
   end
 
 end

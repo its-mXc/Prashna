@@ -50,10 +50,4 @@ class User < ApplicationRecord
     self.save
   end
 
-  def reset_password(password, password_confirmation)
-    if self.update(password: password, password_confirmation: password_confirmation)
-      self.expire_password_token
-    end
-  end
-
 end

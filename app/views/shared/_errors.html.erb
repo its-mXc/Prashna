@@ -1,10 +1,14 @@
 <% if object.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(object.errors.count, "error") %> prohibited this user from being saved:</h2>
-    <ul>
-      <% object.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <div class="card border-danger mb-3 row-fluid">
+    <div class="card-header">Cannot create account</div>
+    <div class="card-body">
+        <div id="error_explanation">
+          <ul>
+            <% object.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+          </ul>
+        </div>
       <% end %>
-    </ul>
+    </div>
   </div>
 <% end %>

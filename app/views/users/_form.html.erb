@@ -7,6 +7,7 @@
   </div>
   <div>
     <%= form_with(model: user, local: true) do |form| %>
+      <%= render 'shared/errors', object: user %>
       <div class="form-group">
         <%= form.label :name %>
         <%= form.text_field :name, class: "form-control" %>
