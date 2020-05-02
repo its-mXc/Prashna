@@ -42,7 +42,9 @@ class User < ApplicationRecord
   end
 
   private def send_confirmation_mail
-    UserMailer.send_confirmation_mail(self.id).deliver_now
+    if self.user_type == "user" 
+      UserMailer.send_confirmation_mail(self.id).deliver_now
+    end
   end
 
   private  def generate_confirmation_token
