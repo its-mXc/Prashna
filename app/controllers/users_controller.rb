@@ -44,6 +44,7 @@ class UsersController < ApplicationController
   def set_avatar
     user = current_user
     user.avatar = user_params[:avatar]
+    user.save
     redirect_to my_profile_path
   end
 

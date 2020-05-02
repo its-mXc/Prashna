@@ -15,10 +15,10 @@ class SessionController < ApplicationController
         end
         redirect_to my_profile_path
       else
-        redirect_to login_path, alert: 'Please verify your email first'
+        redirect_to login_path, notice: 'Please verify your email first'
       end
     else
-      redirect_to login_url, alert: 'Invalid credentials'
+      redirect_to login_path, notice: 'Invalid credentials'
     end
   end
 

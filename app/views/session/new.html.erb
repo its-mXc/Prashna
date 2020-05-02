@@ -1,26 +1,32 @@
-<div class="col-7">
 <%= render 'shared/notice' %>
-<div class="card bg-light mb-3"">
-  <div class="card-header"><h3>Login</h3></div>
-  <div class="card-body">
-    <p class="card-text">Login to ask questions and connect with people who contribute unique insights and quality answers.</p>
-  </div>
-</div>
-<div class="depot_form">
-  <%= form_tag do %>
-    <div class="from_group">
-      <%= label_tag :email, 'Email:' %>
-      <%= text_field_tag :email, params[:email], class: "form-control" %>
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>Welcome</h3>
+            <p>Login to ask questions and connect with people who contribute unique insights and quality answers</p>
+            <input type="submit" name="" value="Signup"/><br/>
+        </div>
+        <div class="col-md-9 register-right">   
+            <h3 class="register-heading">Log In</h3>
+            <%= form_tag do %>  
+            <div class="row register-form">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                      <%= text_field_tag :email, params[:email], placeholder: "Email", class: "form-control" %>
+                    </div>
+                    <div class="form-group">
+                      <%= password_field_tag :password, params[:password],placeholder: "Password", class: "form-control" %>
+                    </div>
+                    <div class="form-group">
+                        <%= check_box_tag :remember, class: "form-check-inputs" %> Remember
+                    </div>
+                     <%= link_to 'Forgot Password', forgot_password_path %><br>
+                    <%= submit_tag 'Login', class: 'btnRegister'%>
+                </div>
+            </div>
+        </div>
+        <% end %>
     </div>
-    <div class="form-group">
-      <%= label_tag :password, 'Password:' %>
-      <%= password_field_tag :password, params[:password], class: "form-control" %>
-    </div>
-    <div class="form-group form-check">
-      <%= check_box_tag :remember, class: "form-check-inputs" %> Remember
-    </div>
-    <%= submit_tag "Login", class: 'btn btn-primary' %>
-  <% end %>
-  <%= link_to 'Forgot Password', forgot_password_path %>
-</div>
 </div>

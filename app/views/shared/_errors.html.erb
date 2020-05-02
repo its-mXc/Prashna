@@ -1,14 +1,11 @@
 <% if object.errors.any? %>
-  <div class="card border-danger mb-3 row-fluid">
-    <div class="card-header">Cannot create account</div>
-    <div class="card-body">
-        <div id="error_explanation">
-          <ul>
-            <% object.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-          </ul>
-        </div>
-      <% end %>
-    </div>
+  <div class="container alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Cannot create account</h4>
+        <ul>
+          <% object.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
   </div>
 <% end %>
