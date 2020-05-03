@@ -1,4 +1,12 @@
-Post your question
-<%= form_for :question, local: true do |f| %>
+<div>Post your question<br></div>
+<%= form_with scope: :question, url: question_create_url, local: true do |f| %>
+  <div class="form-field">
+    <%= f.text_field :title, placeholder: "title", class: "form-control" %>
+  </div>
   
+  <div class="form-field">
+    <%= f.text_area :content, placeholder: "content", class: "form-control" %>
+  </div>
+
+  <%= f.submit %>
 <% end %>

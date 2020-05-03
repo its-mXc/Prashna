@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_02_113848) do
+ActiveRecord::Schema.define(version: 2020_05_03_154224) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 2020_05_02_113848) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
+  end
+
+  create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "topic_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_question_topics_on_question_id"
+    t.index ["topic_id"], name: "index_question_topics_on_topic_id"
   end
 
   create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -85,6 +94,8 @@ ActiveRecord::Schema.define(version: 2020_05_02_113848) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "credit_transactions", "users"
+  add_foreign_key "question_topics", "questions"
+  add_foreign_key "question_topics", "topics"
   add_foreign_key "user_topics", "topics"
   add_foreign_key "user_topics", "users"
 end
