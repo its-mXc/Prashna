@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'topics', to: "topic#index"
   resources :users do
     member do
       post :set_avatar

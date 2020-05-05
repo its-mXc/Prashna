@@ -55,10 +55,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'solargraph'
-
 gem 'bcrypt'
 
 
 #FIXME_AB: whenever we add any gem, ensure to specify version
 gem "figaro"
+gem 'jquery-ui-rails'

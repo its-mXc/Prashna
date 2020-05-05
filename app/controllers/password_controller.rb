@@ -15,7 +15,7 @@ class PasswordController < ApplicationController
 
   def reset
     @user = User.find_by(password_reset_token: params[:reset_token])
-    if @user && Time.current >= @user.password_token_created_at
+    if @user && Time.current >= @user.password_token_expire_at
       @user.expire_password_token
       redirect_to forgot_password_path, notice: "Link expired"
     elsif @user.nil?
@@ -24,8 +24,7 @@ class PasswordController < ApplicationController
   end
 
   def update
-    @user = User.find_by(password_reset_token: password_params[:password_reset_token])
-    p @user
+    @user = User.find_by(password_reset_token: params[:user][:password_reset_token])
     respond_to do |format|
       if @user.update(password_params)
         @user.expire_password_token
@@ -42,6 +41,6 @@ class PasswordController < ApplicationController
 
   private def password_params
     #FIXME_AB: password_reset_token is not required here
-    params.require(:user).permit(:password, :password_confirmation, :password_reset_token)
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end

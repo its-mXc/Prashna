@@ -46,13 +46,16 @@
   <%= f.file_field :avatar %>
 <% end %>
 
+
+
 <%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
   <%= f.label :topics %>
-  <%= f.select :topic_ids, Topic.all.collect { |c| [ c.name, c.id ] }, {}, multiple: true %>
+  <%= f.text_field :topic_names, id: "tag-autocomplete" %>
   <%= f.submit :attach_topics %>
 <% end %>
 
 <%= link_to 'Logout', logout_path, method: :delete %>
 
 <%= javascript_include_tag 'user_dashboard' %>
+<%= javascript_include_tag 'autocomplete' %>
 </div>
