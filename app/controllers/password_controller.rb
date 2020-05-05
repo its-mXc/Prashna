@@ -12,7 +12,7 @@ class PasswordController < ApplicationController
       redirect_to forgot_password_path, notice: "No such email id exists"
     end
   end
-  
+
   def reset
     @user = User.find_by(password_reset_token: params[:reset_token])
     if @user && Time.current >= @user.password_token_created_at
@@ -22,7 +22,7 @@ class PasswordController < ApplicationController
       redirect_to forgot_password_path, notice: "Invalid Link"
     end
   end
-  
+
   def update
     @user = User.find_by(password_reset_token: password_params[:password_reset_token])
     p @user
@@ -41,6 +41,7 @@ class PasswordController < ApplicationController
   end
 
   private def password_params
+    #FIXME_AB: password_reset_token is not required here
     params.require(:user).permit(:password, :password_confirmation, :password_reset_token)
   end
 end
