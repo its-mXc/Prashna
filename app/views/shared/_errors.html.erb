@@ -1,0 +1,11 @@
+<% if object.errors.any? %>
+  <div class="container alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Cannot create account</h4>
+        <ul>
+          <% object.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+  </div>
+<% end %>

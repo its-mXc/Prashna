@@ -1,0 +1,34 @@
+<%= render 'shared/errors', object: user %>
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>Welcome</h3>
+            <p>Create an account to ask questions and connect with people who contribute unique insights and quality answers</p>
+            <input type="submit" name="" value="Login"/><br/>
+        </div>
+        <div class="col-md-9 register-right">   
+            <h3 class="register-heading">Sign Up</h3>
+            <%= form_with(model: user, local: true) do |form| %>
+            <div class="row register-form">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <%= form.text_field :name, placeholder: "Name", class: "form-control" %>
+                    </div>
+                    <div class="form-group">
+                        <%= form.password_field :password, placeholder: "Password", class: "form-control" %>
+                    </div>
+                    <div class="form-group">
+                        <%= form.password_field :password_confirmation, placeholder: "Confirm Password",  class: "form-control"  %>
+                    </div>
+                    <div class="form-group">
+                        <%= form.email_field :email, placeholder: "Email",  class: "form-control"  %>
+                    </div>
+                    <%= form.submit 'Signup', class: 'btnRegister'%>
+                </div>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>

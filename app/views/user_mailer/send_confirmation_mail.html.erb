@@ -1,0 +1,5 @@
+<h3>Hi <%= @user.name %>,</h3>
+
+<p>Thanks for registering! To confirm your registration click the URL below.</p>
+
+<p><%= verify_url(token: @user.confirmation_token) %></p>

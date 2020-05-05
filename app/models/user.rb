@@ -1,0 +1,54 @@
+class User < ApplicationRecord
+  has_secure_password
+  has_one_attached :avatar
+
+  has_many :credit_transactions, dependent: :restrict_with_error
+
+  validates :email, presence: true
+  validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
+  validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
+  validates :password, length: {minimum: 4}, if: -> { password.present? }
+
+  has_many :user_topics , dependent: :destroy
+  has_many :topics, through: :user_topics
+
+  before_create :generate_confirmation_token
+  after_commit :send_confirmation_mail, on: :create
+
+  def verify!
+    unless self.verified_at
+      self.verified_at = Time.current
+      self.confirmation_token = nil
+      credit_trasnaction = self.credit_transactions.new(amount: ENV['signup_credits'].to_i)
+      credit_trasnaction.transaction_type = CreditTransaction.transaction_types["signup"]
+      credit_trasnaction.save
+      save
+    end
+  end
+
+  def generate_password_token
+    self.password_reset_token = SecureRandom.urlsafe_base64.to_s
+    #FIXME_AB: password_token_expire_at
+    self.password_token_created_at = Time.current + ENV['password_token_expiry_time'].to_i.hours
+    self.save
+  end
+
+  def verified?
+    !!self.verified_at
+  end
+
+  private def send_confirmation_mail
+    UserMailer.send_confirmation_mail(self.id).deliver_now
+  end
+
+  private  def generate_confirmation_token
+      self.confirmation_token = SecureRandom.urlsafe_base64.to_s
+  end
+
+  def expire_password_token
+    self.password_reset_token  = nil
+    self.password_token_created_at = nil
+    self.save
+  end
+
+end
