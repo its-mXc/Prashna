@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
   has_many :questions
+  has_many :notifications
 
   before_create :generate_confirmation_token
   after_commit :send_confirmation_mail, on: :create

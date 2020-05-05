@@ -1,3 +1,4 @@
+<%= render  "shared/errors", object: @question %>
 <div>Post your question<br></div>
 <%= form_with scope: :question, url: question_create_url, local: true do |f| %>
   <div class="form-field">
@@ -8,5 +9,16 @@
     <%= f.text_area :content, placeholder: "content", class: "form-control" %>
   </div>
 
+  <div class="form-field">
+    <%= f.label :topics %>
+    <%= f.select :topic_ids, Topic.all.collect { |c| [ c.name, c.id ] }, {}, multiple: true %>
+  </div>
+
+  <div class="form-field">
+    <%= f.file_field :pdf_file, class: "form-control-file" %>
+  </div>
+
+
   <%= f.submit %>
+  <%= f.submit :draft %>
 <% end %>

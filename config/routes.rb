@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   resources :topic, only: [:index]
   get 'topics', to: "topic#index"
+  get 'question/new'
+  post 'question/create'
+  get '/question/:id', to: 	"question#show"
+
   resources :users do
     member do
       post :set_avatar

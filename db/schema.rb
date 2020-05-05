@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_03_154224) do
+ActiveRecord::Schema.define(version: 2020_05_05_070236) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2020_05_03_154224) do
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
+  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_notifications_on_question_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "topic_id", null: false
@@ -56,8 +66,10 @@ ActiveRecord::Schema.define(version: 2020_05_03_154224) do
     t.bigint "user_id"
     t.string "title"
     t.text "content"
+    t.string "url_slug"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -94,6 +106,8 @@ ActiveRecord::Schema.define(version: 2020_05_03_154224) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "credit_transactions", "users"
+  add_foreign_key "notifications", "questions"
+  add_foreign_key "notifications", "users"
   add_foreign_key "question_topics", "questions"
   add_foreign_key "question_topics", "topics"
   add_foreign_key "user_topics", "topics"
