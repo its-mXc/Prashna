@@ -213,14 +213,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt
+  bcrypt (>= 3.1.13)
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
-  figaro
+  figaro (>= 1.1.1)
   jbuilder (~> 2.7)
-  jquery-ui-rails
-  letter_opener
+  jquery-ui-rails (>= 6.0.1)
+  letter_opener (>= 1.7.0)
   letter_opener_web (~> 1.0)
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.4.4)
