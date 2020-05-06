@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  #FIXME_AB: use resources and only index
+  resources :topic, only: [:index]
+  get 'topics', to: "topic#index"
+
   resources :users do
     member do
       post :set_avatar
@@ -27,5 +32,6 @@ Rails.application.routes.draw do
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+  #FIXME_AB: remove this check for now for development
+  mount LetterOpenerWeb::Engine, at: "/letter_opener"
 end

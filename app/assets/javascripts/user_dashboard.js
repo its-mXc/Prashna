@@ -1,4 +1,6 @@
 //= require jquery
+//= require jquery-ui/widgets/autocomplete
+
 class AutoSubmitForm {
   constructor(options) {
     this.form = options['form']
@@ -18,3 +20,4 @@ $(document).ready(function() {
 let autoSubmitForm = new AutoSubmitForm(options)
 autoSubmitForm.init()
 })
+

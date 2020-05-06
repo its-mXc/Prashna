@@ -5,9 +5,10 @@
             <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
             <h3>Welcome</h3>
             <p>Create an account to ask questions and connect with people who contribute unique insights and quality answers</p>
-            <input type="submit" name="" value="Login"/><br/>
+            <% #FIXME_AB: fix this -%>
+            <a href="/login"><input type="submit" name="" value="Login"/></a><br/>
         </div>
-        <div class="col-md-9 register-right">   
+        <div class="col-md-9 register-right">
             <h3 class="register-heading">Sign Up</h3>
             <%= form_with(model: user, local: true) do |form| %>
             <div class="row register-form">

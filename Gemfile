@@ -41,7 +41,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
    gem 'letter_opener_web', '~> 1.0'
-   gem "letter_opener"
+   gem "letter_opener", '>= 1.7.0'
 end
 
 group :test do
@@ -55,10 +55,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'solargraph'
-
-gem 'bcrypt'
+gem 'bcrypt', '>= 3.1.13'
 
 
 #FIXME_AB: whenever we add any gem, ensure to specify version
-gem "figaro"
+gem "figaro", '>= 1.1.1'
+gem 'jquery-ui-rails', '>= 6.0.1'

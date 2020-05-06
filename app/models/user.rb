@@ -28,8 +28,7 @@ class User < ApplicationRecord
 
   def generate_password_token
     self.password_reset_token = SecureRandom.urlsafe_base64.to_s
-    #FIXME_AB: password_token_expire_at
-    self.password_token_created_at = Time.current + ENV['password_token_expiry_time'].to_i.hours
+    self.password_token_expire_at = Time.current + ENV['password_token_expiry_time'].to_i.hours
     self.save
   end
 
@@ -47,7 +46,7 @@ class User < ApplicationRecord
 
   def expire_password_token
     self.password_reset_token  = nil
-    self.password_token_created_at = nil
+    self.password_token_expire_at = nil
     self.save
   end
 

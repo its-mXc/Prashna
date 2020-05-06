@@ -42,15 +42,15 @@ class UsersController < ApplicationController
 
 
   def set_avatar
-    user = current_user
-    user.avatar = user_params[:avatar]
-    user.save
+    current_user.avatar = user_params[:avatar]
+    current_user.save
     redirect_to my_profile_path
   end
 
   def set_topics
-    user = current_user
-    user.topic_ids = user_params[:topic_ids][1..-1]
+    user_params[:topic_names].split(", ").each do  |topic_name|
+      current_user.topics << Topic.find_by(name: topic_name)
+    end
   end
 
   private def set_user
@@ -59,6 +59,6 @@ class UsersController < ApplicationController
     end
 
   private def user_params
-      params.require(:user).permit(:name, :password, :password_confirmation, :email, :avatar, topic_ids: [])
+      params.require(:user).permit(:name, :password, :password_confirmation, :email, :avatar, :topic_names)
     end
 end
