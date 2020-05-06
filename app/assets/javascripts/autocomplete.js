@@ -1,15 +1,9 @@
 // FIXME_AB: why these are global functions. You can make Utils module and add them there
-function split( val ) {
-  return val.split( /,\s*/ );
-}
-
-function extractLast( term ) {
-  return split( term ).pop();
-}
 
 class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
+    this.inputElement.data("JSONURL", options["JSONURL"])
     // FIXME_AB:     this.topics_url = this.inputElement.data('topics_url')
   }
 
@@ -17,7 +11,7 @@ class AutoCompleteInput {
     this.inputElement.autocomplete({
       source: function( request, response ) {
                 // FIXME_AB: we should not hardcode this url. get it from elment
-                $.getJSON( "/topics", {
+                $.getJSON( this.element.data('JSONURL'), {
                   term: extractLast( request.term )
                 }, response );
               },
@@ -44,6 +38,7 @@ class AutoCompleteInput {
 let options = {
   // FIXME_AB: add topics url as data-attribute to this element using rails url helper
   inputElement: $( "#tag-autocomplete" ),
+  JSONURL: "/topics"
 }
 
 let autoCompleteInput = new AutoCompleteInput(options)
