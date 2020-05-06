@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'welcome#index'
 
   #FIXME_AB: use resources and only index
   resources :topic, only: [:index]
