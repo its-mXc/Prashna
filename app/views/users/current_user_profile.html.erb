@@ -1,50 +1,47 @@
 <div class="container">
-<%= render 'shared/notice' %>
-<%= render 'shared/errors', object: @current_user %>
-<div class="row">
-  <div class="col-md-3">
-  <% if @current_user.avatar.attached? %>
-  <strong>Avatar:</strong>
-  <%= image_tag url_for(@current_user.avatar) %>
-  <% end %>
-  </div>
-  <div class="col-md-4">
+  <%= render 'shared/notice' %>
+  <%= render 'shared/errors', object: @current_user %>
   <div class="row">
-  <strong>Name:</strong>
-  <%= @current_user.name %>
-</div>
+    <div class="col-md-3">
+          <% if @current_user.avatar.attached? %>
+            <%= image_tag(@current_user.avatar, class: "rounded-circle", size: "200") %>
+          <% end %>
+          <%= form_for :user, url: set_avatar_user_path(@current_user.id), local: true, html:{id: 'avatar_form' } do |f| %>
+            <%= f.file_field :avatar, class: "form-control-file" %>
+          <% end %>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-4" style="margin-top:20px;">
+          <div class="row">
+            <strong>Name:</strong>
+            <%= @current_user.name %>
+          </div>
+          <div class="row">
+            <strong>Email:</strong>
+            <%= @current_user.email %>
+          </div>
+
+          <div class="row">
+            <strong>User type:</strong>
+            <%= @current_user.user_type %>
+          </div>
+
+          <div class="row">
+            <strong>Credit:</strong>
+            <%= @current_user.credit_balance %>
+          </div>
+
+          <div class="row">
+            <strong>Followers count:</strong>
+            <%= @current_user.followers_count %>
+          </div>
+        </div>
+
+        <div id="notifications" class="col-md-3">
+        </div>
+
   </div>
 </div>
-
-<div class="row">
-  <strong>Name:</strong>
-  <%= @current_user.name %>
-</div>
-
-<div>
-  <strong>Email:</strong>
-  <%= @current_user.email %>
-</div>
-
-<div>
-  <strong>User type:</strong>
-  <%= @current_user.user_type %>
-</div>
-
-<div>
-  <strong>Credit:</strong>
-  <%= @current_user.credit_balance %>
-</div>
-
-<div>
-  <strong>Followers count:</strong>
-  <%= @current_user.followers_count %>
-</div>
-
-<%= form_for :user, url: set_avatar_user_path(@current_user.id), local: true, html:{id: 'avatar_form' } do |f| %>
-  <%= f.label :avatar %>
-  <%= f.file_field :avatar %>
-<% end %>
 
 
 
@@ -54,7 +51,6 @@
   <%= f.submit :attach_topics %>
 <% end %>
 
-<%= link_to 'Logout', logout_path, method: :delete %>
 
 <%= javascript_include_tag 'user_dashboard' %>
 <%= javascript_include_tag 'autocomplete' %>
