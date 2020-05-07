@@ -7,13 +7,13 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
-  validates :password, length: {minimum: 4}, unless: -> { password.blank? }
+  validates :password, length: {minimum: 6}, unless: -> { password.blank? }
   validates :password, presence: true
   validates :name, presence: true
 
   #FIXME_AB: config/initilizers/constants.rb  REGEXP = {password_format: /fdsafdsafdsa/} and use REGEXP[:password_format]
   #FIXME_AB: also show password hint below the password field in the signup form
-  validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one character and one special character." }, unless: -> { password.blank? }
+  validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one uppercase character, one lowercase character and one special character." }, unless: -> { password.blank? }
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
@@ -28,7 +28,7 @@ class User < ApplicationRecord
       credit_trasnaction = self.credit_transactions.new(amount: ENV['signup_credits'].to_i)
       credit_trasnaction.transaction_type = CreditTransaction.transaction_types["signup"]
       credit_trasnaction.save
-      save
+      save(validate: false)
     end
   end
 
