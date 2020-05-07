@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :name, presence: true
   validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{3,}\Z/, message: "should have atleast one 
-  number, one character and one special character." }
+  number, one character and one special character." }, unless: -> { password.blank? }
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
