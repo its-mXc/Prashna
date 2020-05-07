@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates :password, length: {minimum: 4}, unless: -> { password.blank? }
   validates :password, presence: true
   validates :name, presence: true
-  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{3,19}\Z/, message: "should have atleast one 
+  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{3,}\Z/, message: "should have atleast one 
   number, one character and one special character." }
 
   has_many :user_topics , dependent: :destroy
