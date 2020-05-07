@@ -21,5 +21,4 @@ module Prashna
   end
 end
 
-#FIXME_AB: take this from figaro
 Rails.application.routes.default_url_options[:host] = ENV['host']
