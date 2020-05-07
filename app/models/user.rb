@@ -7,7 +7,11 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
-  validates :password, length: {minimum: 4}, if: -> { password.present? }
+  validates :password, length: {minimum: 4}, unless: -> { password.blank? }
+  validates :password, presence: true
+  validates :name, presence: true
+
+  validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one character and one special character." }, unless: -> { password.blank? }
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
@@ -29,7 +33,7 @@ class User < ApplicationRecord
   def generate_password_token
     self.password_reset_token = SecureRandom.urlsafe_base64.to_s
     self.password_token_expire_at = Time.current + ENV['password_token_expiry_time'].to_i.hours
-    self.save
+    self.save(validate: false)
   end
 
   def verified?
