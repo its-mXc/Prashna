@@ -46,7 +46,8 @@ class QuestionController < ApplicationController
 
 
   private def question_params
-    params.require(:question).permit(:title, :content,:pdf_file, topic_ids: [])
+    params[:question][:topics] = params[:question][:topic_names].split(", ") 
+    params.require(:question).permit(:title, :content,:pdf_file, topics: [])
   end
 end
 

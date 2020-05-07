@@ -1,4 +1,6 @@
-
+// FIXME_AB: why these are global functions. You can make Utils module and add them there
+//= require jquery
+//= require jquery-ui/widgets/autocomplete
 class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
@@ -38,5 +40,5 @@ let options = {
   JSONURL: "/topics"
 }
 
-let autoCompleteInput = new AutoCompleteInput(options)
+var autoCompleteInput = new AutoCompleteInput(options)
 autoCompleteInput.init()

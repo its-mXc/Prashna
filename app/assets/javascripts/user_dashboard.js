@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery-ui/widgets/autocomplete
+
 
 class AutoSubmitForm {
   constructor(options) {
