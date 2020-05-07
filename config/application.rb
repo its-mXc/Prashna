@@ -21,4 +21,4 @@ module Prashna
   end
 end
 
-Rails.application.routes.default_url_options[:host] = "XXX"
+Rails.application.routes.default_url_options[:host] = "localhost:3000"

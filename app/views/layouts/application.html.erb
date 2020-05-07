@@ -12,7 +12,9 @@
   <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <% #FIXME_AB: don't use inline styles -%>
-    <a class="navbar-brand" href="#" style="width:90%;">Prashna</a>
+    <div class="logo">
+      <%= link_to  "Prashna", root_path, class: "navbar-brand" %>
+    </div>
 
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav mr-auto">

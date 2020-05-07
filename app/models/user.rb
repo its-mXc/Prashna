@@ -7,7 +7,11 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
-  validates :password, length: {minimum: 4}, if: -> { password.present? }
+  validates :password, length: {minimum: 4}, unless: -> { password.blank? }
+  validates :password, presence: true
+  validates :name, presence: true
+  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{3,19}\Z/, message: "should have atleast one 
+  number, one character and one special character." }
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
