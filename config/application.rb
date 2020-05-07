@@ -17,8 +17,9 @@ module Prashna
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-    # config.routes.default_url_options[:host] = "prashna"  
+    # config.routes.default_url_options[:host] = "prashna"
   end
 end
 
+#FIXME_AB: take this from figaro
 Rails.application.routes.default_url_options[:host] = "localhost:3000"
