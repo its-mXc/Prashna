@@ -13,8 +13,7 @@ class User < ApplicationRecord
 
   #FIXME_AB: config/initilizers/constants.rb  REGEXP = {password_format: /fdsafdsafdsa/} and use REGEXP[:password_format]
   #FIXME_AB: also show password hint below the password field in the signup form
-  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{3,}\Z/, message: "should have atleast one
-  number, one character and one special character." }, unless: -> { password.blank? }
+  validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one character and one special character." }, unless: -> { password.blank? }
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
@@ -36,7 +35,7 @@ class User < ApplicationRecord
   def generate_password_token
     self.password_reset_token = SecureRandom.urlsafe_base64.to_s
     self.password_token_expire_at = Time.current + ENV['password_token_expiry_time'].to_i.hours
-    self.save
+    self.save(validate: false)
   end
 
   def verified?

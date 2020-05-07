@@ -1,0 +1,1 @@
+REGEXP = {password_format: /\A(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{3,}\Z/ }
