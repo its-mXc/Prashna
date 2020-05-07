@@ -11,6 +11,7 @@
 
   <div class="form-field">
     <%= f.label :topics %>
+    <%= f.text_field :topic_names, id: "tag-autocomplete" %>
     <%= f.select :topic_ids, Topic.all.collect { |c| [ c.name, c.id ] }, {}, multiple: true %>
   </div>
 
@@ -22,3 +23,5 @@
   <%= f.submit %>
   <%= f.submit :draft %>
 <% end %>
+
+<%= javascript_include_tag 'autocomplete' %>

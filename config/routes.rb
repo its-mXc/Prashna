@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'topics', to: "topic#index"
   get 'question/new'
   post 'question/create'
-  get '/question/:id', to: 	"question#show"
+  get '/question/:id', to: 	"question#show", as: "question"
 
   resources :users do
     member do

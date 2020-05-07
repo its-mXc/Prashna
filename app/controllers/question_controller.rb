@@ -37,7 +37,7 @@ class QuestionController < ApplicationController
 
   def show
     @question = Question.find_by_url_slug(params[:id])
-    p @question
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @product }

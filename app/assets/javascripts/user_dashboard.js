@@ -21,3 +21,7 @@ let autoSubmitForm = new AutoSubmitForm(options)
 autoSubmitForm.init()
 })
 
+$("#notification-bell").on('click', function(){
+  $("#notifications").toggle()
+})
+

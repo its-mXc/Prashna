@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_070236) do
   create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
-    t.integer "status"
+    t.boolean "viewed"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_notifications_on_question_id"

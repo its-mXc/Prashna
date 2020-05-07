@@ -19,8 +19,9 @@
       <ul class="navbar-nav mr-auto">
           <% if logged_in? %>
             <li class="nav-item active"><%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %></li>
-            <a class="nav-link" href="/signup"><img id="notification-bell" width="30" height="30" src="https://www.materialui.co/materialIcons/social/notifications_white_192x192.png"><span class="sr-only">(current)</span></a>
-
+            <li class="nav-item active">
+              <img id="notification-bell" width="30" height="30" src="https://www.materialui.co/materialIcons/social/notifications_white_192x192.png">
+            </li>
           <% else %>
             <li class="nav-item active"><%= link_to 'Login', login_path, class: "nav-link" %></li>
             <li class="nav-item active"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
@@ -28,9 +29,11 @@
       </ul>
     </div>
   </nav>
+    <div>
+      <%= yield %>
+    </div>
     <div class = 'container' style="margin-top:20px;">
       <div class="row">
-        <%= yield %>
       </div>
     </div>
   </body>
