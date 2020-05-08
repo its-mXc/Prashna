@@ -37,6 +37,11 @@
             <strong>Followers count:</strong>
             <%= current_user.followers_count %>
           </div>
+
+          <div class="row">
+            <strong>Topics:</strong>
+            <%= current_user.topics.map(&:name).join(", ") %>
+          </div>
         </div>
 
         <div id="notifications" class="col-md-3">
@@ -50,7 +55,7 @@
 <%= form_for :user, url: set_topics_user_path(current_user.id), local: true do |f| %>
   <%= f.label :topics %>
   <%= f.text_field :topic_names, id: "tag-autocomplete" %>
-  <%= f.submit :attach_topics %>
+  <%= f.submit "Add Topics", class:"btn btn-danger" %>
 <% end %>
 
 

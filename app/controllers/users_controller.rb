@@ -43,14 +43,16 @@ class UsersController < ApplicationController
 
   def set_avatar
     current_user.avatar = user_params[:avatar]
-    current_user.save
+    current_user.save(validate: false)
     redirect_to my_profile_path
   end
 
   def set_topics
-    user_params[:topic_names].split(", ").each do  |topic_name|
-      current_user.topics << Topic.find_by(name: topic_name)
+    topic_names = user_params[:topic_names].split(", ") - current_user.topics.map(&:name)
+    if topic_names.any?
+      current_user.topics << Topic.where(name: topic_names)
     end
+    redirect_to my_profile_path, notice: "Topic added to user"
   end
 
   private def set_user
