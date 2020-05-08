@@ -60,7 +60,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bcrypt', '>= 3.1.13'
 
 
-#FIXME_AB: whenever we add any gem, ensure to specify version
 gem "figaro", '>= 1.1.1'
 gem 'jquery-ui-rails', '>= 6.0.1'
 gem 'letter_opener_web', '~> 1.0'

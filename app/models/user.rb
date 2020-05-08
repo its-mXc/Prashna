@@ -8,7 +8,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
   validates :password, length: {minimum: 6}, unless: -> { password.blank? }
-  #FIXME_AB: lets do password validation on certain context. on: password_validation_required
   validates :password, presence: true, on: :password_entered
   validates :name, presence: true
 

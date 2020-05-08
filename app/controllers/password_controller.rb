@@ -41,7 +41,6 @@ class PasswordController < ApplicationController
   end
 
   private def password_params
-    #FIXME_AB: password_reset_token is not required here
     params.require(:user).permit(:password, :password_confirmation)
   end
 end

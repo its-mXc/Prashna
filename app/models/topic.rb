@@ -6,5 +6,4 @@ class Topic < ApplicationRecord
   scope :search, ->(term) { where("name LIKE ?","%#{term}%") }
 
 
-  #FIXME_AB: make this a scope
 end
