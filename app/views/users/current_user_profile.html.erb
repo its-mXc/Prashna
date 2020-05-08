@@ -12,45 +12,49 @@
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-4" style="margin-top:20px;">
-          <div class="row">
+          <div class="row user-info">
             <strong>Name:</strong>
             <%= current_user.name %>
           </div>
-          <div class="row">
+          <div class="row user-info">
             <strong>Email:</strong>
             <%= current_user.email %>
           </div>
 
-          <div class="row">
+          <div class="row user-info">
             <strong>User type:</strong>
             <%= current_user.user_type %>
           </div>
 
-          <div class="row">
+          <div class="row user-info">
             <strong>Credit:</strong>
             <%= current_user.credit_balance %>
           </div>
 
-          <div class="row">
+          <div class="row user-info">
             <strong>Followers count:</strong>
             <%= current_user.followers_count %>
           </div>
 
+           <div class="row user-info">
+            <%= form_for :user, url: set_topics_user_path(current_user.id), local: true do |f| %>
+              <%= f.label :topics %>
+              <%= f.text_field :topic_names, id: "tag-autocomplete",  value: current_user.topics.map(&:name).join(",") %>
+              <%= f.submit "Add Topics", class:"btn btn-danger" %>
+            <% end %>
+           </div> 
         </div>
 
         <div id="notifications" class="col-md-3">
         </div>
+
 
   </div>
 </div>
 
 
 
-<%= form_for :user, url: set_topics_user_path(current_user.id), local: true do |f| %>
-  <%= f.label :topics %>
-  <%= f.text_field :topic_names, id: "tag-autocomplete",  value: current_user.topics.map(&:name).join(",") %>
-  <%= f.submit "Add Topics", class:"btn btn-danger" %>
-<% end %>
+
 
 <% #FIXME_AB: use content_for to move these js in layout head. Discuss with me if not clear -%>
 <%= javascript_include_tag 'user_dashboard' %>

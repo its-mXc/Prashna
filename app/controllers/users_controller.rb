@@ -49,10 +49,12 @@ class UsersController < ApplicationController
 
   def set_topics
     topic_names = user_params[:topic_names].split(",").map(&:strip)
+    current_user.topics = Topic.where(name: topic_names)
     if topic_names.any?
-      current_user.topics = Topic.where(name: topic_names)
+      redirect_to my_profile_path, notice: "Topics added to user"
+    else
+      redirect_to my_profile_path, notice: "Topics Removed"
     end
-    redirect_to my_profile_path, notice: "Topic added to user"
   end
 
   private def set_user
