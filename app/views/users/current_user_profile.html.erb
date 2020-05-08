@@ -40,15 +40,18 @@
             <%= current_user.followers_count %>
           </div>
 
-           <div class="row user-info">
-            <%= form_for :user, url: set_topics_user_path(current_user.id), local: true do |f| %>
+          <div class="row user-info">
+            <%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
               <%= f.label :topics %>
-              <%= f.text_field :topic_names, id: "tag-autocomplete",  value: current_user.topics.map(&:name).join(",") %>
-              <%= f.submit "Add Topics", class:"btn btn-danger" %>
+              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: "/topics"}, value: current_user.topics.map(&:name).join(",") %>
+              <%= f.submit "Add Topics"%>
             <% end %>
-           </div> 
+          </div> 
         </div>
       </div>
+      
+      
+
     </div>
 
     <div class="col-md-2">
@@ -65,10 +68,6 @@
 
 
 
-
-
-
-<% #FIXME_AB: use content_for to move these js in layout head. Discuss with me if not clear -%>
-<%= javascript_include_tag 'user_dashboard' %>
+<%= javascript_include_tag 'current_user_profile' %>
 
 </div>

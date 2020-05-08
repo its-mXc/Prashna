@@ -1,18 +1,14 @@
-// FIXME_AB: why these are global functions. You can make Utils module and add them there
 //= require jquery
 //= require jquery-ui/widgets/autocomplete
 class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
-    console.log(options)
-    this.inputElement.data("JSONURL", options["JSONURL"])
   }
 
   init() {
-    console.log(this.inputElement)
     this.inputElement.autocomplete({
       source: function( request, response ) {
-                $.getJSON( this.element.data('JSONURL'), {
+                $.getJSON( this.element.data('jsonurl'), {
                   term: extractLast( request.term )
                 }, response );
               },
@@ -35,13 +31,4 @@ class AutoCompleteInput {
   }
 }
 
-$(document).ready(function() {
-  let options = {
-    // FIXME_AB: add topics url as data-attribute to this element using rails url helper
-    inputElement: $( "#tag-autocomplete" ),
-    JSONURL: "/topics"
-  }
-  
-  let autoCompleteInput = new AutoCompleteInput(options)
-  autoCompleteInput.init()
-})
+
