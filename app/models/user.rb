@@ -8,12 +8,11 @@ class User < ApplicationRecord
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
   validates :password, length: {minimum: 6}, unless: -> { password.blank? }
+  #FIXME_AB: lets do password validation on certain context. on: password_validation_required
   validates :password, presence: true
   validates :name, presence: true
 
 
-  #FIXME_AB: config/initilizers/constants.rb  REGEXP = {password_format: /fdsafdsafdsa/} and use REGEXP[:password_format]
-  #FIXME_AB: also show password hint below the password field in the signup form
   validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one uppercase character, one lowercase character and one special character." }, unless: -> { password.blank? }
 
   has_many :user_topics , dependent: :destroy

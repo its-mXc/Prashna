@@ -48,8 +48,11 @@ class UsersController < ApplicationController
   end
 
   def set_topics
+    #FIXME_AB: ', ' => ","
+    #FIXME_AB: user's profile topic field should be prefilled with exiting topics with comma.
     topic_names = user_params[:topic_names].split(", ") - current_user.topics.map(&:name)
     if topic_names.any?
+      #FIXME_AB: then =
       current_user.topics << Topic.where(name: topic_names)
     end
     redirect_to my_profile_path, notice: "Topic added to user"
