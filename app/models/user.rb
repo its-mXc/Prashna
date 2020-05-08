@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :name, presence: true
 
+
   #FIXME_AB: config/initilizers/constants.rb  REGEXP = {password_format: /fdsafdsafdsa/} and use REGEXP[:password_format]
   #FIXME_AB: also show password hint below the password field in the signup form
   validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one uppercase character, one lowercase character and one special character." }, unless: -> { password.blank? }

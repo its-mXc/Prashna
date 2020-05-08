@@ -33,6 +33,5 @@ Rails.application.routes.draw do
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  #FIXME_AB: remove this check for now for development
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 end
