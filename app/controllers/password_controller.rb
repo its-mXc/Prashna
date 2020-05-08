@@ -25,8 +25,9 @@ class PasswordController < ApplicationController
 
   def update
     @user = User.find_by(password_reset_token: params[:user][:password_reset_token])
+    @user.assign_attributes(password_params)
     respond_to do |format|
-      if @user.update(password_params)
+      if @user.save(context: :password_entered)
         @user.expire_password_token
         format.html { redirect_to login_url, notice: 'Password updated sucessfuly' }
       else

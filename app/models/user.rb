@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
   validates :password, length: {minimum: 6}, unless: -> { password.blank? }
   #FIXME_AB: lets do password validation on certain context. on: password_validation_required
-  validates :password, presence: true
+  validates :password, presence: true, on: :password_entered
   validates :name, presence: true
 
 
@@ -28,14 +28,14 @@ class User < ApplicationRecord
       credit_trasnaction = self.credit_transactions.new(amount: ENV['signup_credits'].to_i)
       credit_trasnaction.transaction_type = CreditTransaction.transaction_types["signup"]
       credit_trasnaction.save
-      save(validate: false)
+      save
     end
   end
 
   def generate_password_token
     self.password_reset_token = SecureRandom.urlsafe_base64.to_s
     self.password_token_expire_at = Time.current + ENV['password_token_expiry_time'].to_i.hours
-    self.save(validate: false)
+    self.save
   end
 
   def verified?

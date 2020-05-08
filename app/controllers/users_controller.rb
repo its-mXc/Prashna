@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
+      if @user.save(context: :password_entered)
         format.html { redirect_to login_path, notice: t('confirmation_mail_sent_message') }
         format.json { render :show, status: :created, location: @user }
       else
@@ -43,17 +43,16 @@ class UsersController < ApplicationController
 
   def set_avatar
     current_user.avatar = user_params[:avatar]
-    current_user.save(validate: false)
+    current_user.save
     redirect_to my_profile_path
   end
 
   def set_topics
-    #FIXME_AB: ', ' => ","
-    #FIXME_AB: user's profile topic field should be prefilled with exiting topics with comma.
-    topic_names = user_params[:topic_names].split(", ") - current_user.topics.map(&:name)
+    topic_names = user_params[:topic_names].split(",").map(&:strip)
     if topic_names.any?
       #FIXME_AB: then =
-      current_user.topics << Topic.where(name: topic_names)
+      p topic_names
+      current_user.topics = Topic.where(name: topic_names)
     end
     redirect_to my_profile_path, notice: "Topic added to user"
   end
