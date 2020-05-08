@@ -37,6 +37,11 @@
             <strong>Followers count:</strong>
             <%= current_user.followers_count %>
           </div>
+
+          <div class="row">
+            <strong>Topics:</strong>
+            <%= current_user.topics.map(&:name).join(", ") %>
+          </div>
         </div>
 
         <div id="notifications" class="col-md-3">

@@ -50,9 +50,7 @@ class UsersController < ApplicationController
   def set_topics
     topic_names = user_params[:topic_names].split(", ") - current_user.topics.map(&:name)
     if topic_names.any?
-      topic_names.each do  |topic_name|
-        current_user.topics << Topic.find_by(name: topic_name)
-      end
+      current_user.topics << Topic.where(name: topic_names)
     end
     redirect_to my_profile_path, notice: "Topic added to user"
   end
