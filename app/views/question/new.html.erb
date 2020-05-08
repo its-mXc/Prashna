@@ -11,7 +11,7 @@
 
   <div class="form-field">
     <%= f.label :topics %>
-    <%= render  "topic/input", formObject: f %>
+    <%= f.text_field :topic_names, id: "tag-autocomplete" %>
   </div>
 
   <div class="form-field">

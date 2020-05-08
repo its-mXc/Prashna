@@ -4,10 +4,12 @@
 class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
+    console.log(options)
     this.inputElement.data("JSONURL", options["JSONURL"])
   }
 
   init() {
+    console.log(this.inputElement)
     this.inputElement.autocomplete({
       source: function( request, response ) {
                 $.getJSON( this.element.data('JSONURL'), {
@@ -19,7 +21,7 @@ class AutoCompleteInput {
                 var terms = split( this.value );
                 // remove the current input
                 terms.pop();
-                // add the selected item
+                // add t  he selected item
                 terms.push( ui.item.value );
                 // join all terms with a comma
                 this.value = terms.join( ", " );
@@ -33,12 +35,13 @@ class AutoCompleteInput {
   }
 }
 
-
-let options = {
-  inputElement: $( "#tag-autocomplete" ),
-  // FIXME_AB: add topics url as data-attribute to this element using rails url helper
-  JSONURL: "/topics"
-}
-
-var autoCompleteInput = new AutoCompleteInput(options)
-autoCompleteInput.init()
+$(document).ready(function() {
+  let options = {
+    // FIXME_AB: add topics url as data-attribute to this element using rails url helper
+    inputElement: $( "#tag-autocomplete" ),
+    JSONURL: "/topics"
+  }
+  
+  let autoCompleteInput = new AutoCompleteInput(options)
+  autoCompleteInput.init()
+})
