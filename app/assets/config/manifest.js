@@ -5,3 +5,4 @@
 //= link modules/utils.js
 //=link current_user_profile.js
 //=link question.js
+//=link comments.js

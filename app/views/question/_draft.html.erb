@@ -1,0 +1,12 @@
+<% questions.each do |question| %>
+  <div>
+  <h3>
+   <%= question.title %>
+  </h3>
+  </p>
+    <%= question.content  %>
+  <p>
+
+  <%= link_to  "Post", question_publish_path(question.id) %>
+</div>
+<% end %>

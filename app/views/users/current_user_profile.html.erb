@@ -57,7 +57,7 @@
     <div class="col-md-2">
       <div id="notifications" style="display:none">
         <ul>
-          <%= render  current_user.notifications %>
+          <%= render  current_user.notifications.not_viewed %>
         </ul>
       </div>
     </div>

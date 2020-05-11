@@ -1,3 +1,4 @@
+<%= render  "shared/notice", object: @question %>
 <div>
   <h3>
    <%= @question.title %>
@@ -5,4 +6,23 @@
   </p>
     <%= @question.content  %>
   <p>
+  <p>
+    <%= @question.reaction_count  %>
+  </p>
+  <%= form_for @question , url: question_reaction_path(@question.id) ,local: true, method: :get do |f| %>
+    <%= f.submit :upvote %>
+    <%= f.submit :downvote %>
+  <% end %>
+    <h3>Comments</h3>
+
+    <%= form_for [@question, Comment.new] do |f| %>
+    <%= f.text_area :body, placeholder: "Add a comment" %><br/>
+    <%= f.submit "Add Comment" %>
+  <% end %>
+
+  <ul>
+    <%= render @question.comments %>
+  </ul>
+      <%= javascript_include_tag "comments" %>
+
 </div>

@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
-  resources :topic, only: [:index]
   get 'topics', to: "topic#index"
-  get 'question/new'
-  post 'question/create'
-  get '/question/:id', to: 	"question#show", as: "question"
+  resources :question do
+    resources :comments
+  end
+  get 'question/drafts'
+  get '/question/:id/publish', to: 	"question#publish", as: "question_publish"
+  get '/question/:id/reaction', to: 	"question#reaction", as: "question_reaction"
 
+  resources :comments do
+      resources :comments
+  end
+  
   resources :users do
     member do
       post :set_avatar

@@ -1,0 +1,26 @@
+<%= render  "shared/errors", object: @question %>
+<div>Post your question<br></div>
+<%= form_for @question, local: true do |f| %>
+  <div class="form-field">
+    <%= f.text_field :title, placeholder: "title", class: "form-control" %>
+  </div>
+  
+  <div class="form-field">
+    <%= f.text_area :content, placeholder: "content", class: "form-control" %>
+  </div>
+
+  <div class="form-field">
+    <%= f.label :topics %>
+    <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: "/topics"} %>
+  </div>
+
+  <div class="form-field">
+    <%= f.file_field :pdf_file, class: "form-control-file" %>
+  </div>
+
+
+  <%= f.submit %>
+  <%= f.submit :draft %>
+
+  <%= javascript_include_tag "question" %>
+<% end %>
