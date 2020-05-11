@@ -10,6 +10,7 @@ consumer.subscriptions.create("NotificationChannel", {
   },
 
   received(data) {
+    console.log("hello")
     document.getElementById("notifications").innerHTML = data.html
     // Called when there's incoming data on the websocket for this channel
   }

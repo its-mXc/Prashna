@@ -14,7 +14,7 @@ class QuestionController < ApplicationController
     respond_to do |format|
       
       if @question.save
-        @notifications = current_user.notifications
+        @notifications = current_user.notifications.not_viewed
         p @notifications
         ActionCable.server.broadcast 'notifications', html: render_to_string('notifications/index', layout: false)
         format.html { redirect_to @question, notice: "Question posted" }
@@ -28,7 +28,10 @@ class QuestionController < ApplicationController
 
   def show
     @question = Question.find_by_url_slug(params[:id])
-    notification = Notification.find_by(question: @question)
+    if @question.nil?
+      redirect_to my_profile_path, notice: "Cannot find question"
+    end
+    notification = current_user.notifications.find_by(question: @question)
     if notification
       notification.viewed = true
       notification.save

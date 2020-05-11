@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 2020_05_11_081336) do
     t.bigint "question_id", null: false
     t.bigint "user_id", null: false
     t.integer "reaction_type"
-    t.integer "reaction_count"
     t.index ["question_id"], name: "index_question_reactions_on_question_id"
     t.index ["user_id"], name: "index_question_reactions_on_user_id"
   end
