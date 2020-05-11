@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2020_05_11_081336) do
     t.datetime "verified_at"
     t.string "confirmation_token"
     t.string "password_reset_token"
-    t.datetime "password_token_expire_at"
+    t.datetime "password_token_created_at"
     t.index ["email", "confirmation_token"], name: "index_users_on_email_and_confirmation_token", unique: true
   end
 
