@@ -1,3 +1,3 @@
 <li class="list-group-item d-flex justify-content-between align-items-center">
-    <%= link_to  "#{notification.question.user.name} asked a question '#{notification.question.title }'", question_path(notification.question) %>
+    <%= link_to  "#{notification.question.user.name} asked a question '#{notification.question.title }'", question_path(notification.question.url_slug) %>
 </li>

@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   resources :topic, only: [:index]
   get 'topics', to: "topic#index"
-  post 'question/create'
-  get 'question/drafts'
-  get '/question/:id/publish', to: 	"question#publish", as: "question_publish"
-  get '/question/:id/reaction', to: 	"question#reaction", as: "question_reaction"
-  resources :question do
+  post 'questions/create'
+  get 'questions/drafts'
+  get '/questions/:id/publish', to: 	"questions#publish", as: "question_publish"
+  get '/questions/:id/reaction', to: 	"questions#reaction", as: "question_reaction"
+  resources :questions do
     resources :comments
   end
 
@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       resources :comments
   end
   
+  get "my-profile", to: "users#current_user_profile"
+  get "user_notifications", to: "users#notifications"
   resources :users do
     member do
       post :set_avatar
@@ -29,7 +31,6 @@ Rails.application.routes.draw do
 
   get 'signup', to: "users#new"
 
-  get "my-profile", to: "users#current_user_profile"
 
   controller :password do
     get "forgot-password" => :forgot

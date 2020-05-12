@@ -18,6 +18,10 @@ $(document).ready(function() {
   $("#notification-bell").on('click', function(){
     $("#notifications").toggle()
   })
+
+  setInterval(function(){
+    $(".refresh-notifications").trigger("click")
+  },20000)
 })
 
 

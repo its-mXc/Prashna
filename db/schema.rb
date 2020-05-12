@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_081336) do
+ActiveRecord::Schema.define(version: 2020_05_12_060107) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -39,7 +39,9 @@ ActiveRecord::Schema.define(version: 2020_05_11_081336) do
     t.bigint "commentable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "credit_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -118,11 +120,12 @@ ActiveRecord::Schema.define(version: 2020_05_11_081336) do
     t.datetime "verified_at"
     t.string "confirmation_token"
     t.string "password_reset_token"
-    t.datetime "password_token_created_at"
+    t.datetime "password_token_expire_at"
     t.index ["email", "confirmation_token"], name: "index_users_on_email_and_confirmation_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "users"
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "questions"
   add_foreign_key "notifications", "users"

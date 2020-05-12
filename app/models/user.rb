@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   has_many :credit_transactions, dependent: :restrict_with_error
   has_many :question_reactions
-
+  has_many :comments
 
   validates :email, presence: true
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }

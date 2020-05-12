@@ -57,6 +57,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def notifications
+    @notifications = current_user.notifications.not_viewed
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private def set_user
       @user = User.find(params[:id])
       #FIXME_AB: what if user not found

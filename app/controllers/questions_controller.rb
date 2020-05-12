@@ -1,5 +1,6 @@
-class QuestionController < ApplicationController
+class QuestionsController < ApplicationController
   before_action :ensure_logged_in
+  before_action :ensure_positive_balance, only:[:publish]
   def new
     @question = current_user.questions.new
   end
@@ -14,10 +15,12 @@ class QuestionController < ApplicationController
     respond_to do |format|
       
       if @question.save
-        @notifications = current_user.notifications.not_viewed
-        p @notifications
-        ActionCable.server.broadcast 'notifications', html: render_to_string('notifications/index', layout: false)
-        format.html { redirect_to @question, notice: "Question posted" }
+
+        if @question.draft?
+          format.html { redirect_to questions_drafts_path, notice: "Saved to Drafts" }
+        elsif @question.published?
+          format.html { redirect_to question_publish_path(@question.id), notice: "Question posted" }
+        end
         # format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -45,7 +48,7 @@ class QuestionController < ApplicationController
   def edit
     @question = Question.find_by_url_slug(params[:id])
     if @question && @question.interacted?
-      redirect_to @question, notice: "Cannot edit, has  been interacted"
+      redirect_to question_path(@question.url_slug), notice: "Cannot edit, has  been interacted"
     elsif @question.nil?
       redirect_to question_new_path, notice: "No such question exist"
     end
@@ -54,7 +57,7 @@ class QuestionController < ApplicationController
   def update
     @question = Question.find_by_url_slug(params[:id])
     @question.update(question_params)
-    redirect_to @question
+    redirect_to question_path(@question.url_slug)
   end
   
   def drafts
@@ -65,7 +68,7 @@ class QuestionController < ApplicationController
     @question = Question.find(params[:id])
     @question.status = Question.statuses["published"]
     @question.save
-    redirect_to @question
+    redirect_to question_path(@question.url_slug), notice: "Question Posted"
   end
   
   def reaction
@@ -77,7 +80,7 @@ class QuestionController < ApplicationController
     else
       @question.question_reactions.create(user:current_user, reaction_type: QuestionReaction.reaction_types[params[:commit]])
     end
-    redirect_to @question
+    redirect_to question_path(@question.url_slug)
   end
 
 
@@ -86,6 +89,12 @@ class QuestionController < ApplicationController
     params[:question][:topic_ids] = Topic.where(name: topic_names).map(&:id)
 
     params.require(:question).permit(:title, :content,:pdf_file, topic_ids: [])
+  end
+
+  private def ensure_positive_balance
+    unless current_user.credit_balance > 0
+      redirect_to my_profile_path, notice: "No credit avaliable. Purchase more"
+    end
   end
 end
 
