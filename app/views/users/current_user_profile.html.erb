@@ -54,15 +54,8 @@
 
     </div>
 
-    <div class="col-md-2">
-      <div id="notifications" style="display:none">
-        <ul>
-          <%= render  current_user.notifications.not_viewed %>
-        </ul>
-      </div>
-    </div>
+    
   </div>
-</div>
 <%= button_to "Refresh Notification", user_notifications_path, method: :get, remote: true , class: "refresh-notifications"%>
 
 <%= link_to  "Ask Question", new_question_path %>
