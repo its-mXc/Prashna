@@ -40,11 +40,13 @@
           <%= yield %>
         </div>
         <div class="col-md-2">
-          <div id="notifications">
-            <ul>
-              <%= render  current_user.notifications.not_viewed %>
-            </ul>
-          </div>
+          <% if logged_in? %>
+            <div id="notifications">
+              <ul>
+                <%= render  current_user.notifications.not_viewed %>
+              </ul>
+            </div>
+          <% end% >
         </div>
       </div>
     </div>
