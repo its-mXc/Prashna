@@ -8,17 +8,17 @@ $(document).ready(function() {
   avatar_auto_submit.init()
 
   let topic_auto_complete_profile = {
-    // FIXME_AB: add topics url as data-attribute to this element using rails url helper
     inputElement: $( "#tag-autocomplete" ),
   }
-  
+
   let profile_topic_autocomplete = new AutoCompleteInput(topic_auto_complete_profile)
   profile_topic_autocomplete.init()
-  
+
   $("#notification-bell").on('click', function(){
     $("#notifications").toggle()
   })
 
+  // FIXME_AB: remove unused  code
   setInterval(function(){
     $(".refresh-notifications").trigger("click")
   },20000)

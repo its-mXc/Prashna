@@ -9,6 +9,7 @@
   <p>
     <%= @question.reaction_count  %>
   </p>
+  <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
   <%= form_for @question , url: question_reaction_path(@question.id) ,local: true, method: :get do |f| %>
     <%= f.submit :upvote %>
     <%= f.submit :downvote %>
@@ -17,6 +18,7 @@
 
     <%= form_for [@question, Comment.new] do |f| %>
     <%= f.text_area :body, placeholder: "Add a comment" %><br/>
+    <% #FIXME_AB: I18n -%>
     <%= f.submit "Add Comment" %>
   <% end %>
 

@@ -4,6 +4,5 @@ class Comment < ApplicationRecord
   has_many :comments, as: :commentable
 
   validates :body, presence: true
-  #FIXME_AB: add validations
-  #FIXME_AB: should also belongs to user
+  #FIXME_AB: add another validation that body of a comment should have min x words.
 end

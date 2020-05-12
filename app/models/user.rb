@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :credit_transactions, dependent: :restrict_with_error
+  #FIXME_AB: dependent restrict
   has_many :question_reactions
   has_many :comments
 
@@ -18,7 +19,9 @@ class User < ApplicationRecord
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
+  #FIXME_AB: what about dependent? restict
   has_many :questions
+  #FIXME_AB: dependent destroy
   has_many :notifications
 
   before_create :generate_confirmation_token
@@ -46,7 +49,8 @@ class User < ApplicationRecord
   end
 
   private def send_confirmation_mail
-    if self.user_type == "user" 
+    #FIXME_AB: convert to enum
+    if self.user_type == "user"
       UserMailer.send_confirmation_mail(self.id).deliver_now
     end
   end
@@ -60,5 +64,12 @@ class User < ApplicationRecord
     self.password_token_expire_at = nil
     self.save
   end
+
+  #FIXME_AB: make a method refresh_credits!.
+  # def refresh_credits!
+  #   user.reload.credit_trasnactions.sum(:amount)
+  #   ...
+  #   user.save
+  # end
 
 end

@@ -1,3 +1,4 @@
+<% #FIXME_AB: dont use @current_uesr -%>
 <div class="container-fluid">
   <%= render 'shared/notice' %>
   <%= render 'shared/errors', object: current_user %>
@@ -46,15 +47,15 @@
               <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: "/topics"}, value: current_user.topics.map(&:name).join(",") %>
               <%= f.submit "Add Topics"%>
             <% end %>
-          </div> 
+          </div>
         </div>
       </div>
-      
-      
+
+
 
     </div>
 
-    
+
   </div>
 
 <%= link_to  "Ask Question", new_question_path %>

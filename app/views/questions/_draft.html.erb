@@ -6,7 +6,8 @@
   </p>
     <%= question.content  %>
   <p>
-
+  <% #FIXME_AB: show time -%>
+  <% #FIXME_AB: always use object.  question_publish_path(question)-%>
   <%= link_to  "Post", question_publish_path(question.id) %>
 </div>
 <% end %>

@@ -7,6 +7,8 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <% #FIXME_AB: use javascript pack tags -%>
     <%= javascript_include_tag 'classes/auto_submit_form' %>
     <%= javascript_include_tag 'modules/utils' %>
     <%= javascript_include_tag 'classes/autocomplete' %>
@@ -50,8 +52,9 @@
         </div>
       </div>
     </div>
-    
+
   </body>
+  <% #FIXME_AB: nothing should be out of body tag -%>
   <%= button_to "Refresh Notification", user_notifications_path, method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
 <%= javascript_include_tag 'notification' %>
 
