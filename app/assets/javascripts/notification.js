@@ -8,7 +8,10 @@ $(document).ready(function() {
   let collapsibleNotification = new Collapsible(notifications_collapsible_options)
   collapsibleNotification.init()
 
-  setInterval(function(){
-    $(".refresh-notifications").trigger("click")
-  },20000)
+  let persisistnetNotificationOptions = {
+    persistentElement: $(".refresh-notifications")
+  }
+
+  let persisistnetNotification = new PersistentAction(persisistnetNotificationOptions)
+  persisistnetNotification.init()
 })

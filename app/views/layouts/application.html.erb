@@ -11,6 +11,7 @@
     <%= javascript_include_tag 'modules/utils' %>
     <%= javascript_include_tag 'classes/autocomplete' %>
     <%= javascript_include_tag 'classes/collapsible' %>
+    <%= javascript_include_tag 'classes/persistent_action' %>
   </head>
 
   <body>
@@ -49,6 +50,8 @@
     </div>
     
   </body>
+  <%= button_to "Refresh Notification", user_notifications_path, method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
 <%= javascript_include_tag 'notification' %>
+
 </html>
 
