@@ -5,6 +5,7 @@ class PersistentAction {
   }
 
   init() {
+    this.persistentElement.hide()
     setInterval( () => {
       this.persistentElement.trigger("click")
     },this.refershTime)
