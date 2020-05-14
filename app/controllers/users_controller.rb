@@ -49,6 +49,7 @@ class UsersController < ApplicationController
 
   def set_topics
     topic_names = user_params[:topic_names].split(",").map(&:strip)
+    #FIXME_AB: this is wrong always creating, think better
     topic_names.each do |topic_name|
       Topic.create(name:topic_name)
     end
@@ -59,10 +60,6 @@ class UsersController < ApplicationController
       redirect_to my_profile_path, notice: "Topics Removed"
     end
   end
-
-  #FIXME_AB: this should be nested route/ resource for user
-  #FIXME_AB: ajax polling should be for logged in user only
-  
 
   private def set_user
       @user = User.find(params[:id])

@@ -24,6 +24,7 @@
   <ul>
     <%= render @question.comments %>
   </ul>
+  <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
       <%= javascript_pack_tag "comments" %>
 
 </div>
