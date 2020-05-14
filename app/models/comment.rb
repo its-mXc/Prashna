@@ -5,8 +5,10 @@ class Comment < ApplicationRecord
 
   validates :body, presence: true
   validates_length_of :words_in_comment, minimum: ENV["comment_word_length"].to_i
-  #FIXME_AB: add another validation that body of a comment should have min x words.
 
+  #FIXME_AB: Also add a validation that if comment is being created on a question that question should be published.
+
+  #FIXME_AB: should be private method
   def words_in_comment
     body.scan(/\w+/)
   end

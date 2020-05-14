@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  #FIXME_AB: need user to be logged in
+  #FIXME_AB: fix indentation in this file
   before_action :find_commentable, :ensure_logged_in
 
     def new
@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
     end
 
     def create
+      #FIXME_AB: remove these puts statements
       puts comment_params
       @comment = @commentable.comments.new(comment_params)
       @comment.user = current_user
@@ -21,18 +22,17 @@ class CommentsController < ApplicationController
     end
 
 
-    #FIXME_AB: use inline private
-
     private def comment_params
       params.require(:comment).permit(:body)
     end
 
+    #FIXME_AB: wheneve you create a method think whether it should be private or public or protected. what should be this method
     def find_commentable
-      #FIXME_AB: check and fixe
       if params[:comment_id]
         @commentable = Comment.find_by_id(params[:comment_id])
       elsif params[:question_id]
-        @commentable = Question.find_by_url_slug(params[:question_id]) 
-      end 
+        #FIXME_AB: lets allow comments only on published questions so here Question.published.find_by....
+        @commentable = Question.find_by_url_slug(params[:question_id])
+      end
     end
   end

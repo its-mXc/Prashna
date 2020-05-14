@@ -4,7 +4,6 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :credit_transactions, dependent: :restrict_with_error
-  #FIXME_AB: dependent restrict
   has_many :question_reactions, dependent: :restrict_with_error
   has_many :comments, dependent: :destroy
 
@@ -20,9 +19,7 @@ class User < ApplicationRecord
 
   has_many :user_topics , dependent: :destroy
   has_many :topics, through: :user_topics
-  #FIXME_AB: what about dependent? restict
   has_many :questions, dependent: :restrict_with_error
-  #FIXME_AB: dependent destroy
   has_many :notifications, dependent: :destroy
 
   before_create :generate_confirmation_token
@@ -48,8 +45,8 @@ class User < ApplicationRecord
   end
 
   private def send_confirmation_mail
-    #FIXME_AB: convert to enum
     if self.user?
+      #FIXME_AB: deliver_later
       UserMailer.send_confirmation_mail(self.id).deliver_now
     end
   end
@@ -72,6 +69,7 @@ class User < ApplicationRecord
 
   def mark_notification_viewed(question)
     notification = notifications.find_by(question: question)
+    #FIXME_AB: this should be done like notification.mark_viewed! that should return true/false so that it can be re-used
     if notification
       notification.viewed = true
       notification.save
