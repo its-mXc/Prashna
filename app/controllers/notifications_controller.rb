@@ -7,7 +7,7 @@ class NotificationsController < ApplicationController
     if current_user == user
       @notifications = current_user.notifications.not_viewed
       respond_to do |format|
-       format.json {render json: { notifications: @notifications, timestamp: Time.current }, status: :ok, include: {question: {only: [:title, :url_slug],include: {user: {only: :name}}}}}
+       format.json {render json: { notifications: @notifications, timestamp: Time.current }, status: :ok, include: {question: {only: [:title, :url_slug],include: { user: {only: :name}}}}}
       end
     else
       render json: {error: "Cannot view another user notifications"}

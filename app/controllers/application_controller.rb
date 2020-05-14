@@ -19,13 +19,13 @@ class ApplicationController < ActionController::Base
 
   private def ensure_not_logged_in
     if logged_in?
-      redirect_to my_profile_path, notice: "Already logged in"
+      redirect_to my_profile_path, notice: t('logged_in')
     end
   end
 
   private def ensure_logged_in
     unless logged_in?
-      redirect_to login_url, notice: "Please log in first"
+      redirect_to login_url, notice: t('not_logged_in')
     end
   end
 end

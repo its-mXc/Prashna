@@ -1,0 +1,3 @@
+es:
+  not_logged_in: "Por favor ingresa primero"
+  logged_in: "Ya iniciado sesión"

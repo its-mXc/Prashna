@@ -13,10 +13,10 @@ class CommentsController < ApplicationController
 
       if @comment.save
         #FIXME_AB: I18n
-        redirect_back fallback_location: root_path, notice: "Comment Posted sucessfully"
+        redirect_back fallback_location: root_path, notice: t('comment_posted_successfuly')
       else
         p @comment.errors
-        redirect_back fallback_location: root_path, notice: "Minimum #{ENV["comment_word_length"]} words required for comment"
+        redirect_back fallback_location: root_path, notice: t('comment_not_posted')
       end
     end
 
