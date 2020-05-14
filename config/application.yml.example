@@ -6,3 +6,6 @@ signup_credits: 5
 question_post_debit: 1
 host: "localhost:3000"
 notification_refresh_time_secs: 20
+comment_word_length: 5
+minimum_question_char_length: 10
+maximun_question_char_length: 1000

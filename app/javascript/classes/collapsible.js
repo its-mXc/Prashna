@@ -1,4 +1,4 @@
-class Collapsible {
+export class Collapsible {
   constructor(options) {
     this.clickableElement = options["clickableElement"]
     this.collapsibleElement = options["collapsibleElement"]

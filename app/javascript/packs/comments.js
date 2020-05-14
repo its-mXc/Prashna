@@ -1,10 +1,5 @@
-// $('.reply-btn').next(".reply-form").hide()
-// $('.reply-btn').on('click',function() {
-//   $(this).next(".reply-form").toggle()
-// })
-
-$(document).ready(function() {
-  
+import {Collapsible} from '../classes/collapsible'
+$(document).ready(function() {  
   let comments_collapsible_options = {
     clickableElement: $(".reply-btn"),
     collapsibleElement: $(".reply-form")

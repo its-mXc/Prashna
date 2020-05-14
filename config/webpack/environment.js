@@ -10,7 +10,14 @@ jQuery: 'jquery',
 
 Popper: ['popper.js', 'default']
 
+
 }))
 
+
+const aliasConfig = {
+  'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
+};
+
+environment.config.set('resolve.alias', aliasConfig);
 
 module.exports = environment

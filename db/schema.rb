@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_060107) do
+ActiveRecord::Schema.define(version: 2020_05_14_061509) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_05_12_060107) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
     t.integer "reaction_count", default: 0
+    t.index ["url_slug"], name: "index_questions_on_url_slug", unique: true
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -112,7 +113,7 @@ ActiveRecord::Schema.define(version: 2020_05_12_060107) do
     t.string "name"
     t.string "password_digest"
     t.string "email"
-    t.string "user_type", default: "user"
+    t.integer "user_type", default: 0
     t.integer "credit_balance", default: 0
     t.integer "followers_count", default: 0
     t.datetime "created_at", precision: 6, null: false
@@ -120,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_05_12_060107) do
     t.datetime "verified_at"
     t.string "confirmation_token"
     t.string "password_reset_token"
-    t.datetime "password_token_created_at"
+    t.datetime "password_token_expire_at"
     t.index ["email", "confirmation_token"], name: "index_users_on_email_and_confirmation_token", unique: true
   end
 

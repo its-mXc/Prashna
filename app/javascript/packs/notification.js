@@ -1,8 +1,10 @@
+import { Collapsible } from "../classes/collapsible"
+import {PersistentAction} from "../classes/persistent_action"
 $(document).ready(function() { 
 
   let notifications_collapsible_options = {
     clickableElement: $("#notification-bell"),
-    collapsibleElement: $("notifications")
+    collapsibleElement: $("#notifications")
   }
 
   let collapsibleNotification = new Collapsible(notifications_collapsible_options)

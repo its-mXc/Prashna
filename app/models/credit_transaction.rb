@@ -15,8 +15,7 @@ class CreditTransaction < ApplicationRecord
 
   private def set_user_credit_balance
     #FIXME_AB:  user.refresh_credits!
-    self.user.credit_balance = self.credit_balance
-    self.user.save
+    self.user.refresh_credits!
   end
 
 end

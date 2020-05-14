@@ -9,11 +9,6 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
   <% #FIXME_AB: use javascript pack tags -%>
-    <%= javascript_include_tag 'classes/auto_submit_form' %>
-    <%= javascript_include_tag 'modules/utils' %>
-    <%= javascript_include_tag 'classes/autocomplete' %>
-    <%= javascript_include_tag 'classes/collapsible' %>
-    <%= javascript_include_tag 'classes/persistent_action' %>
   </head>
 
   <body>
@@ -25,6 +20,9 @@
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav mr-auto">
             <% if logged_in? %>
+              <li class="nav-item active"><%= link_to 'Ask Question', new_question_path, class: "nav-link" %></li>
+              <li class="nav-item active"><%= link_to 'Drafts', drafts_questions_path, class: "nav-link" %></li>
+              <li class="nav-item active"><%= link_to 'Profile', my_profile_path, class: "nav-link" %></li>
               <li class="nav-item active"><%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %></li>
               <li class="nav-item active">
                 <img id="notification-bell" width="30" height="30" src="https://www.materialui.co/materialIcons/social/notifications_white_192x192.png">
@@ -45,7 +43,11 @@
           <% if logged_in? %>
             <div id="notifications">
               <ul>
-                <%= render  current_user.notifications.not_viewed %>
+                <% if current_user.notifications.not_viewed.any? %>
+                  <%= render current_user.notifications.not_viewed %>
+                <% else %>
+                  <li>You have no notifications</li>
+                <% end %>
               </ul>
             </div>
           <% end %>
@@ -53,10 +55,13 @@
       </div>
     </div>
 
+  <% if logged_in? %>
+    <%= button_to "Refresh Notification", user_notifications_path(current_user), method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
+  <% end %>
+  <%= javascript_pack_tag 'notification' %>
   </body>
   <% #FIXME_AB: nothing should be out of body tag -%>
-  <%= button_to "Refresh Notification", user_notifications_path, method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
-<%= javascript_include_tag 'notification' %>
+  
 
 </html>
 

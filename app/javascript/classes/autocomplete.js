@@ -1,6 +1,7 @@
-//= require jquery
-//= require jquery-ui/widgets/autocomplete
-class AutoCompleteInput {
+require("jquery-ui")
+
+import {split, extractLast} from '../modules/utils'
+export class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
   }
@@ -30,5 +31,3 @@ class AutoCompleteInput {
     });
   }
 }
-
-

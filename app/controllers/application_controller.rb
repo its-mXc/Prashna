@@ -4,8 +4,13 @@ class ApplicationController < ActionController::Base
 
   def current_user
     #FIXME_AB: avoid firing query if user is not present
-    @current_user ||= User.find_by(id: cookies.signed[:user_id])
-    @current_user ||= User.find_by(id: session[:user_id])
+      if cookies.signed[:user_id]
+        @current_user ||= User.find_by(id: cookies.signed[:user_id])
+      elsif session[:user_id]
+        @current_user ||= User.find_by(id: session[:user_id])
+      else
+        @current_user = nil
+      end
   end
 
   def logged_in?

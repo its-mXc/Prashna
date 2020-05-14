@@ -6,8 +6,11 @@
   </p>
     <%= question.content  %>
   <p>
+  <small>Submitted <%= time_ago_in_words(question.created_at) %> ago</small>
+
   <% #FIXME_AB: show time -%>
   <% #FIXME_AB: always use object.  question_publish_path(question)-%>
-  <%= link_to  "Post", question_publish_path(question.id) %>
+  <%= link_to  "Post", publish_question_path(question) %>
+  <%= link_to  "Edit", edit_question_path(question) %>
 </div>
 <% end %>

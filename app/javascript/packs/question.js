@@ -1,6 +1,6 @@
+import { AutoCompleteInput } from "../classes/autocomplete";
 $(document).ready(function() {
   let questions_topics_autocomplete_options = {
-    // FIXME_AB: add topics url as data-attribute to this element using rails url helper
     inputElement: $( "#tag-autocomplete" ),
   }
 

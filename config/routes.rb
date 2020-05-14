@@ -7,25 +7,29 @@ Rails.application.routes.draw do
 
   #FIXME_AB: question resources
   post 'questions/create'
-  get 'questions/drafts'
-  get '/questions/:id/publish', to: 	"questions#publish", as: "question_publish"
-  get '/questions/:id/reaction', to: 	"questions#reaction", as: "question_reaction"
-
+  
   resources :questions do
+    collection do
+      get 'drafts'
+    end
+    member do
+      get 'publish'
+      get 'reaction'
+    end
     #FIXME_AB: limit routes
-    resources :comments
+    resources :comments,  only: [:new, :create]
   end
 
-  resources :comments do
-      resources :comments
+  resources :comments, only: [:new, :create] do
+      resources :comments, only: [:new, :create]
   end
 
   get "my-profile", to: "users#current_user_profile"
 
   #FIXME_AB: nested resource for user
-  get "user_notifications", to: "users#notifications"
 
   resources :users do
+    resources :notifications, only: [:index]
     member do
       post :set_avatar
       post :set_topics

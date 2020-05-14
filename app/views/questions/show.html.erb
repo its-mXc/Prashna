@@ -10,7 +10,7 @@
     <%= @question.reaction_count  %>
   </p>
   <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
-  <%= form_for @question , url: question_reaction_path(@question.id) ,local: true, method: :get do |f| %>
+  <%= form_for @question , url: reaction_question_path(@question) ,local: true, method: :get do |f| %>
     <%= f.submit :upvote %>
     <%= f.submit :downvote %>
   <% end %>
@@ -25,6 +25,6 @@
   <ul>
     <%= render @question.comments %>
   </ul>
-      <%= javascript_include_tag "comments" %>
+      <%= javascript_pack_tag "comments" %>
 
 </div>

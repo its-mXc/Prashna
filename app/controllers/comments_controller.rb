@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   #FIXME_AB: need user to be logged in
-  before_action :find_commentable
+  before_action :find_commentable, :ensure_logged_in
 
     def new
       @comment = Comment.new
@@ -20,15 +20,17 @@ class CommentsController < ApplicationController
 
 
     #FIXME_AB: use inline private
-    private
 
-    def comment_params
+    private def comment_params
       params.require(:comment).permit(:body)
     end
 
     def find_commentable
       #FIXME_AB: check and fixe
-      @commentable = Comment.find_by_id(params[:comment_id]) if params[:comment_id]
-      @commentable = Question.find_by_url_slug(params[:question_id]) if params[:question_id]
+      if params[:comment_id]
+        @commentable = Comment.find_by_id(params[:comment_id])
+      elsif params[:question_id]
+        @commentable = Question.find_by_url_slug(params[:question_id]) 
+      end 
     end
   end

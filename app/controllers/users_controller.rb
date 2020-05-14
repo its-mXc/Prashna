@@ -58,13 +58,8 @@ class UsersController < ApplicationController
   end
 
   #FIXME_AB: this should be nested route/ resource for user
-  def notifications
-    #FIXME_AB: ajax polling should be for logged in user only
-    @notifications = current_user.notifications.not_viewed
-    respond_to do |format|
-      format.js
-    end
-  end
+  #FIXME_AB: ajax polling should be for logged in user only
+  
 
   private def set_user
       @user = User.find(params[:id])
