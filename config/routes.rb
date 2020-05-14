@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get 'drafts'
     end
     member do
+      get 'show'
       get 'publish'
       get 'reaction'
     end

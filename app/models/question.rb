@@ -21,7 +21,7 @@ class Question < ApplicationRecord
   #FIXME_AB: slug shoudl be unique
   #FIXME_AB: also slug should have unique index
   
-  validates :content, length:{ minimum: ENV["minimum_question_char_length"], maximum: ENV["maximum_question_char_length"] }
+  validates :content, length:{ minimum: ENV["minimum_question_char_length"].to_i, maximum: ENV["maximum_question_char_length"].to_i }
   #FIXME_AB: content should be between 10 to 1000 characters.
   
   
@@ -35,10 +35,11 @@ class Question < ApplicationRecord
 
   private def generate_url_slug
     #FIXME_AB: slug url should  be unique. what if same slug already exists. This can happen if we remove title's uniqueness. So, if this generated slug exists, then append a random number .
-    url_slug = title.downcase.gsub(REGEXP[:special_characters], "-")
-    if self.class.find_by_url_slug(url_slug)
-      self.url_slug = url_slug + rand(100)
+    self.url_slug = title.downcase.gsub(REGEXP[:special_characters], "-")
+    if self.class.find_by_url_slug(self.url_slug)
+      self.url_slug = self.url_slug + rand(100)
     end
+    save
   end
 
   def to_param

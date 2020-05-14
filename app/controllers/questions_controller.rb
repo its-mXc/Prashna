@@ -11,11 +11,10 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new(question_params)
 
     #FIXME_AB: fallback should be draft.  check for published
-    if params[:commit] != "published"
-      puts 
-      @question.status = Question.statuses["draft"]
-    else
+    if params[:commit] == "Save Question"
       @question.status = Question.statuses["published"]
+    else
+      @question.status = Question.statuses["draft"]
     end
 
     respond_to do |format|

@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
     end
 
     def create
+      puts comment_params
       @comment = @commentable.comments.new(comment_params)
       @comment.user = current_user
 
@@ -14,7 +15,8 @@ class CommentsController < ApplicationController
         #FIXME_AB: I18n
         redirect_back fallback_location: root_path, notice: "Comment Posted sucessfully"
       else
-        redirect_back fallback_location: root_path, notice: "Comment Posted sucessfully"
+        p @comment.errors
+        redirect_back fallback_location: root_path, notice: "Minimum #{ENV["comment_word_length"]} words required for comment"
       end
     end
 

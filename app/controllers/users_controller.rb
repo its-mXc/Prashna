@@ -49,6 +49,9 @@ class UsersController < ApplicationController
 
   def set_topics
     topic_names = user_params[:topic_names].split(",").map(&:strip)
+    topic_names.each do |topic_name|
+      Topic.create(name:topic_name)
+    end
     current_user.topics = Topic.where(name: topic_names)
     if topic_names.any?
       redirect_to my_profile_path, notice: "Topics added to user"

@@ -7,8 +7,8 @@ export class Collapsible {
   init() {
     if (this.clickableElement.hasClass("nested")) {
       this.clickableElement.next(this.collapsibleElement).hide()
-      this.clickableElement.on('click', () => {
-        this.clickableElement.next(this.collapsibleElement).toggle()
+      this.clickableElement.on('click', (event) => {
+        $(event.target).next(this.collapsibleElement).toggle()
       })
     }
     else {

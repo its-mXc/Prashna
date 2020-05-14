@@ -1,3 +1,4 @@
+import {Notification} from'../classes/notifications'
 export class PersistentAction {
   constructor(options) {
     this.persistentElement = options["persistentElement"]
@@ -6,10 +7,14 @@ export class PersistentAction {
 
   init() {
     this.persistentElement.hide();
-    this.persistentElement.parent('form').on('ajax:success', function(r, s, x){
-      console.log(r)
-      console.log(s)
-      console.log(x)
+
+    this.persistentElement.parent('form').on('ajax:success', function(event){
+      let notifications_options = {
+        displayElement: $("#notifications")
+      }
+      let notifications = new Notification(notifications_options)
+      notifications.init(event.detail[0]["notifications"])
+
     });
     // FIXME_AB: only for logged in users
     setInterval( () => {
