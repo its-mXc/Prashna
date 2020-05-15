@@ -51,7 +51,9 @@ class UsersController < ApplicationController
     topic_names = user_params[:topic_names].split(",").map(&:strip)
     #FIXME_AB: this is wrong always creating, think better
     topic_names.each do |topic_name|
+      unless Topic.find_by_name(topic_name)
       Topic.create(name:topic_name)
+      end
     end
     current_user.topics = Topic.where(name: topic_names)
     if topic_names.any?
@@ -63,7 +65,7 @@ class UsersController < ApplicationController
 
   private def set_user
       @user = User.find(params[:id])
-      #FIXME_AB: what if user not found
+      redirect_to root_path, notice: "Cannot find user"
     end
 
   private def user_params

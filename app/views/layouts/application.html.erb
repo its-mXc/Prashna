@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark top-navbar">
       <div class="logo">
         <%= link_to  "Prashna", root_path, class: "navbar-brand" %>
       </div>
@@ -46,7 +46,7 @@
                 <% if current_user.notifications.not_viewed.any? %>
                   <%= render current_user.notifications.not_viewed %>
                 <% else %>
-                  <li>You have no notifications</li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">You have no notifications</li>
                 <% end %>
               </ul>
             </div>

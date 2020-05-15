@@ -47,7 +47,7 @@ class User < ApplicationRecord
   private def send_confirmation_mail
     if self.user?
       #FIXME_AB: deliver_later
-      UserMailer.send_confirmation_mail(self.id).deliver_now
+      UserMailer.send_confirmation_mail(self.id).deliver_later
     end
   end
 
@@ -71,8 +71,7 @@ class User < ApplicationRecord
     notification = notifications.find_by(question: question)
     #FIXME_AB: this should be done like notification.mark_viewed! that should return true/false so that it can be re-used
     if notification
-      notification.viewed = true
-      notification.save
+      notification.mark_viewed!
     end
   end
 

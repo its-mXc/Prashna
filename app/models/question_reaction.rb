@@ -8,6 +8,8 @@ class QuestionReaction < ApplicationRecord
   scope :upvotes, -> {where(reaction_type: QuestionReaction.reaction_types["upvote"])}
   scope :downvotes, -> {where(reaction_type: QuestionReaction.reaction_types["downvote"])}
 
+  validates :user_id, uniqueness: {scope: :question_id}
+
   #FIXME_AB:  have a validation that one user can have one entry for one question
 
   private def set_question_reaction_count

@@ -1,29 +1,36 @@
-<%= render  "shared/notice", object: @question %>
 <div>
-  <h3>
-   <%= @question.title %>
-  </h3>
-  </p>
-    <%= @question.content  %>
-  <p>
-  <p>
-    <%= @question.reaction_count  %>
-  </p>
-  <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
-  <%= form_for @question , url: reaction_question_path(@question) ,local: true, method: :get do |f| %>
-    <%= f.submit :upvote %>
-    <%= f.submit :downvote %>
+<div class="jumbotron question-container">
+  <%= render  "shared/notice", object: @question %>
+  <% @question.topic_names.each do |topic_name|  %>
+    <span class="badge badge-primary"><%= topic_name %></span>
   <% end %>
-    <h3>Comments</h3>
-    <%= form_for [@question, Comment.new] do |f| %>
-    <%= f.text_area :body, placeholder: "Add a comment" %><br/>
-    <% #FIXME_AB: I18n -%>
-    <%= f.submit "Add Comment" %>
-  <% end %>
+  <h1 class="display-3"><%= @question.title %></h1>
+  <p class="lead"><%= @question.content  %></p>
+  <hr class="my-4">
+  <p><strong>Upvotes:</strong>
+  <%= @question.reaction_count %></p>
+  <p class="lead">
+    <%= form_for @question , url: reaction_question_path(@question) ,local: true, method: :get do |f| %>
+      <%= f.submit :upvote, class: "btn btn-primary" %>
+      <%= f.submit :downvote, class: "btn btn-primary" %>
+    <% end %>
+    <br>
+    <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
+      <%= form_for [@question, Comment.new] do |f| %>
+      <div class="form-group">
+        <%= f.text_area :body, placeholder: "Add a comment", class: "form-control" %>
+      </div>
+      <% #FIXME_AB: I18n -%>
+      <%= f.submit "Add Comment", class: "btn btn-danger" %>
+    <% end %>
+      <br>
+      <h3 class="display-5">Comments</h3>
+      <ul>
+        <%= render @question.comments %>
+      </ul>
+  </p>
+</div>
 
-  <ul>
-    <%= render @question.comments %>
-  </ul>
   <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
       <%= javascript_pack_tag "comments" %>
 

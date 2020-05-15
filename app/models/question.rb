@@ -12,9 +12,9 @@ class Question < ApplicationRecord
   has_many :question_topics, dependent: :destroy
   has_many :topics, through: :question_topics
   #FIXME_AB: it should be dependent restrict_with_error
-  has_many :question_reactions, dependent: :destroy
+  has_many :question_reactions, dependent: :restrict_with_error
   #FIXME_AB: it should be dependent restrict_with_error
-  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :restrict_with_error
 
   validates :title, uniqueness: {case_sensitive: true}
   validates :content, presence: true
@@ -23,18 +23,17 @@ class Question < ApplicationRecord
 
   before_mark_published :has_needed_credit_balance
   before_mark_published :create_question_transaction
-  before_mark_published :generate_url_slug
-
   after_mark_published :generate_notifications
+  before_save :generate_url_slug, if: -> {self.published?}
+  
 
 
 
   private def generate_url_slug
     self.url_slug = title.downcase.gsub(REGEXP[:special_characters], "-")
     if self.class.find_by_url_slug(self.url_slug)
-      self.url_slug = self.url_slug + rand(100)
+      self.url_slug = self.url_slug + rand(100).to_s
     end
-    save
   end
 
   def to_param
