@@ -1,0 +1,6 @@
+es:
+  password_reset_mail_sent: "Revise su bandeja de entrada para el correo de restablecimiento de contraseña"
+  no_email_id: "No existe tal ID de correo electrónico"
+  link_expired: "Enlace expirado"
+  invalid_link:  "Enlace inválido"
+  password_update_successfull: "Contraseña actualizada correctamente"

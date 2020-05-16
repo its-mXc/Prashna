@@ -1,0 +1,6 @@
+en:
+  password_reset_mail_sent: "Check your inbox for password reset mail"
+  no_email_id: "No such email id exists"
+  link_expired: "Link Expired"
+  invalid_link:  "Invalid Link"
+  password_update_successfull: "Password updated sucessfuly"
