@@ -16,7 +16,7 @@ export class PersistentAction {
       notifications.init(event.detail[0]["notifications"])
 
     });
-    // FIXME_AB: only for logged in users
+    // _AB: only for logged in users
     setInterval( () => {
       this.persistentElement.trigger("click")
     },this.refershTime)

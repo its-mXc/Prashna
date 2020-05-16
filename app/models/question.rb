@@ -24,16 +24,17 @@ class Question < ApplicationRecord
   before_mark_published :has_needed_credit_balance
   before_mark_published :create_question_transaction
   after_mark_published :generate_notifications
-  before_save :generate_url_slug, if: -> {self.published?}
+  after_mark_published :generate_url_slug
   
 
 
 
-  private def generate_url_slug
+  def generate_url_slug
     self.url_slug = title.downcase.gsub(REGEXP[:special_characters], "-")
     if self.class.find_by_url_slug(self.url_slug)
       self.url_slug = self.url_slug + rand(100).to_s
     end
+    save
   end
 
   def to_param
@@ -52,7 +53,10 @@ class Question < ApplicationRecord
   end
 
   def generate_notifications
+    puts "****"
     self.topics.map(&:users).flatten.uniq.reject { |user| user.id == self.user.id }.each do |user|
+        puts "####"
+        p user
         #FIXME_AB: make it in 3 lines
         user.notifications.create(question: self)
     end
@@ -92,5 +96,9 @@ class Question < ApplicationRecord
       #FIXME_AB: add error so that we can show in frontend
       throw :abort
     end
+  end
+
+  def editable?
+    !interacted?
   end
 end

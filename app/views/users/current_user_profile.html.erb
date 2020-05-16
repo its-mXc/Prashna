@@ -1,5 +1,5 @@
 <% #FIXME_AB: dont use @current_uesr -%>
-<div class="container-fluid">
+<div class="container-fluid user-container">
   <%= render 'shared/notice' %>
   <%= render 'shared/errors', object: current_user %>
   <div class="row">
@@ -55,11 +55,13 @@
 
     </div>
 
-
   </div>
 
-<%= link_to  "Ask Question", new_question_path %>
 
+  <hr class="my-4">
+  <h3>Questions</h3>
+  <hr class="my-5">
+  <%= render current_user.questions.published %>
 
 <%= javascript_pack_tag 'current_user_profile.js' %>
 

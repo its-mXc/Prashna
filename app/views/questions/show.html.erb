@@ -6,6 +6,12 @@
   <% end %>
   <h1 class="display-3"><%= @question.title %></h1>
   <p class="lead"><%= @question.content  %></p>
+  <% if @question.pdf_file.attached? %>
+    <%= link_to  @question.pdf_file.filename, url_for(@question.pdf_file) %>
+  <% end %><br>
+  <% if @question.editable? && @question.user == current_user %>
+  <%= link_to "Edit", edit_question_path(@question) %>
+  <% end %>
   <hr class="my-4">
   <p><strong>Upvotes:</strong>
   <%= @question.reaction_count %></p>

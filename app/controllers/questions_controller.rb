@@ -3,8 +3,8 @@ class QuestionsController < ApplicationController
   before_action :find_editable_question, only: [:edit, :update]
   before_action :find_published_question, only: [:show, :reaction]
   before_action :ensure_has_not_been_interacted, only: [:edit, :update]
-  before_action :ensure_positive_balance, only: :publish
   before_action :find_publishable_question, only: :publish
+  before_action :ensure_positive_balance, only: :publish
   before_action :ensure_has_not_been_published, only: [:publish]
   before_action :ensure_is_author_of_question, only: [:edit, :update, :publish]
 
@@ -51,8 +51,15 @@ class QuestionsController < ApplicationController
   def update
     #FIXME_AB: before actions
     if @question.update(question_params)
-      @question.mark_published!
-      redirect_to @question, notice: "Question updated"
+      if params[:commit] == "Update"
+        puts "hello"
+        @question.generate_url_slug
+        redirect_to @question, notice: "Question updated"
+      elsif params[:commit] == "Publish"
+        redirect_to publish_question_path(@question)
+      elsif params["commit"] == "Draft"
+        redirect_to drafts_questions_path, notice: "Draft changes"
+      end
     else
       respond_to do |format|
         format.html {render :edit}
@@ -93,8 +100,10 @@ class QuestionsController < ApplicationController
   
   private def ensure_positive_balance
     unless current_user.credit_balance >= ENV['question_post_debit'].to_i
+      @question.status = Question.statuses["draft"]
+      @question.save
       #FIXME_AB: lets start using I18n everywhere
-      redirect_to my_profile_path, notice: "No credit avaliable. Purchase more"
+      redirect_to my_profile_path, notice: "No credit avaliable, Purchase more. Saved to drafts"
     end
   end
   
@@ -114,7 +123,7 @@ class QuestionsController < ApplicationController
   
   private def ensure_has_not_been_interacted
     if @question.interacted?
-      redirect_to question_path(@question.url_slug), notice: "Cannot edit, has  been interacted"
+      redirect_to @question, notice: "Cannot edit, has  been interacted"
     end
   end
   

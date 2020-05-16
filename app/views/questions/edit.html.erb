@@ -19,8 +19,12 @@
       <%= f.file_field :pdf_file, class: "form-control-file" %><br>
     </div>
 
-
-    <%= f.submit "Save", class: "btn btn-danger" %>
+    <% if @question.published? %>
+      <%= f.submit "Update", class: "btn btn-danger" %>
+    <% else %>
+      <%= f.submit "Publish", class: "btn btn-danger" %>
+      <%= f.submit "Draft", class: "btn btn-primary" %>
+    <% end %>
 
     <%= javascript_pack_tag "question" %>
   <% end %>
