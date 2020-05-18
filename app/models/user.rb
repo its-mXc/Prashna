@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :credit_transactions, dependent: :restrict_with_error
-  has_many :question_reactions, dependent: :restrict_with_error
+  has_many :reactions, dependent: :restrict_with_error
   has_many :comments, dependent: :destroy
 
   validates :email, presence: true

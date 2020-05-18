@@ -1,0 +1,9 @@
+en:
+  comments:
+    create:
+      comment_posted: "Comment Posted"
+      minimum_words: "Mimimum words required"
+    reaction:
+      cannot_vote_own_comment: "You cannot vote your own comment"
+      reaction_submitted: "Reaction Submitted"
+      cannot_find_comment: "Cannot find comment"

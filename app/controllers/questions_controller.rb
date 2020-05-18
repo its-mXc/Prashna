@@ -83,13 +83,7 @@ class QuestionsController < ApplicationController
       redirect_to @question, notice: t('cannot_vote_own_question')
     else
       #FIXME_AB: following indented code should be a sepereate method @question.record_reaction(reaction_type, user) and it should return true / false
-      question_reaction = @question.question_reactions.find_by(user: current_user)
-      if question_reaction
-        question_reaction.reaction_type = QuestionReaction.reaction_types[params[:commit]]
-        question_reaction.save
-      else
-        @question.question_reactions.create(user:current_user, reaction_type: QuestionReaction.reaction_types[params[:commit]])
-      end
+      @question.record_reaction(params[:commit], current_user)
       #FIXME_AB: why used .url_slug?
       redirect_to @question, notice: t('reaction_submitted')
     end

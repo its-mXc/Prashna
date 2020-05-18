@@ -25,10 +25,11 @@
               <li class="nav-item active"><%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %></li>
               <li class="nav-item active">
                 <% #FIXME_AB: add image to assets -%>
-                <img id="notification-bell" width="30" height="30" src="https://www.materialui.co/materialIcons/social/notifications_white_192x192.png">
+                <%= image_tag  "notifications-30.png", id:"notification-bell" %>
               </li>
             <% else %>
-              <li class="nav-item active nav-link-not-logged"><%= link_to 'Login', login_path, class: "nav-link" %></li>
+              <li class="nav-link-not-logged"></li>
+              <li class="nav-item active"><%= link_to 'Login', login_path, class: "nav-link" %></li>
               <li class="nav-item active"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
             <% end%>
         </ul>

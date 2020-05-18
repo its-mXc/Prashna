@@ -12,7 +12,7 @@ class Question < ApplicationRecord
   has_many :question_topics, dependent: :destroy
   has_many :topics, through: :question_topics
   #FIXME_AB: it should be dependent restrict_with_error
-  has_many :question_reactions, dependent: :restrict_with_error
+  has_many :reactions, as: :reactable, dependent: :restrict_with_error
   #FIXME_AB: it should be dependent restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
 
@@ -62,7 +62,7 @@ class Question < ApplicationRecord
 
   def interacted?
     # done like this to see code coverage when we write test
-    if self.question_reactions.any?
+    if self.reactions.any?
       return true
     end
 
@@ -78,7 +78,7 @@ class Question < ApplicationRecord
   end
 
   def refresh_votes!
-    self.reaction_count = self.question_reactions.upvotes.count -  question_reactions.downvotes.count
+    self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
     save
   end
 
@@ -99,5 +99,15 @@ class Question < ApplicationRecord
 
   def editable?
     !interacted?
+  end
+
+  def record_reaction(reaction_type, user)
+    question_reaction = reactions.find_by(user: user)
+    if question_reaction
+      question_reaction.reaction_type = Reaction.reaction_types[reaction_type]
+      question_reaction.save
+    else
+      reactions.create(user: user, reaction_type: Reaction.reaction_types[reaction_type])
+    end
   end
 end

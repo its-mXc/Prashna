@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_15_065023) do
+ActiveRecord::Schema.define(version: 2020_05_18_052032) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_05_15_065023) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
+    t.integer "reaction_count", default: 0
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["question_id"], name: "index_comments_on_question_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -66,14 +67,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_065023) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "question_reactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "question_id", null: false
-    t.bigint "user_id", null: false
-    t.integer "reaction_type"
-    t.index ["question_id"], name: "index_question_reactions_on_question_id"
-    t.index ["user_id"], name: "index_question_reactions_on_user_id"
-  end
-
   create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "topic_id", null: false
@@ -94,6 +87,15 @@ ActiveRecord::Schema.define(version: 2020_05_15_065023) do
     t.integer "reaction_count", default: 0
     t.index ["url_slug"], name: "index_questions_on_url_slug", unique: true
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "reactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "reaction_type"
+    t.string "reactable_type"
+    t.bigint "reactable_id"
+    t.index ["reactable_type", "reactable_id"], name: "index_reactions_on_reactable_type_and_reactable_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
   create_table "topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -133,10 +135,9 @@ ActiveRecord::Schema.define(version: 2020_05_15_065023) do
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "questions"
   add_foreign_key "notifications", "users"
-  add_foreign_key "question_reactions", "questions"
-  add_foreign_key "question_reactions", "users"
   add_foreign_key "question_topics", "questions"
   add_foreign_key "question_topics", "topics"
+  add_foreign_key "reactions", "users"
   add_foreign_key "user_topics", "topics"
   add_foreign_key "user_topics", "users"
 end
