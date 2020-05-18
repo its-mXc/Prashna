@@ -5,6 +5,8 @@ export class Notification {
   init(data) {
     this.displayElement.children().remove()
     if(data.length == 0) {
+      // FIXME_AB: $('<li>', {class: ""}).text()
+      // FIXME_AB: I18n
       let notification_element = $('<li class="list-group-item d-flex justify-content-between align-items-center">You have no notifications</li>')
       this.displayElement.append(notification_element)
     }

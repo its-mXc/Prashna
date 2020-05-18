@@ -1,4 +1,5 @@
 class Topic < ApplicationRecord
+  #FIXME_AB: add index on name
   has_many :user_topics, dependent: :destroy
   has_many :users, through: :user_topics
   validates :name, presence: true, uniqueness: {case_sensitive: false}

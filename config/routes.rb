@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
+  #FIXME_AB: following two routes should be same
   resources :topic, only: [:index]
 
   get 'topics', to: "topic#index"
 
   #FIXME_AB: question resources
   post 'questions/create'
-  
+
   resources :questions do
     collection do
       get 'drafts'
@@ -16,21 +17,18 @@ Rails.application.routes.draw do
       get 'publish'
       get 'reaction'
     end
-    #FIXME_AB: limit routes
     resources :comments,  only: [:new, :create]
   end
 
   resources :comments, only: [:new, :create] do
       resources :comments, only: [:new, :create]
-      member do 
+      member do
         get 'reaction'
       end
 
   end
 
   get "my-profile", to: "users#current_user_profile"
-
-  #FIXME_AB: nested resource for user
 
   resources :users do
     resources :notifications, only: [:index]

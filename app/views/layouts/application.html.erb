@@ -24,7 +24,6 @@
               <li class="nav-item active"><%= link_to 'Profile', my_profile_path, class: "nav-link" %></li>
               <li class="nav-item active"><%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %></li>
               <li class="nav-item active">
-                <% #FIXME_AB: add image to assets -%>
                 <%= image_tag  "notifications-30.png", id:"notification-bell" %>
               </li>
             <% else %>

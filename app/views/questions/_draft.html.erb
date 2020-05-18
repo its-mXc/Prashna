@@ -1,3 +1,4 @@
+<% #FIXME_AB: fix this -%>
 <% questions.each do |question| %>
   <div>
     <h3>
@@ -6,6 +7,7 @@
     </p>
       <%= question.content  %>
     <p>
+      <% #FIXME_AB: everywhere, if attachment is image show thumbnail else link of file -%>
     <% if question.pdf_file.attached? %>
       <%= link_to  question.pdf_file.filename, url_for(question.pdf_file) %>
     <% end %><br>
@@ -14,8 +16,6 @@
     <% end %><br>
     <small>Submitted <%= time_ago_in_words(question.created_at) %> ago</small><br>
 
-    <% #FIXME_AB: show time -%>
-    <% #FIXME_AB: always use object.  question_publish_path(question)-%>
     <%= link_to  "Post", publish_question_path(question), class: "text-success" %>
     <%= link_to  "Edit", edit_question_path(question), class: "text-danger" %>
   </div>

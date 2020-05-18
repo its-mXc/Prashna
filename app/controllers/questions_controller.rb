@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  #FIXME_AB: need to change a few
   before_action :ensure_logged_in
   before_action :find_editable_question, only: [:edit, :update]
   before_action :find_published_question, only: [:show, :reaction]
@@ -15,7 +16,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
 
-    #FIXME_AB: fallback should be draft.  check for published
+    #FIXME_AB: before action to validate commit values
     if params[:commit] == "Publish"
       @question.status = Question.statuses["published"]
     else
@@ -27,16 +28,16 @@ class QuestionsController < ApplicationController
         if @question.draft?
           format.html { redirect_to drafts_questions_path, notice: t('draft_to_saved') }
         elsif @question.published?
-          format.html { redirect_to publish_question_path(@question.id), notice: t('question_posted') }
+          format.html { redirect_to publish_question_path(@question), notice: t('question_posted') }
         end
       else
+        #FIXME_AB: topics field should be filled with entered values
         format.html { render :new }
       end
     end
   end
 
   def show
-    #FIXME_AB: what about this quesiton is a draft question? if it is a draft question then only poster can see the question. other people should not be able to see it.
     current_user.mark_notification_viewed(@question)
 
     respond_to do |format|
@@ -45,11 +46,12 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    #FIXME_AB: who all can edit update question? no check?
   end
 
+  #FIXME_AB: try to split it in three actions. one for each :commit value: update, publish, draft
+  #FIXME_AB: make conditional routing whcih will use appropirate actoin based on :commit value
   def update
-    #FIXME_AB: before actions
+    #FIXME_AB: before actions to validate commit values
     if @question.update(question_params)
       if params[:commit] == "Update"
         @question.generate_url_slug
@@ -64,69 +66,60 @@ class QuestionsController < ApplicationController
         format.html {render :edit}
       end
     end
-      
+
   end
 
   def drafts
-    @drafts = current_user.questions.drafts
+    @drafts = current_user.questions.draft
   end
 
   def publish
-    #FIXME_AB: we need to ensure that question is currently in draft before publish
-    #FIXME_AB: who can publish a question, anybody? no check
     @question.mark_published!
     redirect_to question_path(@question), notice: t('question_posted')
   end
-  
+
+  #FIXME_AB: same
   def reaction
     if current_user == @question.user
       redirect_to @question, notice: t('cannot_vote_own_question')
     else
-      #FIXME_AB: following indented code should be a sepereate method @question.record_reaction(reaction_type, user) and it should return true / false
       @question.record_reaction(params[:commit], current_user)
-      #FIXME_AB: why used .url_slug?
       redirect_to @question, notice: t('reaction_submitted')
     end
   end
-  
-  
-  
+
   private def ensure_positive_balance
     unless current_user.credit_balance >= ENV['question_post_debit'].to_i
       @question.status = Question.statuses["draft"]
       @question.save
-      #FIXME_AB: lets start using I18n everywhere
       redirect_to my_profile_path, notice: t('no_credit_saved_to_draft')
     end
   end
-  
+
   private def find_published_question
-    #FIXME_AB: finding published question, hence Question.published.find...
     @question = Question.published.find_by_url_slug(params[:id])
     unless @question
       redirect_to my_profile_path, notice: t('cannot_find_question')
     end
   end
-  
+
   private def ensure_is_author_of_question
-    p "bug xxx"
-    p @question
-    p current_user
     unless @question.user == current_user
       redirect_to my_profile_path, notice: t('not_author')
     end
   end
-  
+
   private def ensure_has_not_been_interacted
     if @question.interacted?
       redirect_to @question, notice: t('cannot_edit')
     end
   end
-  
+
   private def find_publishable_question
     @question = Question.find_by_id(params[:id])
     unless @question
       @question = Question.find_by_url_slug(params[:id])
+      #FIXME_AB: remove this and add as before action
       ensure_has_not_been_published
     end
     unless @question
@@ -134,14 +127,19 @@ class QuestionsController < ApplicationController
     end
   end
 
+  #FIXME_AB: find_question
   private def find_editable_question
+    #FIXME_AB: it can fire two queries, can be done in one. Use .or
     @question = Question.find_by_id(params[:id])
+
     unless @question
       @question = Question.find_by_url_slug(params[:id])
     end
+
     unless @question
       redirect_to my_profile_path, notice: t('cannot_find_editable_question')
     end
+
   end
 
   private def ensure_has_not_been_published

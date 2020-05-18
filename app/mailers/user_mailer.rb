@@ -14,11 +14,11 @@ class UserMailer < ApplicationMailer
 
   def send_password_reset_mail(user_id)
     @user = User.find_by_id(user_id)
+
     if @user
       mail to: @user.email, subject: 'Password reset request'
     else
-      redirect forgot_password_path, notice: "Cannot find user"
+      #FIXME_AB: redirect won't work here, Make an entry in Rails log that user with id this not found hence skipping the password reset mail
     end
-    #FIXME_AB: what if user not found.
   end
 end
