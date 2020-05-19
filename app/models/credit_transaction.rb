@@ -1,7 +1,7 @@
 class CreditTransaction < ApplicationRecord
+  enum transaction_type: { signup: 0, purchase: 1, debit: 2 }
+
   belongs_to :user
-  #FIXME_AB: Lets make transaction_type index
-  enum transaction_type: {signup:0, purchase: 1, debit: 2}
 
   before_save :set_transaction_credit_balance
   after_commit :set_user_credit_balance

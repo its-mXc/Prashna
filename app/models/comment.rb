@@ -19,8 +19,6 @@ class Comment < ApplicationRecord
     save!
   end
 
-  #FIXME_AB: since this can be reused in questions, answers, comments so lets make ReactionRecorder Concern and use it
-
   private def words_in_comment
     body.scan(/\w+/)
   end

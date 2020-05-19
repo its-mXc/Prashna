@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  #FIXME_AB: add required indexes
   enum user_type: { user: 0, admin: 1 }
 
   has_secure_password
@@ -17,7 +16,6 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  #FIXME_AB: use with_options dependent: destroy do .. end
   with_options dependent: :destroy do |assoc|
     assoc.has_many :comments
     assoc.has_many :user_topics
@@ -25,6 +23,7 @@ class User < ApplicationRecord
     assoc.has_many :topics, through: :user_topics
 
   end
+
   with_options dependent: :restrict_with_error do |assoc|
     assoc.has_many :credit_transactions
     assoc.has_many :reactions
@@ -70,12 +69,10 @@ class User < ApplicationRecord
   end
 
   def refresh_credits!
-    #FIXME_AB: if while debiting we save -ve amount then we can do reload.credit_transactions.sum(:amount)
     self.credit_balance = reload.credit_transactions.sum(:amount)
     save!
   end
 
-  #FIXME_AB: mark_notification_viewed! rename
   def mark_notification_viewed(notificable)
     notification = notifications.find_by(notificable: notificable)
     if notification

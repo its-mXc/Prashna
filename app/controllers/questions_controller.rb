@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-  #FIXME_AB: need to change a few
   before_action :ensure_logged_in, except: :show
   before_action :ensure_valid_commit_values, only: [:create, :update]
   before_action :find_published_question, only: [:show, :reaction]
@@ -17,7 +16,6 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
 
-    #FIXME_AB: before action to validate commit values
     if params[:commit] == "Publish"
       @question.status = Question.statuses["published"]
     else
@@ -81,7 +79,6 @@ class QuestionsController < ApplicationController
     redirect_to question_path(@question), notice: t('.question_posted')
   end
 
-  #FIXME_AB: same
   def reaction
     @question.record_reaction(params[:commit], current_user)
     redirect_to @question, notice: t('.reaction_submitted')
@@ -115,10 +112,12 @@ class QuestionsController < ApplicationController
   end
 
 
-  #FIXME_AB: find_question
   private def find_question
+<<<<<<< Updated upstream
     #FIXME_AB: it can fire two queries, can be done in one. Use .or
     # @question = Question.where(id: params[:id]).or(Question.where(url_slug: params[:id]))
+=======
+>>>>>>> Stashed changes
     @question = Question.find_by_id(params[:id])
 
     unless @question
@@ -128,7 +127,6 @@ class QuestionsController < ApplicationController
     unless @question
       redirect_to my_profile_path, notice: t('.cannot_find_question')
     end
-
   end
 
   private def ensure_has_not_been_published
@@ -138,6 +136,7 @@ class QuestionsController < ApplicationController
   end
 
   private def ensure_valid_commit_values
+    #FIXME_AB: VALID_COMMIT_BUTTON_VALUES.exclude?(params[:commit].to_sym)
     unless params[:commit] == "Publish" || params[:commit] == "Update" || params[:commit] == "Draft"
       redirect_back fallback_location: root_path, notice: t('.invalid_commmit_params')
     end

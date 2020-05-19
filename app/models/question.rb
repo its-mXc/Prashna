@@ -51,7 +51,6 @@ class Question < ApplicationRecord
     end
   end
 
-  #FIXME_AB: should be private. check other methods too.
   def generate_notifications
     self.topics.map(&:users).flatten.uniq.reject { |user| user.id == self.user.id }.each do |user|
         user.notifications.create(notificable: self)
@@ -89,7 +88,6 @@ class Question < ApplicationRecord
 
   def has_needed_credit_balance
     unless user.credit_balance >= ENV['question_post_debit'].to_i
-      #FIXME_AB: tell user how much balance needed
       errors.add(:base, "Not sufficient balance, need atleast #{ENV['question_post_debit']} credits")
       throw :abort
     end
