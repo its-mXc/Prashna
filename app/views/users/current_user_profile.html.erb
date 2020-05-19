@@ -42,7 +42,7 @@
               <% #FIXME_AB: add hint that topics are comma sperated -%>
               <% #FIXME_AB: user url helper for jsonurl -%>
               <% #FIXME_AB: use basic presenter gem for current user so that you can do current_user.presenter.topics_list -%>
-              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: "/topics"}, value: current_user.topics.map(&:name).join(", ") %>
+              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path }, value: current_user.topics.map(&:name).join(", "), title: "Comma seperated topics" %>
               <%= f.submit "Add Topics"%>
             <% end %>
           </div>

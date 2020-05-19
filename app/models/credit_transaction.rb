@@ -7,11 +7,7 @@ class CreditTransaction < ApplicationRecord
   after_commit :set_user_credit_balance
 
   private def set_transaction_credit_balance
-    if self.signup?
-      self.credit_balance = self.user.credit_balance + self.amount
-    elsif self.debit?
-      self.credit_balance = self.user.credit_balance - self.amount
-    end
+    self.credit_balance = self.user.credit_balance + self.amount
   end
 
   private def set_user_credit_balance

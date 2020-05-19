@@ -2,7 +2,9 @@ class CommentsController < ApplicationController
   #FIXME_AB: since we need user to be logged in for most of the actions, lets move this to application controller and skip it when we don' need
   before_action :ensure_logged_in
   before_action :find_commentable_and_question, only: [:new, :create]
-  before_action :find_comment, only: :reaction
+  before_action :find_comment, only: [:reaction, :show]
+  before_action :ensure_not_voting_own_comment, only: :reaction
+  before_action :validate_commit_param, only: :reaction
 
   def new
     @comment = Comment.new
@@ -20,15 +22,15 @@ class CommentsController < ApplicationController
     end
   end
 
+  def show
+    current_user.mark_notification_viewed(@comment)
+    redirect_to "#{question_path(@comment.question)}#comment-#{@comment.id}"
+  end
+
   def reaction
-    #FIXME_AB: add a before action
-    if current_user == @comment.user
-      redirect_back fallback_location: root_path, notice: t('.cannot_vote_own_comment')
-    else
-      #FIXME_AB: if user change button text, then there will be an issue. So add a before action to validated param[:commit]
-      @comment.record_reaction(params[:commit], current_user)
-      redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
-    end
+    #FIXME_AB: if user change button text, then there will be an issue. So add a before action to validated param[:commit]
+    @comment.record_reaction(params[:commit], current_user)
+    redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
   end
 
 
@@ -53,4 +55,17 @@ class CommentsController < ApplicationController
     end
   end
 
+  private def ensure_not_voting_own_comment
+    #FIXME_AB: add a before action
+    if current_user == @comment.user
+      redirect_back fallback_location: root_path, notice: t('.cannot_vote_own_comment')
+    end
+  end
+
+  private def validate_commit_param
+    unless params[:commit] == "upvote" || params[:commit] == "downvote"
+      redirect_back fallback_location: root_path, notice: t('.invalid_commmit_params')
+    end
+  end
+  
 end

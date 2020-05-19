@@ -2,7 +2,7 @@ class Reaction < ApplicationRecord
   enum reaction_type: { upvote: 0, downvote: 1 }
 
   #FIXME_AB: scope reactable_id and reactable type
-  validates :user_id, uniqueness: { scope: :reactable_id }
+  validates :user_id, uniqueness: { scope: [:reactable_id, :reaction_type] }
 
   belongs_to :user
   belongs_to :reactable, polymorphic: true

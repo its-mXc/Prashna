@@ -1,6 +1,6 @@
 class Notification < ApplicationRecord
   belongs_to :user
-  belongs_to :question
+  belongs_to :notificable, polymorphic: true
 
   scope :not_viewed, -> {where(viewed: false)}
   scope :viewed, -> {where(viewed: true)}
@@ -8,5 +8,5 @@ class Notification < ApplicationRecord
   def mark_viewed!
     self.viewed = true
     save!
-  end
+  end  
 end

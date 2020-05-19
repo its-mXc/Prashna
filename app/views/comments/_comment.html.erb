@@ -1,4 +1,4 @@
-  <li>
+  <li id="comment-<%= comment.id %>">
     <% if current_user == comment.user %>
     <strong class="text-info"><%= comment.user.name %></strong><br>
     <% else %>

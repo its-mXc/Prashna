@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+  include ReactionRecorder
 
   validate :parent_question_is_published
   validates :body, presence: true
@@ -7,8 +8,11 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :question
   has_many :comments, as: :commentable
+  has_many :notifications, as: :notificable
   belongs_to :commentable, polymorphic: true
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
+
+  after_save :generate_notifications
 
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
@@ -16,18 +20,15 @@ class Comment < ApplicationRecord
   end
 
   #FIXME_AB: since this can be reused in questions, answers, comments so lets make ReactionRecorder Concern and use it
-  def record_reaction(reaction_type, user)
-    comment_reaction = reactions.find_by(user: user)
-    if comment_reaction
-      comment_reaction.reaction_type = Reaction.reaction_types[reaction_type]
-      comment_reaction.save
-    else
-      reactions.create(user: user, reaction_type: Reaction.reaction_types[reaction_type])
-    end
-  end
 
   private def words_in_comment
     body.scan(/\w+/)
+  end
+
+  def generate_notifications
+    unless commentable.user == user
+      commentable.user.notifications.create(notificable: self)
+    end
   end
 
   private def parent_question_is_published

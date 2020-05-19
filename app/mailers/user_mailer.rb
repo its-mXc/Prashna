@@ -18,6 +18,7 @@ class UserMailer < ApplicationMailer
     if @user
       mail to: @user.email, subject: 'Password reset request'
     else
+      logger.error "Cannot find user, id = #{user_id}"
       #FIXME_AB: redirect won't work here, Make an entry in Rails log that user with id this not found hence skipping the password reset mail
     end
   end

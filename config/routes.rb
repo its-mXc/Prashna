@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   #FIXME_AB: following two routes should be same
   resources :topic, only: [:index]
 
-  get 'topics', to: "topic#index"
-
   #FIXME_AB: question resources
   post 'questions/create'
 
@@ -20,7 +18,10 @@ Rails.application.routes.draw do
     resources :comments,  only: [:new, :create]
   end
 
-  resources :comments, only: [:new, :create] do
+  # patch 'questions/:id', to: 'questions#draft1', constraints: { params[:commit]: 'Draft' }
+
+
+  resources :comments, only: [:new, :create, :show] do
       resources :comments, only: [:new, :create]
       member do
         get 'reaction'

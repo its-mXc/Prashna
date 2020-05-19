@@ -51,17 +51,14 @@ class UsersController < ApplicationController
     topic_names = user_params[:topic_names].split(",").map(&:strip)
 
     #FIXME_AB: topics = []
-
+    topics = []
     topic_names.each do |topic_name|
       #FIXME_AB: topics << find_or_create
-      unless Topic.find_by_name(topic_name)
-      Topic.create(name:topic_name)
-      end
+      topics << Topic.find_or_create_by(name: topic_name)
     end
 
     #FIXME_AB: you can save this query by saving all topics a local array and assign that array here current_user.topics = topics
-    current_user.topics = Topic.where(name: topic_names)
-
+    current_user.topics = topics
     if topic_names.any?
       redirect_to my_profile_path, notice: t('topics_added')
     else

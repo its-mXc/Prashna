@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+  include ReactionRecorder
   extend ActiveModel::Callbacks
 
   enum status: { draft: 0, published: 1 }
@@ -22,8 +23,7 @@ class Question < ApplicationRecord
   before_mark_published :has_needed_credit_balance
   before_mark_published :create_question_transaction
   after_mark_published :generate_url_slug
-  after_save :generate_notifications, if: -> { self.published? }
-
+  after_mark_published :generate_notifications
 
 
 
@@ -45,7 +45,7 @@ class Question < ApplicationRecord
   end
 
   private def create_question_transaction
-    if user.credit_transactions.create(amount: ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"])
+    if user.credit_transactions.create(amount: -ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"])
     else
       throw :abort
     end
@@ -54,7 +54,7 @@ class Question < ApplicationRecord
   #FIXME_AB: should be private. check other methods too.
   def generate_notifications
     self.topics.map(&:users).flatten.uniq.reject { |user| user.id == self.user.id }.each do |user|
-        user.notifications.create(question: self)
+        user.notifications.create(notificable: self)
     end
   end
 
@@ -90,7 +90,7 @@ class Question < ApplicationRecord
   def has_needed_credit_balance
     unless user.credit_balance >= ENV['question_post_debit'].to_i
       #FIXME_AB: tell user how much balance needed
-      errors.add(:base, "Not sufficient balance")
+      errors.add(:base, "Not sufficient balance, need atleast #{ENV['question_post_debit']} credits")
       throw :abort
     end
   end
@@ -99,13 +99,4 @@ class Question < ApplicationRecord
     !interacted?
   end
 
-  def record_reaction(reaction_type, user)
-    question_reaction = reactions.find_by(user: user)
-    if question_reaction
-      question_reaction.reaction_type = Reaction.reaction_types[reaction_type]
-      question_reaction.save
-    else
-      reactions.create(user: user, reaction_type: Reaction.reaction_types[reaction_type])
-    end
-  end
 end

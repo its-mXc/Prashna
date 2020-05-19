@@ -18,13 +18,18 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   #FIXME_AB: use with_options dependent: destroy do .. end
-  has_many :comments, dependent: :destroy
-  has_many :user_topics , dependent: :destroy
-  has_many :notifications, dependent: :destroy
-  has_many :topics, through: :user_topics
-  has_many :credit_transactions, dependent: :restrict_with_error
-  has_many :reactions, dependent: :restrict_with_error
-  has_many :questions, dependent: :restrict_with_error
+  with_options dependent: :destroy do |assoc|
+    assoc.has_many :comments
+    assoc.has_many :user_topics
+    assoc.has_many :notifications
+    assoc.has_many :topics, through: :user_topics
+
+  end
+  with_options dependent: :restrict_with_error do |assoc|
+    assoc.has_many :credit_transactions
+    assoc.has_many :reactions
+    assoc.has_many :questions
+  end
 
   before_create :generate_confirmation_token
   after_commit :send_confirmation_mail, on: :create
@@ -66,13 +71,13 @@ class User < ApplicationRecord
 
   def refresh_credits!
     #FIXME_AB: if while debiting we save -ve amount then we can do reload.credit_transactions.sum(:amount)
-    self.credit_balance = reload.credit_transactions.signup.sum(:amount) + credit_transactions.purchase.sum(:amount) - credit_transactions.debit.sum(:amount)
+    self.credit_balance = reload.credit_transactions.sum(:amount)
     save!
   end
 
   #FIXME_AB: mark_notification_viewed! rename
-  def mark_notification_viewed(question)
-    notification = notifications.find_by(question: question)
+  def mark_notification_viewed(notificable)
+    notification = notifications.find_by(notificable: notificable)
     if notification
       notification.mark_viewed!
     end
