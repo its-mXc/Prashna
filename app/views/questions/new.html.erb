@@ -1,7 +1,7 @@
 <div class="question-container">
   <%= render  "shared/errors", object: @question %>
   <div>Post your question<br></div>
-  <%= form_with scope: :question, url: questions_create_url, local: true do |f| %>
+  <%= form_with scope: :question, url: questions_url, local: true do |f| %>
     <div class="form-field question-field">
       <%= f.text_field :title, placeholder: "title", class: "form-control" %>
     </div>

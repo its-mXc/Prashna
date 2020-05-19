@@ -118,6 +118,7 @@ class QuestionsController < ApplicationController
   #FIXME_AB: find_question
   private def find_question
     #FIXME_AB: it can fire two queries, can be done in one. Use .or
+    # @question = Question.where(id: params[:id]).or(Question.where(url_slug: params[:id]))
     @question = Question.find_by_id(params[:id])
 
     unless @question

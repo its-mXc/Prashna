@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :topic, only: [:index]
 
   #FIXME_AB: question resources
-  post 'questions/create'
+  # post 'questions/create'
 
   resources :questions do
     collection do
