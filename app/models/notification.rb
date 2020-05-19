@@ -8,5 +8,13 @@ class Notification < ApplicationRecord
   def mark_viewed!
     self.viewed = true
     save!
+  end
+
+  def as_json(options={})
+    if self.notificable_type == "Question"
+      self.serializable_hash(include: [notificable: {include: [user: {only: [:name]}]} ])
+    else
+      self.serializable_hash(include: [notificable: {include: [:commentable, user: {only: [:name]}]} ])
+    end
   end  
 end

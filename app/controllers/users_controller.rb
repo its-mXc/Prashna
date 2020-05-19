@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save(context: :password_entered)
-        format.html { redirect_to login_path, notice: t('confirmation_mail_sent_message') }
+        format.html { redirect_to login_path, notice: t('.confirmation_mail_sent_message') }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -30,13 +30,13 @@ class UsersController < ApplicationController
     user = User.find_by(confirmation_token: params[:token])
     if user
       if user.verified?
-        redirect_to login_path, notice: t('already_confirmed')
+        redirect_to login_path, notice: t('.already_confirmed')
       else
         user.verify!
-        redirect_to login_path, notice: t('confirmed')
+        redirect_to login_path, notice: t('.confirmed')
       end
     else
-      redirect_to login_path, notice: t('user_doesnt_exist')
+      redirect_to login_path, notice: t('.user_doesnt_exist')
     end
   end
 
@@ -60,15 +60,15 @@ class UsersController < ApplicationController
     #FIXME_AB: you can save this query by saving all topics a local array and assign that array here current_user.topics = topics
     current_user.topics = topics
     if topic_names.any?
-      redirect_to my_profile_path, notice: t('topics_added')
+      redirect_to my_profile_path, notice: t('.topics_added')
     else
-      redirect_to my_profile_path, notice: t('topics_removed')
+      redirect_to my_profile_path, notice: t('.topics_removed')
     end
   end
 
   private def set_user
       @user = User.find(params[:id])
-      redirect_to root_path, notice: t('user_doesnt_exist')
+      redirect_to root_path, notice: t('.user_doesnt_exist')
     end
 
   private def user_params

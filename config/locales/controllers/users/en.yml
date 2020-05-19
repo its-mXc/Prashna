@@ -1,7 +1,13 @@
 en:
-  confirmation_mail_sent_message: 'Check you email for confirmation mail'
-  already_confirmed: "Welcome to the Pransh! Your email is already confirmed. Please sign in to continue."
-  confirmed: "Welcome to the Pransh! Your email has been confirmed. Please sign in to continue."
-  user_doesnt_exist: "Sorry. User does not exist"
-  topics_added: "Topics added to user"
-  topics_removed: "Topics Removed"
+  users:
+    create:
+      confirmation_mail_sent_message: 'Check you email for confirmation mail'
+    verify:
+      already_confirmed: "Welcome to the Pransh! Your email is already confirmed. Please sign in to continue."
+      confirmed: "Welcome to the Pransh! Your email has been confirmed. Please sign in to continue."
+      user_doesnt_exist: "Sorry. User does not exist"
+    set_topics:
+      topics_added: "Topics added to user"
+      topics_removed: "Topics Removed"
+    update:
+      user_doesnt_exist: "Sorry. User does not exist"

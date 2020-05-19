@@ -12,7 +12,7 @@
 
     <div class="form-field question-field">
       <%= f.label :topics %>
-      <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: "/topics"} %>
+      <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path} %>
     </div>
 
     <div class="form-field">

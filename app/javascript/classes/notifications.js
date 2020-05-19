@@ -12,7 +12,17 @@ export class Notification {
     }
     else {
       data.flatMap((notification) => {
-        let notification_element = $('<li />').addClass("list-group-item d-flex justify-content-between align-items-center").text(`${notification.question.user.name} asked a question <a href='${notification.question.url_slug}'>${notification.question.title}</a>`)
+        if(notification.notificable_type == "Question") {
+          var notification_element = $('<li />').addClass("list-group-item d-flex justify-content-between align-items-center").html(`<a href='questions/${notification.notificable.url_slug}'>${notification.notificable.user.name} asked a question ${notification.notificable.title}</a>`)
+        } 
+        else {
+          if (notification.notificable.commentable_type == "Question") {
+            var notification_element = $('<li />').addClass("list-group-item d-flex justify-content-between align-items-center").html(`<a href='comments/${notification.notificable.id}'>${notification.notificable.user.name} replied to your question ${notification.notificable.commentable.title} </a>`)
+          }
+          else {
+            var notification_element = $('<li />').addClass("list-group-item d-flex justify-content-between align-items-center").html(`<a href='comments/${notification.notificable.id}'>${notification.notificable.user.name} replied to your comment ${notification.notificable.commentable.body} </a>`)
+          }
+        }
         this.displayElement.append(notification_element)
       })
     }
