@@ -61,8 +61,8 @@ class QuestionsController < ApplicationController
         redirect_to @question, notice: t('.question_updated')
       elsif params[:commit] == "Publish"
         redirect_to publish_question_path(@question)
-      elsif params["commit"] == "Draft"
-        redirect_to drafts_questions_path, notice: t('.draft_changed')
+      # elsif params["commit"] == "Draft"
+      #   redirect_to drafts_questions_path, notice: t('.draft_changed')
       end
     else
       respond_to do |format|

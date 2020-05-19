@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   #FIXME_AB: question resources
   # post 'questions/create'
+  patch 'questions/:id', to: 'questions#draft1', constraints: lambda {|r| r.params[:commit] == 'Draft' }
 
   resources :questions do
     collection do
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
     resources :comments,  only: [:new, :create]
   end
 
-  # patch 'questions/:id', to: 'questions#draft1', constraints: { params[:commit]: 'Draft' }
 
 
   resources :comments, only: [:new, :create, :show] do
