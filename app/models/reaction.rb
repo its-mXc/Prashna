@@ -26,6 +26,7 @@ class Reaction < ApplicationRecord
   end
 
   private def ensure_question_is_published
+    #FIXME_AB: better way to do this is reactable.is_a? Question
     if reactable_type == "Question"
       if reactable.draft?
         errors.add(:base, "cannot react to unpublished question")
@@ -33,8 +34,5 @@ class Reaction < ApplicationRecord
       end
     end
   end
-
-  #FIXME_AB: we should have a check that if voting is done on a question then question should be published.
-  #FIXME_AB: check that I am not voting on my own question, answer and comment
 
 end
