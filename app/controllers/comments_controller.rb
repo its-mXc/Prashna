@@ -15,9 +15,9 @@ class CommentsController < ApplicationController
     @comment.question = @question
 
     if @comment.save
-      redirect_back fallback_location: root_path, notice: t('.comment_posted')
+      redirect_to question_path(@comment.question), notice: t('.comment_posted')
     else
-      redirect_back fallback_location: root_path, notice: t('.minimum_words', word_count: ENV['comment_word_length'])
+      redirect_to question_path(@comment.question, parent_comment_id: @commentable.id, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
     end
   end
 

@@ -7,6 +7,7 @@ export class Collapsible {
   init() {
     if (this.clickableElement.hasClass("nested")) {
       this.clickableElement.next(this.collapsibleElement).hide()
+      this.clickableElement.filter('.pre-filled').next(this.collapsibleElement).show()
       this.clickableElement.on('click', (event) => {
         $(event.target).next(this.collapsibleElement).toggle()
       })

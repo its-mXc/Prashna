@@ -15,15 +15,27 @@
     <% else %>
      <p><strong>Upvotes:</strong><%= comment.reaction_count %></p>
     <% end %>
-    <div class="reply-btn nested text-success">Reply</div>
+    <% if params[:parent_comment_id].to_i == comment.id %>
+    <div class="reply-btn nested pre-filled text-success">Reply</div>
     <div class="reply-form">
     <%= form_for [comment, Comment.new] do |f| %>
       <div class="form-group">
-        <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field" %>
+        <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field", value: params[:comment_body] %>
       </div>
       <%= f.submit "Reply", class: "btn btn-danger"  %>
     <% end %>
     </div>
+    <% else %>
+      <div class="reply-btn nested text-success">Reply</div>
+      <div class="reply-form">
+      <%= form_for [comment, Comment.new] do |f| %>
+        <div class="form-group">
+          <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field" %>
+        </div>
+        <%= f.submit "Reply", class: "btn btn-danger"  %>
+      <% end %>
+      </div>
+    <% end %>
     <ul>
         <%= render comment.comments %>
     </ul>

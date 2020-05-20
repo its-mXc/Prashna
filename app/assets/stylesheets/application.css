@@ -32,3 +32,9 @@ input.downvote{
     width:50px;
     height:50px;
 }
+
+hr {
+    max-width: 90%;
+    text-align: left;
+    margin-left: 0px;
+}
