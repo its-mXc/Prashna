@@ -1,4 +1,9 @@
-<%= render  "shared/notice" %>
 <div class="question-container">
-  <%= render @questions %>
+  <h2>Questions</h2>
+  <%= render  "shared/notice" %>
+  <% if @questions.any? %>
+    <%= render @questions %>
+  <% else %>
+    <p>No Questions </p>
+  <% end %>
 </div>

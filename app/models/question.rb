@@ -14,7 +14,7 @@ class Question < ApplicationRecord
 
 
   belongs_to :user
-  has_one_attached :pdf_file
+  has_one_attached :file
   has_many :question_topics, dependent: :destroy
   has_many :topics, through: :question_topics
   has_many :reactions, as: :reactable, dependent: :restrict_with_error

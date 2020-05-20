@@ -5,8 +5,8 @@
   </p>
     <%= question.content  %>
   <p>
-  <% if question.pdf_file.attached? %>
-    <%= link_to  question.pdf_file.filename, url_for(question.pdf_file) %>
+  <% if question.file.attached? %>
+    <%= link_to  question.file.filename, url_for(question.file) %>
   <% end %><br>
   <% question.topic_names.each do |topic_name|  %>
     <span class="badge badge-primary"><%= topic_name %></span>

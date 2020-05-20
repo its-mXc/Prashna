@@ -1,6 +1,6 @@
   class QuestionsController < ApplicationController
     before_action :ensure_logged_in, except: :show
-    before_action :ensure_valid_commit_values, only: [:create, :update, :draft_publish_update, :draft_publish_update]
+    before_action :ensure_valid_commit_values, only: [:create, :update, :draft_update, :draft_publish_update]
     before_action :find_published_question, only: [:show, :reaction, :update]
     before_action :find_question, only: [:edit, :draft_update, :draft_publish_update, :publish]
     before_action :ensure_has_not_been_interacted, only: [:edit, :update]
@@ -163,6 +163,6 @@
       topic_names = params[:question][:topic_names].split(",").map(&:strip)
       params[:question][:topic_ids] = Topic.where(name: topic_names).map(&:id)
 
-      params.require(:question).permit(:title, :content,:pdf_file, topic_ids: [])
+      params.require(:question).permit(:title, :content,:file, topic_ids: [])
     end
   end

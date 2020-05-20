@@ -1,13 +1,19 @@
 <div>
   <div class="jumbotron question-container">
     <%= render  "shared/notice", object: @question %>
+    <span><%= @question.user.name %></span><br>
     <% @question.topic_names.each do |topic_name|  %>
       <span class="badge badge-primary"><%= topic_name %></span>
     <% end %>
     <h1 class="display-3"><%= @question.title %></h1>
     <p class="lead"><%= @question.content  %></p>
-    <% if @question.pdf_file.attached? %>
-      <strong>Attached: </strong><%= link_to  @question.pdf_file.filename, url_for(@question.pdf_file) %>
+    <% if @question.file.attached? %>
+      <% if @question.file.blob.content_type =~ /image/ %>
+        <strong>Attached: </strong><%= @question.file.filename %><br>
+        <%= image_tag(@question.file, size: "200") %>
+      <% else %>
+        <strong>Attached: </strong><%= link_to  @question.file.filename, url_for(@question.file) %>
+      <% end %>
     <% end %><br>
     <% if @question.editable? && @question.user == current_user %>
     <%= link_to "Edit", edit_question_path(@question) %>
