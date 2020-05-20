@@ -1,17 +1,19 @@
   <li id="comment-<%= comment.id %>">
     <% if current_user == comment.user %>
-    <strong class="text-info"><%= comment.user.name %></strong><br>
+    <strong class="text-info"><%= link_to comment.user.name, questions_user_path(comment.user) %></strong><br>
     <% else %>
-    <strong><%= comment.user.name %></strong><br>
+    <strong><%= link_to comment.user.name, questions_user_path(comment.user) %></strong><br>
     <% end %>
     <%= comment.body %> -
     <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
-     <p><strong>Upvotes:</strong>
-    <%= comment.reaction_count %></p>
-    <%= form_for @question , url: reaction_comment_path(comment) ,local: true, method: :get do |f| %>
-
-      <%= f.submit :upvote, class: "btn btn-success" %>
-      <%= f.submit :downvote, class: "btn btn-danger" %>
+    <% if current_user != comment.user %>
+      <%= form_for @question , url: reaction_comment_path(comment) ,local: true, method: :get do |f| %>
+        <%= f.submit :upvote, class: "btn  upvote", title: comment.reactions.upvotes.count%>
+        <%= comment.reaction_count %>
+        <%= f.submit :downvote, class: "btn  downvote", title: comment.reactions.downvotes.count%>
+      <% end %>
+    <% else %>
+     <p><strong>Upvotes:</strong><%= comment.reaction_count %></p>
     <% end %>
     <div class="reply-btn nested text-success">Reply</div>
     <div class="reply-form">
