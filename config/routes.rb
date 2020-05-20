@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   #FIXME_AB: following two routes should be same
-  resources :topic, only: [:index]
+  resources :topic, only: [:index] do
+    member do
+      get 'questions'
+    end
+  end
 
   #FIXME_AB: question resources
   patch 'questions/:id', to: 'questions#draft_update', constraints: lambda {|r| r.params[:commit] == 'Draft' }
