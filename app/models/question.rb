@@ -11,7 +11,11 @@ class Question < ApplicationRecord
   validates :content, presence: true
   validates :content, length:{ minimum: ENV["minimum_question_char_length"].to_i, maximum: ENV["maximum_question_char_length"].to_i }
 
-
+#FIXME_AB: when publishing a question record published at
+#FIXME_AB: replace this method below with published_at
+def get_published_at
+  created_at
+end
 
   belongs_to :user
   has_one_attached :file

@@ -1,4 +1,6 @@
   class QuestionsController < ApplicationController
+    VALID_COMMIT_BUTTON_VALUES = [:Publish, :Update, :Draft]
+
     before_action :ensure_logged_in, except: :show
     before_action :ensure_valid_commit_values, only: [:create, :update, :draft_update, :draft_publish_update]
     before_action :find_published_question, only: [:show, :reaction, :update]
@@ -49,10 +51,7 @@
     def edit
     end
 
-    #FIXME_AB: try to split it in three actions. one for each :commit value: update, publish, draft
-    #FIXME_AB: make conditional routing whcih will use appropirate actoin based on :commit value
     def update
-      #FIXME_AB: before actions to validate commit values
       if @question.update(question_params)
         @question.generate_url_slug
         redirect_to @question, notice: t('.question_updated')
@@ -62,8 +61,8 @@
         end
       end
     end
-    
-  
+
+
     def draft_update
       if @question.update(question_params)
         redirect_to drafts_questions_path, notice: t('.draft_changed')
@@ -73,7 +72,7 @@
         end
       end
     end
-    
+
     def draft_publish_update
       if @question.update(question_params)
         redirect_to publish_question_path(@question)
@@ -145,9 +144,7 @@
     end
 
     private def ensure_valid_commit_values
-      #FIXME_AB: VALID_COMMIT_BUTTON_VALUES.exclude?(params[:commit].to_sym)
-      valid_commit_button_values = [:Publish, :Update, :Draft]
-      if valid_commit_button_values.exclude?(params[:commit].to_sym)
+      if VALID_COMMIT_BUTTON_VALUES.exclude?(params[:commit].to_sym)
         redirect_back fallback_location: root_path, notice: t('.invalid_commmit_params')
       end
     end

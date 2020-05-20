@@ -10,8 +10,8 @@
     <%= comment.reaction_count %></p>
     <%= form_for @question , url: reaction_comment_path(comment) ,local: true, method: :get do |f| %>
 
-      <%= f.submit :upvote, class: "btn btn-primary" %>
-      <%= f.submit :downvote, class: "btn btn-primary" %>
+      <%= f.submit :upvote, class: "btn btn-success" %>
+      <%= f.submit :downvote, class: "btn btn-danger" %>
     <% end %>
     <div class="reply-btn nested text-success">Reply</div>
     <div class="reply-form">

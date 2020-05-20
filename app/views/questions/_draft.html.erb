@@ -1,4 +1,3 @@
-<% #FIXME_AB: fix this -%>
 <% drafts.each do |draft| %>
   <div>
     <h3>
@@ -7,9 +6,8 @@
     </p>
       <%= draft.content  %>
     <p>
-      <% #FIXME_AB: everywhere, if attachment is image show thumbnail else link of file -%>
     <% if draft.file.attached? %>
-      <% if draft.file.blob.content_type =~ /image/ %>
+      <% if draft.file.attachment.image? %>
         <strong>Attached: </strong><%= draft.file.filename %><br>
         <%= image_tag(draft.file, size: "200") %>
       <% else %>
@@ -17,6 +15,7 @@
       <% end %>
     <% end %><br>
     <% draft.topic_names.each do |topic_name|  %>
+    <% #FIXME_AB: each topic should be a link, which should show questions of this topic -%>
       <span class="badge badge-primary"><%= topic_name %></span>
     <% end %><br>
     <small>Submitted <%= time_ago_in_words(draft.created_at) %> ago</small><br>
