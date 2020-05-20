@@ -15,6 +15,7 @@
   <% if question.file.attached? %>
     <%= link_to  question.file.filename, url_for(question.file) %>
   <% end %><br>
+  <hr class="my-2 w-50">
    <p>
       <span>Posted by <%= link_to question.user.name, questions_user_path(question.user) %></span> <%= time_ago_in_words(question.published_at)-%> ago in 
         <% question.topics.each do |topic|  %>
@@ -27,4 +28,4 @@
   <p><%= question.comments.count %> comments</p><br>
   <small>Submitted <%= time_ago_in_words(question.created_at) %> ago</small><br>
 </div>
-<hr class="my-4">
+<hr class="my-4 border-danger">
