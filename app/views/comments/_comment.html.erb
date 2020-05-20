@@ -1,8 +1,8 @@
   <li id="comment-<%= comment.id %>">
     <% if current_user == comment.user %>
-    <strong class="text-info"><%= link_to comment.user.name, questions_user_path(comment.user) %></strong><br>
+    <strong><%= link_to "#{comment.user.name}🎙", questions_user_path(comment.user), class: "text-danger" %></strong><br>
     <% else %>
-    <strong><%= link_to comment.user.name, questions_user_path(comment.user) %></strong><br>
+    <strong><%= link_to comment.user.name, questions_user_path(comment.user), class: "text-success" %></strong><br>
     <% end %>
     <%= comment.body %> -
     <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
