@@ -1,10 +1,12 @@
-<div class="col-7">
-<%= render 'shared/notice' %>
-</div>
-<div class="row-fluid col-7"> 
-<h3>Enter your email to send password reset email </h3>
-<%= form_for :user, url: find_user_path, local: true do |f| %>
-  <%= f.text_field 'email', class: "form-control",placheholer: "john@doe.com" %><br>
-  <%= f.submit 'Send Email', class:"btn btn-primary" %>
-<% end %>
+<div class="password-container">
+  <div class="row-fluid col-7"> 
+  <%= render 'shared/notice' %>
+  <h3>Enter your email to send password reset email </h3>
+  <%= form_for :user, url: find_user_path, local: true do |f| %>
+    <div class="form-field">
+      <%= f.text_field 'email', class: "form-control",placheholer: "john@doe.com", class: "password-field" %><br>
+    </div>
+    <%= f.submit 'Send Email', class:"btn btn-primary" %>
+  <% end %>
+  </div>
 </div>

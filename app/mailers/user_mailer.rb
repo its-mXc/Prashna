@@ -13,8 +13,12 @@ class UserMailer < ApplicationMailer
   end
 
   def send_password_reset_mail(user_id)
-    @user = User.find_by(id: user_id)
-    #FIXME_AB: what if user not found.
-    mail to: @user.email, subject: 'Password reset request'
+    @user = User.find_by_id(user_id)
+
+    if @user
+      mail to: @user.email, subject: 'Password reset request'
+    else
+      logger.error "Cannot find user, id = #{user_id}"
+    end
   end
 end

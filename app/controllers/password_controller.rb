@@ -7,9 +7,9 @@ class PasswordController < ApplicationController
     if @user
       @user.generate_password_token
       UserMailer.send_password_reset_mail(@user.id).deliver_now
-      redirect_to login_path, notice: "Check your inbox for password reset mail"
+      redirect_to login_path, notice: t('.password_reset_mail_sent')
     else
-      redirect_to forgot_password_path, notice: "No such email id exists"
+      redirect_to forgot_password_path, notice: t('.no_email_id')
     end
   end
 
@@ -17,9 +17,9 @@ class PasswordController < ApplicationController
     @user = User.find_by(password_reset_token: params[:reset_token])
     if @user && Time.current >= @user.password_token_expire_at
       @user.expire_password_token
-      redirect_to forgot_password_path, notice: "Link expired"
+      redirect_to forgot_password_path, notice: t('.link_expired')
     elsif @user.nil?
-      redirect_to forgot_password_path, notice: "Invalid Link"
+      redirect_to forgot_password_path, notice: t('.invalid_link')
     end
   end
 
@@ -29,7 +29,7 @@ class PasswordController < ApplicationController
     respond_to do |format|
       if @user.save(context: :password_entered)
         @user.expire_password_token
-        format.html { redirect_to login_url, notice: 'Password updated sucessfuly' }
+        format.html { redirect_to login_url, notice: t('.password_update_successfull') }
       else
         format.html { render :reset }
       end

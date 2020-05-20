@@ -1,0 +1,8 @@
+<div class="drafts-container">
+  <%= render "shared/notice" %>
+  <% if @drafts.any? %>
+    <%= render  "questions/draft", drafts: @drafts %>
+  <% else %>
+    <h3>No Drafts </h3>
+  <% end %>
+</div>

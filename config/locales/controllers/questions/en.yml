@@ -1,0 +1,25 @@
+en:
+  questions:
+    show:
+      cannot_find_question: "No such question exist"
+    create:
+      saved_to_draft: "Saved to Drafts"
+      question_posted: "Question posted"
+    edit:
+      cannot_edit: "Cannot edit, has  been interacted"
+      cannot_find_question: "No such question exist"
+      not_author: "You are not the author for the question"
+    draft_update:
+      draft_changed: "Draft changed"
+    update:
+      question_updated: "Question updated"
+      not_author: "You are not the author for the question"
+    publish:
+      already_published: "Already been published"
+      cannot_find_question: "No such question exist"
+      question_posted: "Question posted"
+      no_credit_saved_to_draft: "No credit avaliable, Purchase more. Saved to drafts"
+      not_author: "You are not the author for the question"
+    reaction:
+      cannot_vote_own_question: "Cannot vote your own question"
+      reaction_submitted: "Reaction Submitted"

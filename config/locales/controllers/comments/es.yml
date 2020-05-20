@@ -1,0 +1,9 @@
+es:
+  comments:
+    create:
+      comment_posted: "Comentario publicado"
+      minimum_words: "Se requieren palabras mínimas"
+    reaction:
+      cannot_vote_own_comment: "No puedes votar tu propio comentario"
+      reaction_submitted: "Reacción enviada"
+      cannot_find_comment: "No se puede encontrar el comentario"

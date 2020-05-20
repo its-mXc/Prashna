@@ -1,0 +1,30 @@
+  <li id="comment-<%= comment.id %>">
+    <% if current_user == comment.user %>
+    <strong class="text-info"><%= comment.user.name %></strong><br>
+    <% else %>
+    <strong><%= comment.user.name %></strong><br>
+    <% end %>
+    <%= comment.body %> -
+    <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
+     <p><strong>Upvotes:</strong>
+    <%= comment.reaction_count %></p>
+    <%= form_for @question , url: reaction_comment_path(comment) ,local: true, method: :get do |f| %>
+
+      <%= f.submit :upvote, class: "btn btn-success" %>
+      <%= f.submit :downvote, class: "btn btn-danger" %>
+    <% end %>
+    <div class="reply-btn nested text-success">Reply</div>
+    <div class="reply-form">
+    <%= form_for [comment, Comment.new] do |f| %>
+      <div class="form-group">
+        <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field" %>
+      </div>
+      <%= f.submit "Reply", class: "btn btn-danger"  %>
+    <% end %>
+    </div>
+    <ul>
+        <%= render comment.comments %>
+    </ul>
+
+
+  </li>

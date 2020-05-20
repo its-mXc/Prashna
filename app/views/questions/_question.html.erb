@@ -1,0 +1,16 @@
+<div>
+  <h3>
+    <%= link_to  question.title, question %>
+  </h3>
+  </p>
+    <%= question.content  %>
+  <p>
+  <% if question.file.attached? %>
+    <%= link_to  question.file.filename, url_for(question.file) %>
+  <% end %><br>
+  <% question.topic_names.each do |topic_name|  %>
+    <span class="badge badge-primary"><%= topic_name %></span>
+  <% end %><br>
+  <small>Submitted <%= time_ago_in_words(question.created_at) %> ago</small><br>
+</div>
+<hr class="my-4">

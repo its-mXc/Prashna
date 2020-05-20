@@ -1,6 +1,10 @@
-
 from_email: "udaynayakgkv@gmail.com"
 password_token_expiry_time: 5
 remember_me_expiry_days: 15
 signup_credits: 5
+question_post_debit: 1
 host: "localhost:3000"
+notification_refresh_time_secs: 30
+comment_word_length: 5
+minimum_question_char_length: 10
+maximum_question_char_length: 1000

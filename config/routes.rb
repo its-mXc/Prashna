@@ -1,15 +1,44 @@
 Rails.application.routes.draw do
   root 'welcome#index'
 
+  #FIXME_AB: following two routes should be same
   resources :topic, only: [:index]
-  get 'topics', to: "topic#index"
+
+  #FIXME_AB: question resources
+  patch 'questions/:id', to: 'questions#draft_update', constraints: lambda {|r| r.params[:commit] == 'Draft' }
+  patch 'questions/:id', to: 'questions#draft_publish_update', constraints: lambda {|r| r.params[:commit] == 'Publish' }
+
+  resources :questions do
+    collection do
+      get 'drafts'
+    end
+    member do
+      get 'publish'
+      get 'reaction'
+    end
+    resources :comments,  only: [:new, :create]
+  end
+
+
+
+  resources :comments, only: [:new, :create, :show] do
+      resources :comments, only: [:new, :create]
+      member do
+        get 'reaction'
+      end
+
+  end
+
+  get "my-profile", to: "users#current_user_profile"
 
   resources :users do
+    resources :notifications, only: [:index]
     member do
       post :set_avatar
       post :set_topics
     end
   end
+
   controller :session do
     get 'login' => :new
     post 'login' => :create
@@ -18,7 +47,6 @@ Rails.application.routes.draw do
 
   get 'signup', to: "users#new"
 
-  get "my-profile", to: "users#current_user_profile"
 
   controller :password do
     get "forgot-password" => :forgot

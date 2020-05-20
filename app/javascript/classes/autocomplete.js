@@ -1,14 +1,15 @@
+require("jquery-ui")
 
-class AutoCompleteInput {
+import {split, extractLast} from '../modules/utils'
+export class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
-    this.inputElement.data("JSONURL", options["JSONURL"])
   }
 
   init() {
     this.inputElement.autocomplete({
       source: function( request, response ) {
-                $.getJSON( this.element.data('JSONURL'), {
+                $.getJSON( this.element.data('jsonurl'), {
                   term: extractLast( request.term )
                 }, response );
               },
@@ -17,7 +18,7 @@ class AutoCompleteInput {
                 var terms = split( this.value );
                 // remove the current input
                 terms.pop();
-                // add the selected item
+                // add t  he selected item
                 terms.push( ui.item.value );
                 // join all terms with a comma
                 this.value = terms.join( ", " );
@@ -30,13 +31,3 @@ class AutoCompleteInput {
     });
   }
 }
-
-
-let options = {
-  inputElement: $( "#tag-autocomplete" ),
-  // FIXME_AB: add topics url as data-attribute to this element using rails url helper
-  JSONURL: "/topics"
-}
-
-let autoCompleteInput = new AutoCompleteInput(options)
-autoCompleteInput.init()

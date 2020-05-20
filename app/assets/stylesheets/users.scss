@@ -2,13 +2,15 @@
   background: -webkit-linear-gradient(left, #3931af, #00c6ff);
   margin-top: 3%;
   padding: 3%;
+  border: 5px solid white;
+  border-radius: 1.5rem;
 }
 .register-left{
   text-align: center;
   color: #fff;
   margin-top: 4%;
 }
-.register-left input{
+.register-left a{
   border: none;
   border-radius: 1.5rem;
   padding: 2%;
@@ -94,9 +96,23 @@
 }
 
 .logo {
-  width: 90%;
+  width: 80vw;
 }
 
 .user-info {
   margin: 10px;
+}
+
+.user-container {
+  background: white;
+  border-radius: 1.5rem;
+  border-top-right-radius: 10% 50%;
+  border-bottom-right-radius: 10% 50%;
+  padding: 20px;
+  min-height: 70vh;
+}
+
+.nav-link-not-logged {
+  width: 14vw;
+  text-align: end;
 }

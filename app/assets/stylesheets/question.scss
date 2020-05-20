@@ -1,0 +1,30 @@
+// Place all the styles related to the Question controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+body {
+  // background: linear-gradient(90deg, #ccffff, #ffcccc)
+  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+}
+.question-container {
+  background: white;
+  border-radius: 1.5rem;
+  border-top-right-radius: 10% 50%;
+  border-bottom-right-radius: 10% 50%;
+  padding: 20px;
+  min-height: 70vh;
+}
+
+.question-field {
+  width: 80%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.drafts-container {
+  background: white;
+  min-height: 70vh;
+  border-radius: 1.5rem;
+  border-top-right-radius: 10% 50%;
+  border-bottom-right-radius: 10% 50%;
+  padding: 20px;
+}

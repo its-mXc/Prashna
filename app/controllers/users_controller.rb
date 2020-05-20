@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save(context: :password_entered)
-        format.html { redirect_to login_path, notice: t('confirmation_mail_sent_message') }
+        format.html { redirect_to login_path, notice: t('.confirmation_mail_sent_message') }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -30,13 +30,13 @@ class UsersController < ApplicationController
     user = User.find_by(confirmation_token: params[:token])
     if user
       if user.verified?
-        redirect_to login_path, notice: "Welcome to the Pransh! Your email is already confirmed. Please sign in to continue."
+        redirect_to login_path, notice: t('.already_confirmed')
       else
         user.verify!
-        redirect_to login_path, notice: "Welcome to the Pransh! Your email has been confirmed. Please sign in to continue."
+        redirect_to login_path, notice: t('.confirmed')
       end
     else
-      redirect_to login_path, notice: "Sorry. User does not exist"
+      redirect_to login_path, notice: t('.user_doesnt_exist')
     end
   end
 
@@ -49,17 +49,23 @@ class UsersController < ApplicationController
 
   def set_topics
     topic_names = user_params[:topic_names].split(",").map(&:strip)
-    current_user.topics = Topic.where(name: topic_names)
+
+    topics = []
+    topic_names.each do |topic_name|
+      topics << Topic.find_or_create_by(name: topic_name)
+    end
+
+    current_user.topics = topics
     if topic_names.any?
-      redirect_to my_profile_path, notice: "Topics added to user"
+      redirect_to my_profile_path, notice: t('.topics_added')
     else
-      redirect_to my_profile_path, notice: "Topics Removed"
+      redirect_to my_profile_path, notice: t('.topics_removed')
     end
   end
 
   private def set_user
       @user = User.find(params[:id])
-      #FIXME_AB: what if user not found
+      redirect_to root_path, notice: t('.user_doesnt_exist')
     end
 
   private def user_params

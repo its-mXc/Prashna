@@ -5,8 +5,7 @@
             <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
             <h3>Welcome</h3>
             <p>Login to ask questions and connect with people who contribute unique insights and quality answers</p>
-            <% #FIXME_AB: use link_to class: btn-%>
-            <a href="/signup"><input type="submit" name="" value="Signup"/></a><br/>
+            <%= link_to  "Signup", signup_path, class: "btn" %>
         </div>
         <div class="col-md-9 register-right">
             <h3 class="register-heading">Log In</h3>

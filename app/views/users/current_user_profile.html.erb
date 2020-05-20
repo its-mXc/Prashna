@@ -1,8 +1,10 @@
-<div class="container">
+<div class="container-fluid user-container">
   <%= render 'shared/notice' %>
   <%= render 'shared/errors', object: current_user %>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-3">
           <% if current_user.avatar.attached? %>
             <%= image_tag(current_user.avatar, class: "rounded-circle", size: "200") %>
           <% end %>
@@ -10,7 +12,9 @@
             <%= f.file_field :avatar, class: "form-control-file" %>
           <% end %>
         </div>
+
         <div class="col-md-3"></div>
+
         <div class="col-md-4" style="margin-top:20px;">
           <div class="row user-info">
             <strong>Name:</strong>
@@ -22,12 +26,8 @@
           </div>
 
           <div class="row user-info">
-            <strong>User type:</strong>
-            <%= current_user.user_type %>
-          </div>
-
-          <div class="row user-info">
             <strong>Credit:</strong>
+            <% #FIXME_AB: we'll make this link later so that user can see his credit history -%>
             <%= current_user.credit_balance %>
           </div>
 
@@ -36,28 +36,32 @@
             <%= current_user.followers_count %>
           </div>
 
-           <div class="row user-info">
-            <%= form_for :user, url: set_topics_user_path(current_user.id), local: true do |f| %>
+          <div class="row user-info">
+            <%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
               <%= f.label :topics %>
-              <%= f.text_field :topic_names, id: "tag-autocomplete",  value: current_user.topics.map(&:name).join(",") %>
-              <%= f.submit "Add Topics", class:"btn btn-danger" %>
+              <% #FIXME_AB: use basic presenter gem for current user so that you can do current_user.presenter.topics_list -%>
+              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path }, value: current_user.topics.map(&:name).join(", "), title: "Comma seperated topics" %>
+              <%= f.submit "Add Topics"%>
             <% end %>
-           </div> 
+          </div>
         </div>
+      </div>
 
-        <div id="notifications" class="col-md-3">
-        </div>
 
+
+    </div>
 
   </div>
-</div>
 
 
+  <hr class="my-4">
+  <h3>Questions</h3>
+  <hr class="my-5">
+  <%= render current_user.questions.published %>
+
+  
+  
+  <%= javascript_pack_tag 'current_user_profile.js' %>
 
 
-
-<% #FIXME_AB: use content_for to move these js in layout head. Discuss with me if not clear -%>
-<%= javascript_include_tag 'user_dashboard' %>
-<%= javascript_include_tag 'utils' %>
-<%= javascript_include_tag 'autocomplete' %>
 </div>

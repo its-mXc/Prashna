@@ -1,19 +1,22 @@
-<%= form_with(model: @user, url: update_password_path, local: true) do |form| %>
+<div class="password-container">
   <%= render 'shared/errors', object: @user %>
+  <h3>Change password</h3>
+  <%= form_with(model: @user, url: update_password_path, local: true) do |form| %>
 
-  <%= form.hidden_field :password_reset_token, value: @user.password_reset_token%>
+    <%= form.hidden_field :password_reset_token, value: @user.password_reset_token%>
 
-  <div class="form-field">
-    <%= form.label :password %>
-    <%= form.password_field :password, class:"form-control" %>
-  </div>
+    <div class="form-field password-field">
+      <%= form.label :password %>
+      <%= form.password_field :password, class:"form-control" %>
+    </div>
 
-  <div class="form-field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation,class: "form-control"  %>
-  </div>
+    <div class="form-field password-field">
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation,class: "form-control"  %>
+    </div>
 
-  <br>
-  
-  <%= form.submit 'Update Password', class: "btn btn-primary" %>
-<% end %>
+    <br>
+    
+    <%= form.submit 'Update Password', class: "btn btn-primary" %>
+  <% end %>
+</div>

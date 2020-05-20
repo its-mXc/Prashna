@@ -1,0 +1,33 @@
+<div class="question-container">
+  <%= render  "shared/errors", object: @question %>
+  <div>Post your question<br></div>
+  <%= form_with scope: :question, url: questions_url, local: true do |f| %>
+    <div class="form-field question-field">
+      <%= f.text_field :title, placeholder: "title", class: "form-control" %>
+    </div>
+    
+    <div class="form-field question-field" >
+      <%= f.text_area :content, placeholder: "content", class: "form-control" %>
+    </div>
+
+    <div class="form-field question-field">
+      <%= f.label :topics %>
+      <% if @question.errors.any? %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names] %>
+      <% else %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}%>
+      <% end %>
+    </div>
+
+    <div class="form-field">
+      <%= f.file_field :file, class: "form-control-file" %><br>
+    </div>
+
+
+    <%= f.submit "Publish", class: "btn btn-danger" %>
+    <%= f.submit "Draft", class: "btn btn-primary" %>
+
+    <%= javascript_pack_tag "question" %>
+    
+  <% end %>
+</div>

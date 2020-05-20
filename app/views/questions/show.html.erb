@@ -1,0 +1,62 @@
+<div>
+  <div class="jumbotron question-container">
+    <%= render  "shared/notice", object: @question %>
+    <div class = 'row'>
+      <div class="col-md-2">
+       <h1 class="display-3 text-center align-middle" >
+        <%= form_for @question , url: reaction_question_path(@question) ,local: true, method: :get do |f| %>
+          <%= f.submit :upvote, class: "btn  upvote", data: { toggle: "tooltip", title: @question.reactions.upvotes.count } %>
+          <%= @question.reaction_count %>
+          <%= f.submit :downvote, class: "btn  downvote" %>
+        <% end %>
+      </h1>
+      </div>
+      <div class="col-md-10">
+        <h1 class="display-3"><%= @question.title %></h1>
+      </div>
+    </div>
+
+    <p class = 'font-weight-bold'>
+      <span>Posted by <%= link_to @question.user.name, questions_path(user: @question.user) %></span> <%= time_ago_in_words(@question.get_published_at)-%> ago
+        <% @question.topic_names.each do |topic_name|  %>
+          <span class="badge badge-primary p-2"><%= topic_name %></span>
+        <% end %>
+        <% if @question.editable? && @question.user == current_user %>
+        <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning float-right' %>
+        <% end %>
+    </p>
+
+    <p class="mt-4 lead"><%= @question.content  %></p>
+    <% if @question.file.attached? %>
+      <% if @question.file.blob.content_type =~ /image/ %>
+        <strong>Attached: </strong><%= @question.file.filename %><br>
+        <%= image_tag(@question.file, size: "200") %>
+      <% else %>
+        <strong>Attached: </strong><%= link_to  @question.file.filename, url_for(@question.file) %>
+      <% end %>
+    <% end %><br>
+    <hr class="my-4">
+
+
+    <p class="lead">
+      <br>
+      <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
+        <%= form_for [@question, Comment.new] do |f| %>
+        <div class="form-group">
+          <%= f.text_area :body, placeholder: "Add a comment", class: "form-control" %>
+        </div>
+        <% #FIXME_AB: I18n -%>
+        <%= f.submit "Add Comment", class: "btn btn-primary" %>
+      <% end %>
+        <br>
+        <h3 class="display-5">Comments</h3>
+        <ul>
+          <%= render @question.comments %>
+        </ul>
+    </p>
+  </div>
+
+  <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
+  <%= javascript_pack_tag "comments" %>
+
+</div>

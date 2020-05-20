@@ -1,6 +1,5 @@
 namespace :admin do
   desc 'Make a new admin'
-  #FIXME_AB: why do we need :environment here, what if I don write this here. Read and explain to me
   task new: :environment do
 
     def get_attr_value(attr)

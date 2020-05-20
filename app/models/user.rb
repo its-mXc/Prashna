@@ -1,8 +1,8 @@
 class User < ApplicationRecord
-  has_secure_password
-  has_one_attached :avatar
+  enum user_type: { user: 0, admin: 1 }
 
-  has_many :credit_transactions, dependent: :restrict_with_error
+  has_secure_password
+
 
   validates :email, presence: true
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
@@ -10,23 +10,34 @@ class User < ApplicationRecord
   validates :password, length: {minimum: 6}, unless: -> { password.blank? }
   validates :password, presence: true, on: :password_entered
   validates :name, presence: true
+  validates :password, format: { with: REGEXP[:password_format], message: "should have at-least one number, one uppercase character, one lowercase character and one special character." }, unless: -> { password.blank? }
 
 
-  validates :password, format: { with: REGEXP[:password_format], message: "should have atleast one number, one uppercase character, one lowercase character and one special character." }, unless: -> { password.blank? }
 
-  has_many :user_topics , dependent: :destroy
-  has_many :topics, through: :user_topics
+  has_one_attached :avatar
+
+  with_options dependent: :destroy do |assoc|
+    assoc.has_many :comments
+    assoc.has_many :user_topics
+    assoc.has_many :notifications
+    assoc.has_many :topics, through: :user_topics
+
+  end
+
+  with_options dependent: :restrict_with_error do |assoc|
+    assoc.has_many :credit_transactions
+    assoc.has_many :reactions
+    assoc.has_many :questions
+  end
 
   before_create :generate_confirmation_token
   after_commit :send_confirmation_mail, on: :create
 
   def verify!
     unless self.verified_at
+      credit_transactions.create(amount: ENV['signup_credits'].to_i, transaction_type: CreditTransaction.transaction_types["signup"])
       self.verified_at = Time.current
       self.confirmation_token = nil
-      credit_trasnaction = self.credit_transactions.new(amount: ENV['signup_credits'].to_i)
-      credit_trasnaction.transaction_type = CreditTransaction.transaction_types["signup"]
-      credit_trasnaction.save
       save
     end
   end
@@ -42,7 +53,9 @@ class User < ApplicationRecord
   end
 
   private def send_confirmation_mail
-    UserMailer.send_confirmation_mail(self.id).deliver_now
+    if self.user?
+      UserMailer.send_confirmation_mail(self.id).deliver_later
+    end
   end
 
   private  def generate_confirmation_token
@@ -53,6 +66,18 @@ class User < ApplicationRecord
     self.password_reset_token  = nil
     self.password_token_expire_at = nil
     self.save
+  end
+
+  def refresh_credits!
+    self.credit_balance = reload.credit_transactions.sum(:amount)
+    save!
+  end
+
+  def mark_notification_viewed(notificable)
+    notification = notifications.find_by(notificable: notificable)
+    if notification
+      notification.mark_viewed!
+    end
   end
 
 end
