@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     member do
       post :set_avatar
       post :set_topics
+      get :questions
     end
   end
 

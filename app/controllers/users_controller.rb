@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update, :destroy]
+  before_action :set_user, only: [:update, :destroy, :questions]
   before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics]
   before_action :ensure_not_logged_in, only:[:new, :create, :verify]
 
@@ -63,10 +63,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def questions
+    @questions = @user.questions.published
+  end
+
   private def set_user
-      @user = User.find(params[:id])
+    @user = User.find(params[:id])
+    unless @user
       redirect_to root_path, notice: t('.user_doesnt_exist')
     end
+  end
 
   private def user_params
       params.require(:user).permit(:name, :password, :password_confirmation, :email, :avatar, :topic_names)

@@ -94,7 +94,7 @@
 
     def reaction
       @question.record_reaction(params[:commit], current_user)
-      redirect_to @question, notice: t('.reaction_submitted')
+      redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
     end
 
     private def ensure_positive_balance
@@ -151,7 +151,7 @@
 
     private def ensure_not_voting_own_question
       if current_user == @question.user
-        redirect_to @question, notice: t('.cannot_vote_own_question')
+        redirect_back fallback_location: @question, notice: t('.cannot_vote_own_question')
       end
     end
 
