@@ -13,9 +13,9 @@
     <div class="form-field question-field">
       <%= f.label :topics %>
       <% if @question.errors.any? %>
-        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names] %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names], title: "Comma seperated topics" %>
       <% else %>
-        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}%>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, title: "Comma seperated topics"%>
       <% end %>
     </div>
 

@@ -2,29 +2,30 @@
   <div class="jumbotron question-container">
     <%= render  "shared/notice", object: @question %>
     <div class = 'row'>
-      <div class="col-md-2">
-       <h1 class="display-3 text-center align-middle" >
-        <%= form_for @question , url: reaction_question_path(@question) ,local: true, method: :get do |f| %>
-          <%= f.submit :upvote, class: "btn  upvote", data: { toggle: "tooltip", title: @question.reactions.upvotes.count } %>
-          <%= @question.reaction_count %>
-          <%= f.submit :downvote, class: "btn  downvote" %>
-        <% end %>
-      </h1>
-      </div>
       <div class="col-md-10">
         <h1 class="display-3"><%= @question.title %></h1>
       </div>
     </div>
 
     <p class = 'font-weight-bold'>
-      <span>Posted by <%= link_to @question.user.name, questions_path(user: @question.user) %></span> <%= time_ago_in_words(@question.get_published_at)-%> ago
+      <span>Posted by <%= link_to @question.user.name, questions_user_path(@question.user) %></span> <%= time_ago_in_words(@question.published_at)-%> ago in 
         <% @question.topic_names.each do |topic_name|  %>
           <span class="badge badge-primary p-2"><%= topic_name %></span>
-        <% end %>
+        <% end %><br>
         <% if @question.editable? && @question.user == current_user %>
-        <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning float-right' %>
+        <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning' %>
         <% end %>
     </p>
+    <% if current_user != @question.user %>
+
+      <%= form_for @question , url: reaction_question_path(@question) ,local: true, method: :get do |f| %>
+        <%= f.submit :upvote, class: "btn  upvote", title: @question.reactions.upvotes.count  %>
+        <%= @question.reaction_count %>
+        <%= f.submit :downvote, class: "btn  downvote", title: @question.reactions.downvotes.count  %>
+      <% end %>
+    <% else %>
+      <strong>Upvotes: </strong><%= @question.reaction_count %>
+    <% end %>
 
     <p class="mt-4 lead"><%= @question.content  %></p>
     <% if @question.file.attached? %>
@@ -35,7 +36,8 @@
         <strong>Attached: </strong><%= link_to  @question.file.filename, url_for(@question.file) %>
       <% end %>
     <% end %><br>
-    <hr class="my-4">
+    <hr class="my-2">
+
 
 
     <p class="lead">
@@ -43,16 +45,18 @@
       <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
         <%= form_for [@question, Comment.new] do |f| %>
         <div class="form-group">
-          <%= f.text_area :body, placeholder: "Add a comment", class: "form-control" %>
+          <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field" %>
         </div>
         <% #FIXME_AB: I18n -%>
         <%= f.submit "Add Comment", class: "btn btn-primary" %>
       <% end %>
         <br>
-        <h3 class="display-5">Comments</h3>
-        <ul>
-          <%= render @question.comments %>
-        </ul>
+        <% if @question.comments.any? %>
+          <h3 class="display-5">Comments</h3>
+          <ul>
+            <%= render @question.comments %>
+          </ul>
+        <% end %>
     </p>
   </div>
 
