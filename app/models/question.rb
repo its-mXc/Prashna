@@ -43,6 +43,7 @@ class Question < ApplicationRecord
   end
 
   private def create_question_transaction
+    #FIXME_AB: should be -1 * ENV['question_post_debit']
     if user.credit_transactions.create(amount: -ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"])
     else
       throw :abort
