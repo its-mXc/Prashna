@@ -44,7 +44,7 @@
             <div id="notifications">
               <ul>
                 <% if current_user.notifications.not_viewed.any? %>
-                  <%= render current_user.notifications.not_viewed.distinct %>
+                  <%= render current_user.notifications %>
                 <% else %>
                   <li class="list-group-item d-flex justify-content-between align-items-center">You have no notifications</li>
                 <% end %>
@@ -58,7 +58,9 @@
   <% if logged_in? %>
     <%= button_to "Refresh Notification", user_notifications_path(current_user), method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
   <% end %>
+  
   <%= javascript_pack_tag 'notification' %>
+  
   </body>
 
 

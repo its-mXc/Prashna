@@ -6,6 +6,6 @@ class TopicController < ApplicationController
   def index
     #FIXME_AB: pluck
     @topics = Topic.search(params[:term]).distinct
-    render json: @topics.map(&:name)
+    render json: @topics.pluck(:name)
   end
 end

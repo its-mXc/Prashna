@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :topic, only: [:index]
 
   #FIXME_AB: question resources
-  # post 'questions/create'
-  patch 'questions/:id', to: 'questions#draft1', constraints: lambda {|r| r.params[:commit] == 'Draft' }
+  patch 'questions/:id', to: 'questions#draft_update', constraints: lambda {|r| r.params[:commit] == 'Draft' }
+  patch 'questions/:id', to: 'questions#draft_publish_update', constraints: lambda {|r| r.params[:commit] == 'Publish' }
 
   resources :questions do
     collection do

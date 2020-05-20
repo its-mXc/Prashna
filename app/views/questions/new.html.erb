@@ -12,7 +12,11 @@
 
     <div class="form-field question-field">
       <%= f.label :topics %>
-      <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path} %>
+      <% if @question.errors.any? %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names] %>
+      <% else %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}%>
+      <% end %>
     </div>
 
     <div class="form-field">
@@ -24,5 +28,6 @@
     <%= f.submit "Draft", class: "btn btn-primary" %>
 
     <%= javascript_pack_tag "question" %>
+    
   <% end %>
 </div>

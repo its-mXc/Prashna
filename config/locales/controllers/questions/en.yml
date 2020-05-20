@@ -7,9 +7,11 @@ en:
       question_posted: "Question posted"
     edit:
       cannot_edit: "Cannot edit, has  been interacted"
+      cannot_find_question: "No such question exist"
       not_author: "You are not the author for the question"
-    update:
+    draft_update:
       draft_changed: "Draft changed"
+    update:
       question_updated: "Question updated"
       not_author: "You are not the author for the question"
     publish:

@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_back fallback_location: root_path, notice: t('.comment_posted')
     else
-      redirect_back fallback_location: root_path, notice: t('.minimum_words')
+      redirect_back fallback_location: root_path, notice: t('.minimum_words', word_count: ENV['comment_word_length'])
     end
   end
 

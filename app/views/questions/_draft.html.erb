@@ -1,23 +1,23 @@
 <% #FIXME_AB: fix this -%>
-<% questions.each do |question| %>
+<% drafts.each do |draft| %>
   <div>
     <h3>
-      <%= question.title %>
+      <%= draft.title %>
     </h3>
     </p>
-      <%= question.content  %>
+      <%= draft.content  %>
     <p>
       <% #FIXME_AB: everywhere, if attachment is image show thumbnail else link of file -%>
-    <% if question.pdf_file.attached? %>
-      <%= link_to  question.pdf_file.filename, url_for(question.pdf_file) %>
+    <% if draft.pdf_file.attached? %>
+      <%= link_to  draft.pdf_file.filename, url_for(question.pdf_file) %>
     <% end %><br>
-    <% question.topic_names.each do |topic_name|  %>
+    <% draft.topic_names.each do |topic_name|  %>
       <span class="badge badge-primary"><%= topic_name %></span>
     <% end %><br>
-    <small>Submitted <%= time_ago_in_words(question.created_at) %> ago</small><br>
+    <small>Submitted <%= time_ago_in_words(draft.created_at) %> ago</small><br>
 
-    <%= link_to  "Post", publish_question_path(question), class: "text-success" %>
-    <%= link_to  "Edit", edit_question_path(question), class: "text-danger" %>
+    <%= link_to  "Post", publish_question_path(draft), class: "text-success" %>
+    <%= link_to  "Edit", edit_question_path(draft), class: "text-danger" %>
   </div>
   <hr class="my-4">
 <% end %>
