@@ -74,7 +74,8 @@ class User < ApplicationRecord
   end
 
   def mark_notification_viewed(notificable)
-    notification = notifications.find_by(notificable: notificable)
+    notification = notifications.find_by(notificable_type: notificable.class.name, notificable_id: notificable.id)
+    p notification
     if notification
       notification.mark_viewed!
     end

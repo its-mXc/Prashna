@@ -44,7 +44,7 @@
             <div id="notifications">
               <ul>
                 <% if current_user.notifications.not_viewed.any? %>
-                  <%= render current_user.notifications %>
+                  <%= render current_user.notifications.not_viewed %>
                 <% else %>
                   <li class="list-group-item d-flex justify-content-between align-items-center">You have no notifications</li>
                 <% end %>

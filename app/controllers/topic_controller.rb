@@ -1,5 +1,5 @@
 class TopicController < ApplicationController
-  before_action :ensure_logged_in
+  before_action :ensure_logged_in, only: :index
   before_action :set_topic, only: :questions
 
   def index
@@ -9,7 +9,7 @@ class TopicController < ApplicationController
 
   def questions
     @topic = Topic.find_by(id: params[:id])
-    @questions = @topic.questions
+    @questions = @topic.questions.published
   end
   
   private def set_topic
