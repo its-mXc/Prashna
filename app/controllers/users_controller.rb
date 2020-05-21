@@ -52,11 +52,14 @@ class UsersController < ApplicationController
 
     topics = []
     topic_names.each do |topic_name|
-      topics << Topic.find_or_create_by(name: topic_name)
+      topic = Topic.find_or_create_by(name: topic_name)
+      unless topic.errors.any?
+        topics << topic
+      end
     end
 
     current_user.topics = topics
-    if topic_names.any?
+    if topics.any?
       redirect_to my_profile_path, notice: t('.topics_added')
     else
       redirect_to my_profile_path, notice: t('.topics_removed')

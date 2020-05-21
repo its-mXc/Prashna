@@ -26,12 +26,6 @@
           </div>
 
           <div class="row user-info">
-            <strong>Credit:</strong>
-            <% #FIXME_AB: we'll make this link later so that user can see his credit history -%>
-            <%= current_user.credit_balance %>
-          </div>
-
-          <div class="row user-info">
             <strong>Followers count:</strong>
             <%= current_user.followers_count %>
           </div>
@@ -53,13 +47,44 @@
 
   </div>
 
+  <hr class="my-4 border-white">
 
-  <hr class="my-4">
-  <h3>Questions</h3>
-  <hr class="my-5">
-  <%= render current_user.questions.published %>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#questions">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#drafts">Drafts</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#transaction-history">Transaction History</a>
+    </li>
+  </ul>
 
-  
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade show active" id="questions">
+       <%= render current_user.questions.published %>
+    </div>
+    <div class="tab-pane fade" id="drafts">
+       <%= render  "questions/draft", drafts: current_user.questions.draft %>
+    </div>
+    <div class="tab-pane fade" id="transaction-history">
+      <table class="table table-hover border-danger">
+        <thead>
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Credits</th>
+            <th scope="col">Credit Balance</th>
+            <th scope="col">Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render current_user.credit_transactions.reverse %>
+        </tbody>
+      </table>
+      <strong>Credit Balance : <%= current_user.credit_balance %></strong>
+    </div>
+  </div>
   
   <%= javascript_pack_tag 'current_user_profile.js' %>
 

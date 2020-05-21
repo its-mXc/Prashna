@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to question_path(@comment.question), notice: t('.comment_posted')
     else
-      redirect_to question_path(@comment.question, parent_comment_id: @commentable.id, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
+      redirect_to question_path(@comment.question, parent_commentable_id: @commentable.id, parent_commentable_type: @commentable.class.name, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
     end
   end
 
@@ -28,7 +28,8 @@ class CommentsController < ApplicationController
 
   def reaction
     @comment.record_reaction(params[:commit], current_user)
-    redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
+    render json: { reactable: @comment, timestamp: Time.current }
+    # redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
   end
 
 

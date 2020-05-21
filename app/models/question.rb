@@ -7,9 +7,11 @@ class Question < ApplicationRecord
   define_model_callbacks :mark_published, only: :before
   define_model_callbacks :mark_published, only: :after
 
+  validates :title, presence: true
   validates :title, uniqueness: { case_sensitive: true }
   validates :content, presence: true
-  validates :content, length:{ minimum: ENV["minimum_question_char_length"].to_i, maximum: ENV["maximum_question_char_length"].to_i }
+  validates :content, length:{ minimum: ENV["minimum_question_char_length"].to_i, maximum: ENV["maximum_question_char_length"].to_i }, unless: -> {self.content.blank?}
+  validates :topics, presence: true
 
   belongs_to :user
   has_one_attached :file
@@ -22,6 +24,8 @@ class Question < ApplicationRecord
   before_mark_published :create_question_transaction
   after_mark_published :generate_url_slug
   after_mark_published :generate_notifications
+
+  scope :search, ->(term) { published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten }
 
 
 

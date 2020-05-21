@@ -1,0 +1,7 @@
+<div class="question-container">
+  <% if @questions.any? %>
+    <%= render @questions %>
+  <% else %>
+    <h2>Cannot find questions for keyword </h2>
+  <% end %>
+</div>

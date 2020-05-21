@@ -16,4 +16,5 @@ $(document).ready(function() {
 
   let persisistnetNotification = new PersistentAction(persisistnetNotificationOptions)
   persisistnetNotification.init()
+
 })

@@ -16,6 +16,12 @@
         <%= link_to  "Prashna", root_path, class: "navbar-brand" %>
       </div>
 
+      <div id="searchbar">
+        <%= form_with scope: :question, url: search_questions_url , local: true, method: :get do |f| %>
+          <%= f.search_field :search, class: "w-50", placeholder: "Type and enter to search" , value: params.dig(:question, :search) %>
+        <% end %>
+      </div>
+
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav mr-auto">
             <% if logged_in? %>
@@ -60,6 +66,7 @@
   <% end %>
   
   <%= javascript_pack_tag 'notification' %>
+  <%= javascript_pack_tag 'vote' %>
   
   </body>
 

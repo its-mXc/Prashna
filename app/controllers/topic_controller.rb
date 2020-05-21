@@ -1,5 +1,4 @@
 class TopicController < ApplicationController
-  before_action :ensure_logged_in, only: :index
   before_action :set_topic, only: :questions
 
   def index

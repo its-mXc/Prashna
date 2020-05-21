@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :questions do
     collection do
       get 'drafts'
+      get 'search'
     end
     member do
       get 'publish'
