@@ -2,6 +2,8 @@
   <tr class="table-success">
 <%  elsif credit_transaction.debit? %>
   <tr class="table-danger">
+<%  elsif credit_transaction.revert? %>
+  <tr class="table-warning">
 <% else %>
   <tr class="table-info">
 <% end %>
