@@ -42,6 +42,8 @@ class Answer < ApplicationRecord
   end
 
   private def notify_question_author
-    UserMailer.send_question_answered_mail(self.id).deliver_later
+    unless question.user == user
+      UserMailer.send_question_answered_mail(self.id).deliver_later
+    end
   end
 end
