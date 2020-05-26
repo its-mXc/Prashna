@@ -20,9 +20,9 @@ class Answer < ApplicationRecord
   end
 
   private def check_popularity
-    if self.reaction_count >= 1
+    if self.reaction_count >= ENV["popular_question_votes"].to_i
       unless PopularQuestion.find_by(answer: self)
-        transaction = CreditTransaction.create(user: self.user, transaction_type: "popular", amount: 2)
+        transaction = CreditTransaction.create(user: self.user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_vcredits"].to_i)
         PopularQuestion.create(credit_transaction_id: transaction.id, answer: self)
         user.refresh_credits!
       end
