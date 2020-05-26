@@ -5,6 +5,7 @@
   </p>
     <%= question.content  %>
   <p>
+  <% #FIXME_AB: question.posted_by?(user)  -%>
   <% if current_user != question.user && logged_in? %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
       <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count %>
@@ -22,7 +23,7 @@
   <% end %>
   <hr class="my-2 w-50">
    <p>
-      <span>Posted by <%= link_to question.user.name, question.user %></span> <%= time_ago_in_words(question.published_at)-%> ago in 
+      <span>Posted by <%= link_to question.user.name, question.user %></span> <%= time_ago_in_words(question.published_at)-%> ago in
         <% question.topics.each do |topic|  %>
           <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
         <% end %><br>
