@@ -1,5 +1,9 @@
+import {Reaction} from '../classes/reaction'
 $(document).ready(function() {
-  $('.vote').on('ajax:success', function(event){
-    $(this).find($('.reaction_count')).text(event.detail[0].reactable.reaction_count)
-  })
+  let reaction_options = {
+    eventGeneratorElement: $('.vote')
+  }
+
+  let vote = new Reaction(reaction_options)
+  vote.init()
 })
