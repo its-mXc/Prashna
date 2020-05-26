@@ -15,6 +15,6 @@ class CreditTransaction < ApplicationRecord
   end
 
   def revert
-    CreditTransaction.create(amount: -self.amount, transaction_type: "revert", user: user)
+    CreditTransaction.create(amount: -self.amount, transaction_type: CreditTransaction.transaction_types["revert"], user: user)
   end
 end

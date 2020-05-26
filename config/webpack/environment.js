@@ -15,7 +15,8 @@ Popper: ['popper.js', 'default']
 
 
 const aliasConfig = {
-  'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
+  'jquery-ui': 'jquery-ui-dist/jquery-ui.js',
+  'loading-overlay': 'gasparesganga-jquery-loading-overlay/dist/loadingoverlay.js'
 };
 
 environment.config.set('resolve.alias', aliasConfig);

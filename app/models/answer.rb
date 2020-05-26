@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   include ReactionRecorder
 
+  validates :body, presence: true
   validates :question_id, uniqueness: { scope: :user_id }
   validate :question_is_published
 
