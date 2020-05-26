@@ -22,11 +22,12 @@
   <% end %>
   <hr class="my-2 w-50">
    <p>
-      <span>Posted by <%= link_to question.user.name, questions_user_path(question.user) %></span> <%= time_ago_in_words(question.published_at)-%> ago in 
+      <span>Posted by <%= link_to question.user.name, question.user %></span> <%= time_ago_in_words(question.published_at)-%> ago in 
         <% question.topics.each do |topic|  %>
           <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
         <% end %><br>
     </p>
+  <p><%= question.answers.count %> answers</p>
   <p><%= question.comments.count %> comments</p>
 </div>
 <hr class="my-2 border-danger">

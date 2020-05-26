@@ -44,6 +44,9 @@ class CommentsController < ApplicationController
     elsif params[:question_id]
       @commentable = Question.published.find_by_url_slug(params[:question_id])
       @question = @commentable
+    elsif params[:answer_id]
+      @commentable = Answer.find_by_id(params[:answer_id])
+      @question = @commentable.question
     end
   end
 

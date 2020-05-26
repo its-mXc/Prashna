@@ -1,12 +1,12 @@
   <li id="comment-<%= comment.id %>">
     <% if current_user == comment.user %>
-    <strong><%= link_to "#{comment.user.name}🎙", questions_user_path(comment.user), class: "text-danger" %></strong><br>
+    <strong><%= link_to "#{comment.user.name}🎙", comment.user, class: "text-danger" %></strong><br>
     <% else %>
-    <strong><%= link_to comment.user.name, questions_user_path(comment.user), class: "text-success" %></strong><br>
+    <strong><%= link_to comment.user.name, comment.user, class: "text-success" %></strong><br>
     <% end %>
     <%= comment.body %> -
     <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
-    <% if current_user != comment.user && logged_in? %>
+    <% if logged_in? && current_user != comment.user %>
       <%= form_for @question , url: reaction_comment_path(comment) ,remote: true, method: :get, html: {class: "vote"} do |f| %>
         <%= f.submit :upvote, class: "btn  upvote", title: comment.reactions.upvotes.count%>
         <span class="reaction_count"><%= comment.reaction_count %></span>
@@ -15,7 +15,9 @@
     <% else %>
      <p><strong>Votes : </strong><%= comment.reaction_count %></p>
     <% end %>
-    <% if params[:parent_commentable_id].to_i == comment.id && params[:parent_commentable_type] == "Comment" %>
+
+   
+    <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>
       <div class="reply-btn nested pre-filled text-success">Reply</div>
     <% else %>
       <div class="reply-btn nested text-success">Reply</div>
@@ -23,7 +25,7 @@
     <div class="reply-form">
       <%= form_for [comment, Comment.new] do |f| %>
         <div class="form-group">
-          <% if params[:parent_commentable_id].to_i == comment.id && params[:parent_commentable_type] == "Comment" %>
+          <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>
             <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field", value: params[:comment_body] %>
           <% else  %>
             <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field" %>

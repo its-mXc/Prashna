@@ -1,5 +1,5 @@
 class CreditTransaction < ApplicationRecord
-  enum transaction_type: { signup: 0, purchase: 1, debit: 2 }
+  enum transaction_type: { signup: 0, purchase: 1, debit: 2, popular: 3, revert: 4 }
 
   belongs_to :user
 
@@ -14,4 +14,7 @@ class CreditTransaction < ApplicationRecord
     user.refresh_credits!
   end
 
+  def revert
+    CreditTransaction.create(amount: -self.amount, transaction_type: "revert", user: user)
+  end
 end

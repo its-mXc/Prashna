@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update, :destroy, :questions]
+  before_action :set_user, only: [:update, :destroy, :questions, :show]
   before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics]
   before_action :ensure_not_logged_in, only:[:new, :create, :verify]
 
@@ -19,6 +19,10 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show
+    
   end
 
   def current_user_profile

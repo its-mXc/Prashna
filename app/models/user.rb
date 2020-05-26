@@ -21,7 +21,7 @@ class User < ApplicationRecord
     assoc.has_many :user_topics
     assoc.has_many :notifications
     assoc.has_many :topics, through: :user_topics
-
+    assoc.has_many :answers
   end
 
   with_options dependent: :restrict_with_error do |assoc|

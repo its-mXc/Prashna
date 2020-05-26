@@ -8,7 +8,7 @@
     </div>
 
     <p class = 'font-weight-bold'>
-      <span>Posted by <%= link_to @question.user.name, questions_user_path(@question.user) %></span> <%= time_ago_in_words(@question.published_at)-%> ago in 
+      <span>Posted by <%= link_to @question.user.name, (@question.user) %></span> <%= time_ago_in_words(@question.published_at)-%> ago in 
         <% @question.topics.each do |topic|  %>
           <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
         <% end %><br>
@@ -17,7 +17,6 @@
         <% end %>
     </p>
     <% if current_user != @question.user && logged_in? %>
-
       <%= form_for @question , url: reaction_question_path(@question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
         <%= f.submit :upvote, class: "btn  upvote", title: @question.reactions.upvotes.count  %>
         <span class="reaction_count"><%= @question.reaction_count %></span>
@@ -42,29 +41,55 @@
 
     <p class="lead">
       <br>
-      <% #FIXME_AB: for voting use ajax. user himself can not vote. -%>
-        <%= form_for [@question, Comment.new] do |f| %>
-        <div class="form-group">
-          <% if params[:parent_commentable_id].to_i == @question.id && params[:parent_commentable_type] == "Question"  %>
-            <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field", value: params[:comment_body] %>
-          <% else %>
-            <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field" %>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#answers">Answers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#comments">Comments</a>
+        </li>
+      </ul>
+
+      <div id="myTabContent" class="tab-content m-2">
+        <div class="tab-pane fade show active" id="answers">
+          <% if logged_in? && !@question.answered_by_user?(current_user)%>
+            <%= form_for [@question, Answer.new] do |f| %>
+              <div class="form-group">
+                <%= f.text_area :body, placeholder: "Write your answer", class: "form-control question-field" %>
+              </div>
+              <%= f.submit "Answer", class: "btn btn-danger" %>
+            <% end %>
+          <% end %>
+          <%= render @question.answers.order_by_vote %>
+        </div>
+        <div class="tab-pane fade show" id="comments">
+            <% if logged_in? %>
+            <%= form_for [@question, Comment.new] do |f| %>
+              <div class="form-group">
+                <% if params[:parent_commentable_id].to_i == @question.id && params[:parent_commentable_type] == "Question"  %>
+                  <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field", value: params[:comment_body] %>
+                <% else %>
+                  <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field" %>
+                <% end %>
+              </div>
+              <% #FIXME_AB: I18n -%>
+              <%= f.submit "Add Comment", class: "btn btn-primary" %>
+            <% end %>
+            <br>
+            <% if @question.comments.any? %>
+              <h3 class="display-5">Comments</h3>
+              <ul>
+                <%= render @question.comments %>
+              </ul>
+            <% end %>
           <% end %>
         </div>
-        <% #FIXME_AB: I18n -%>
-        <%= f.submit "Add Comment", class: "btn btn-primary" %>
-      <% end %>
-        <br>
-        <% if @question.comments.any? %>
-          <h3 class="display-5">Comments</h3>
-          <ul>
-            <%= render @question.comments %>
-          </ul>
-        <% end %>
+      </div>
     </p>
   </div>
 
   <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
   <%= javascript_pack_tag "comments" %>
+  <%= javascript_pack_tag "answer_comments" %>
 
 </div>

@@ -22,8 +22,15 @@ Rails.application.routes.draw do
       get 'reaction'
     end
     resources :comments,  only: [:new, :create]
+    resources :answers,  only: [:new, :create]
   end
 
+  resources :answers,  only: [:new, :create, :show] do
+      member do
+        get 'reaction'
+      end
+      resources :comments,  only: [:new, :create]
+    end
 
 
   resources :comments, only: [:new, :create, :show] do

@@ -1,6 +1,6 @@
-<% if credit_transaction.transaction_type == "signup"  %>
+<% if credit_transaction.signup?  %>
   <tr class="table-success">
-<%  elsif credit_transaction.transaction_type == "debit" %>
+<%  elsif credit_transaction.debit? %>
   <tr class="table-danger">
 <% else %>
   <tr class="table-info">

@@ -1,0 +1,36 @@
+<div id="answer-<%= answer.id %>">
+  <%= answer.body %>
+  <br>    
+  <small> Posted by <%= link_to answer.user.name, answer.user, class: "text-success" %> <%= time_ago_in_words(answer.created_at) %> ago</small><br>
+  <% if current_user != answer.user && logged_in? %>
+    <%= form_for @question , url: reaction_answer_path(answer) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
+      <%= f.submit :upvote, class: "btn  upvote", title: answer.reactions.upvotes.count  %>
+      <span class="reaction_count"><%= answer.reaction_count %></span>
+      <%= f.submit :downvote, class: "btn  downvote", title: answer.reactions.downvotes.count  %>
+    <% end %>
+  <% else %>
+    <strong>Votes : </strong><%= answer.reaction_count %>
+  <% end %>
+  <% if params[:parent_commentable_id].to_i == answer.id && params[:parent_commentable_type] == "Answer" %>
+    <div class="reply-btn nested pre-filled text-success">Reply</div>
+  <% else %>
+    <div class="reply-btn nested text-success">Reply</div>
+  <% end %>
+  <div class="reply-form">
+    <%= form_for [answer, Comment.new] do |f| %>
+      <div class="form-group">
+        <% if params[:parent_commentable_id].to_i == answer.id && params[:parent_commentable_type] == "Answer" %>
+          <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field", value: params[:comment_body] %>
+        <% else  %>
+          <%= f.text_area :body, placeholder: "Add a Reply", class: "form-control reply-comment-field" %>
+        <% end  %>
+      </div>
+      <%= f.submit "Reply", class: "btn btn-danger"  %>
+    <% end %>
+  </div>
+    <div class="comments-btn nested text-success">Comments</div>
+    <div class="comments-answers" id="answer-<%= answer.id %>-comments">
+      <%= render answer.comments %>
+    </div>
+</div>
+<hr class="my-4 border-success">

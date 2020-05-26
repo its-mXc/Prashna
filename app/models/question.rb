@@ -19,6 +19,7 @@ class Question < ApplicationRecord
   has_many :topics, through: :question_topics
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :answers, dependent: :restrict_with_error
 
   before_mark_published :has_needed_credit_balance
   before_mark_published :create_question_transaction
@@ -65,6 +66,10 @@ class Question < ApplicationRecord
       return true
     end
 
+    if self.answers.any?
+      return true
+    end
+
     if self.comments.any?
       return true
     end
@@ -98,6 +103,10 @@ class Question < ApplicationRecord
 
   def editable?
     !interacted?
+  end
+
+  def answered_by_user?(user)
+    return !!answers.find_by(user_id: user.id)
   end
 
 end

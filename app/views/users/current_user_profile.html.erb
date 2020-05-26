@@ -57,6 +57,9 @@
       <a class="nav-link" data-toggle="tab" href="#drafts">Drafts</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#answers">Answers</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#transaction-history">Transaction History</a>
     </li>
   </ul>
@@ -67,6 +70,9 @@
     </div>
     <div class="tab-pane fade" id="drafts">
        <%= render  "questions/draft", drafts: current_user.questions.draft %>
+    </div>
+    <div class="tab-pane fade" id="answers">
+       <%= render "answers/user_answers", user_answers: current_user.answers %>
     </div>
     <div class="tab-pane fade" id="transaction-history">
       <table class="table table-hover border-danger">
@@ -85,6 +91,7 @@
       <strong>Credit Balance : <%= current_user.credit_balance %></strong>
     </div>
   </div>
+  
   
   <%= javascript_pack_tag 'current_user_profile.js' %>
 
