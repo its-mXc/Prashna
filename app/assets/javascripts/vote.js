@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
   let reaction_options = {
     eventGeneratorElement: $('.vote')
   }

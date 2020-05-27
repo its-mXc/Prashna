@@ -1,4 +1,4 @@
-  <li class='list-group-item border-left pl-4 border-warning  m-2' id="comment-<%= comment.id %>">
+  <li class='pl-2 border-left border-warning list-unstyled ' id="comment-<%= comment.id %>">
     <% #FIXME_AB: comment.posted_by?(current_user) -%>
     <% if current_user == comment.user %>
       <strong><%= link_to "#{comment.user.name}🎙", comment.user, class: "text-danger" %></strong><br>
@@ -14,14 +14,14 @@
         <%= f.submit :downvote, class: "btn  downvote", title: comment.reactions.downvotes.count%>
       <% end %>
     <% else %>
-     <p><strong>Votes : </strong><%= comment.reaction_count %></p>
+     <br><strong>Votes : </strong><%= comment.reaction_count %>
     <% end %>
 
 
     <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>
-      <div class="btn btn-warning reply-btn nested pre-filled ">Reply</div>
+      <div class="reply-btn nested pre-filled text-success">Reply</div>
     <% else %>
-      <div class="btn btn-warning reply-btn nested ">Reply</div>
+      <div class="reply-btn nested text-success">Reply</div>
     <% end %>
     <div class="reply-form m-2 ">
       <%= form_for [comment, Comment.new] do |f| %>
@@ -35,9 +35,8 @@
         <%= f.submit "Reply", class: "btn btn-danger"  %>
       <% end %>
     </div>
-    <ul>
+    <ul class="m-2">
         <%= render comment.comments %>
     </ul>
-
 
   </li>

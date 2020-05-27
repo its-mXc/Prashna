@@ -49,10 +49,19 @@
 
   <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="questions">
-       <%= render @user.questions.published %>
+      <% if @user.questions.published.any? %>
+        <%= render @user.questions.published %>
+      <% else %>
+        <h6>No Questions</h6>
+      <% end %>
     </div>
     <div class="tab-pane fade" id="answers">
-       <%= render "answers/user_answers", user_answers: @user.answers %>
+      <div class="tab-pane fade show active" id="questions">
+      <% if @user.answers.any? %>
+        <%= render "answers/user_answers", user_answers: @user.answers %>
+      <% else %>
+        <h6>No Answers</h6>
+      <% end %>
     </div>
   </div>
   

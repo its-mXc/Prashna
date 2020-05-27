@@ -67,5 +67,6 @@ gem "letter_opener", '>= 1.7.0'
 gem 'will_paginate', '~> 3.3.0'
 gem 'jquery-rails'
 gem 'exception_notification'
+gem 'bootstrap', '~> 4.5.0'
 
 #FIXME_AB: lets lock gem versions of all added gems

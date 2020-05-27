@@ -2,7 +2,7 @@
   <tr class="table-success">
 <%  elsif credit_transaction.debit? %>
   <tr class="table-danger">
-<%  elsif credit_transaction.revert? %>
+<%  elsif credit_transaction.reverted? %>
   <tr class="table-warning">
 <% else %>
   <tr class="table-info">
@@ -10,8 +10,12 @@
   <td><%= credit_transaction.transaction_type %></td>
   <td><%= credit_transaction.amount %></td>
   <td><%= credit_transaction.credit_balance %></td>
+  <% if ["Answer", "Question"].include?(credit_transaction.transactable_type) %>
+    <td><%= link_to  credit_transaction.transactable_type, credit_transaction.transactable %></td>
+  <% else %>
+    <td><%= credit_transaction.transactable_type %></td>
+  <% end %>
   <% #FIXME_AB: if it is a question, then show question title with link -%>
   <% #FIXME_AB: ensure eager load -%>
-  <td><%= credit_transaction.transactable_type %></td>
   <td><%= credit_transaction.created_at %></td>
 </tr>

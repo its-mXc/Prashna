@@ -29,10 +29,10 @@
     </p>
   <p>
     <button type="button" class="btn btn-dark">
-      Answers <span class="badge badge-light"><%= question.answers.size %></span>
+      <a class="text-white" href="<%= question_path(question) %>#answers">Answers <span class="badge badge-light"><%= question.answers.size %></span></a>
     </button>
-    <button type="button" class="btn btn-dark">
-      Comments <span class="badge badge-light"><%= question.comments.size %></span>
+    <button type="button" class="btn btn-dark text-white">
+      <a class="text-white" href="<%= question_path(question) %>#comments">Comments <span class="badge badge-light"><%= question.root_comments.size %></span></a>
     </button>
   </p>
 </div>

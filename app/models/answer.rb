@@ -30,34 +30,34 @@ class Answer < ApplicationRecord
             # end
 
 
-
     check_popularity
     save!
   end
 
   #FIXME_AB:  need to update
   private def check_popularity
-    #FIXME_AB: credit_transactions.popular.order.....
-    popular_transaction = CreditTransaction.popular.order(id: :desc).find_by(transactable: self)
-
-    if self.reaction_count >= ENV["popular_question_votes"].to_i
-      if popular_transaction
-        if CreditTransaction.revert.find_by(transactable: popular_transaction)
-          credit_transactions.create(user: user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_credits"].to_i)
-        end
-      else
-        credit_transactions.create(user: user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_credits"].to_i)
-      end
-    else
-      if popular_transaction
-        unless CreditTransaction.revert.find_by(transactable: popular_transaction)
-          popular_transaction.reverse_transaction
-        end
-      end
+    if reaction_count >= ENV["popular_question_votes"].to_i && !popularity_credits_granted
+      grant_credits
+      self.popularity_credits_granted = true
     end
-    user.refresh_credits!
+    
+    if reaction_count < ENV["popular_question_votes"].to_i && popularity_credits_granted
+      revert_credits
+      self.popularity_credits_granted = false
+    end
+
+    save
+    #FIXME_AB: credit_transactions.popular.order.....
+
   end
 
+  private def grant_credits
+    credit_transactions.create(user: user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_credits"].to_i)
+  end
+
+  private def revert_credits
+    credit_transactions.popular.last.reverse_transaction
+  end
 
   private def question_is_published
     if question.draft?

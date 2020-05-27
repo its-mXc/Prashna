@@ -20,6 +20,7 @@ class Question < ApplicationRecord
   has_many :topics, through: :question_topics
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :root_comments, class_name: 'Comment', dependent: :restrict_with_error
   has_many :answers, dependent: :restrict_with_error
 
   before_mark_published :has_needed_credit_balance
@@ -28,7 +29,7 @@ class Question < ApplicationRecord
   after_mark_published :generate_notifications
 
   def self.search(term)
-    published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten
+    (published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten).uniq
   end
 
   def posted_by?(user)
