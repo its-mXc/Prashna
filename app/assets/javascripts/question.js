@@ -1,4 +1,3 @@
-import { AutoCompleteInput } from "../classes/autocomplete";
 $(document).ready(function() {
   let questions_topics_autocomplete_options = {
     inputElement: $( "#tag-autocomplete" ),

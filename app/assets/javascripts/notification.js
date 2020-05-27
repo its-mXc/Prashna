@@ -1,5 +1,3 @@
-import { Collapsible } from "../classes/collapsible"
-import {PersistentAction} from "../classes/persistent_action"
 $(document).ready(function() { 
 
   let notifications_collapsible_options = {

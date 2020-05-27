@@ -9,9 +9,10 @@ class Answer < ApplicationRecord
   belongs_to :question
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :credit_transactions, as: :transactable
 
   #FIXME_AB: after commit on create
-  after_create :notify_question_author
+  after_commit :notify_question_author, on: :create
 
   scope :order_by_vote, -> {order(reaction_count: :desc)}
 
@@ -24,17 +25,24 @@ class Answer < ApplicationRecord
   #FIXME_AB:  need to update
   private def check_popularity
     #FIXME_AB: add figaro.rb and ad required keys
+    popular_transaction = CreditTransaction.popular.order(id: :desc).find_by(transactable: self)
+
     if self.reaction_count >= ENV["popular_question_votes"].to_i
-      unless PopularQuestion.find_by(answer: self)
-        transaction = CreditTransaction.create(user: self.user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_vcredits"].to_i)
-        PopularQuestion.create(credit_transaction_id: transaction.id, answer: self)
-        user.refresh_credits!
+      if popular_transaction
+        if CreditTransaction.revert.find_by(transactable: popular_transaction)
+          credit_transactions.create(user: user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_credits"].to_i)
+        end
+      else
+        credit_transactions.create(user: user, transaction_type: CreditTransaction.transaction_types["popular"], amount: ENV["popular_question_credits"].to_i)
       end
     else
-      if PopularQuestion.find_by(answer: self)
-        PopularQuestion.find_by(answer: self).destroy
+      if popular_transaction
+        unless CreditTransaction.revert.find_by(transactable: popular_transaction)
+          popular_transaction.reverse_transaction
+        end
       end
     end
+    user.refresh_credits!
   end
 
 

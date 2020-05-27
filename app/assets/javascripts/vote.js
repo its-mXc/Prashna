@@ -1,4 +1,3 @@
-import {Reaction} from '../classes/reaction'
 $(document).ready(function() {
   let reaction_options = {
     eventGeneratorElement: $('.vote')

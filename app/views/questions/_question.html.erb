@@ -6,7 +6,7 @@
     <%= question.content  %>
   <p>
   <% #FIXME_AB: question.posted_by?(user)  -%>
-  <% if current_user != question.user && logged_in? %>
+  <% if logged_in? && question.posted_by?(current_user) %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
       <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count %>
       <span class="reaction_count"><%= question.reaction_count %></span>

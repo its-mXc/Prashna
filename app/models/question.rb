@@ -16,6 +16,7 @@ class Question < ApplicationRecord
   belongs_to :user
   has_one_attached :file
   has_many :question_topics, dependent: :destroy
+  has_one :credit_transaction, as: :transactable
   has_many :topics, through: :question_topics
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
@@ -27,9 +28,15 @@ class Question < ApplicationRecord
   after_mark_published :generate_notifications
 
   #FIXME_AB: should be class method
-  scope :search, ->(term) { published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten }
 
 
+  def self.search(term)
+    published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten
+  end
+
+  def posted_by?(user)
+    self.user == user
+  end
 
   def generate_url_slug
     self.url_slug = title.downcase.gsub(REGEXP[:special_characters], "-")
@@ -49,7 +56,7 @@ class Question < ApplicationRecord
   end
 
   private def create_question_transaction
-    if user.credit_transactions.create(amount: -ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"])
+    if user.credit_transactions.create(amount: -ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"], transactable: self)
     else
       throw :abort
     end

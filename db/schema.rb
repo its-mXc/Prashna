@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_24_140005) do
+ActiveRecord::Schema.define(version: 2020_05_26_105407) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,9 @@ ActiveRecord::Schema.define(version: 2020_05_24_140005) do
     t.integer "credit_balance"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "transactable_type"
+    t.bigint "transactable_id"
+    t.index ["transactable_type", "transactable_id"], name: "transactable_index"
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
@@ -77,15 +80,6 @@ ActiveRecord::Schema.define(version: 2020_05_24_140005) do
     t.bigint "notificable_id"
     t.index ["notificable_type", "notificable_id"], name: "index_notifications_on_notificable_type_and_notificable_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
-  create_table "popular_questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "credit_transaction_id", null: false
-    t.bigint "answer_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["answer_id"], name: "index_popular_questions_on_answer_id"
-    t.index ["credit_transaction_id"], name: "index_popular_questions_on_credit_transaction_id"
   end
 
   create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -162,8 +156,6 @@ ActiveRecord::Schema.define(version: 2020_05_24_140005) do
   add_foreign_key "comments", "users"
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "users"
-  add_foreign_key "popular_questions", "answers"
-  add_foreign_key "popular_questions", "credit_transactions"
   add_foreign_key "question_topics", "questions"
   add_foreign_key "question_topics", "topics"
   add_foreign_key "reactions", "users"

@@ -1,2 +1,10 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
+//= link application.js
+//= link answer_comments.js
+//= link notification.js
+//= link comments.js
+//= link current_user_profile.js
+//= link notification.js
+//= link question.js
+//= link vote.js

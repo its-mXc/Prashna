@@ -1,4 +1,4 @@
-export class ScrollIntoView {
+class ScrollIntoView {
   constructor(options){
     this.scrollableElement = options["scrollableElement"]
   }

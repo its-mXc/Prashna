@@ -1,6 +1,3 @@
-import {AutoCompleteInput } from '../classes/autocomplete'
-import { AutoSubmitForm } from '../classes/auto_submit_form';
-
 $(document).ready(function() {
   let avatar_auto_submit_options = {
     form: $('#avatar_form'),

@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
 
   has_one_attached :avatar
-
+  has_many :transactions, as: :transactable
   with_options dependent: :destroy do |assoc|
     assoc.has_many :comments
     assoc.has_many :user_topics
@@ -35,10 +35,10 @@ class User < ApplicationRecord
 
   def verify!
     unless self.verified_at
-      credit_transactions.create(amount: ENV['signup_credits'].to_i, transaction_type: CreditTransaction.transaction_types["signup"])
+      credit_transactions.create(amount: ENV['signup_credits'].to_i, transaction_type: CreditTransaction.transaction_types["signup"], transactable: self)
       self.verified_at = Time.current
       self.confirmation_token = nil
-      save
+      save!
     end
   end
 

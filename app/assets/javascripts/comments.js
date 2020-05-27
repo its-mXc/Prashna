@@ -1,5 +1,3 @@
-import {Collapsible} from '../classes/collapsible'
-import {ScrollIntoView} from '../classes/scroll_into_view'
 $(document).ready(function() {  
   let comments_collapsible_options = {
     clickableElement: $(".reply-btn"),

@@ -6,6 +6,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
@@ -64,8 +65,8 @@
     <%= button_to "Refresh Notification", user_notifications_path(current_user), method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
   <% end %>
   
-  <%= javascript_pack_tag 'notification' %>
-  <%= javascript_pack_tag 'vote' %>
+  <%= javascript_include_tag 'notification' %>
+  <%= javascript_include_tag 'vote' %>
   
   </body>
 

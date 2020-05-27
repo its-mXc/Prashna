@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   #FIXME_AB:  new create not needed
-  resources :answers,  only: [:new, :create, :show] do
+  resources :answers,  only: :show do
       member do
         get 'reaction'
       end

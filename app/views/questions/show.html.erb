@@ -16,7 +16,7 @@
         <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning' %>
         <% end %>
     </p>
-    <% if current_user != @question.user && logged_in? %>
+    <% if logged_in? && @question.posted_by?(current_user) %>
       <%= form_for @question , url: reaction_question_path(@question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
         <%= f.submit :upvote, class: "btn  upvote", title: @question.reactions.upvotes.count  %>
         <span class="reaction_count"><%= @question.reaction_count %></span>
@@ -89,7 +89,7 @@
   </div>
 
   <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
-  <%= javascript_pack_tag "comments" %>
-  <%= javascript_pack_tag "answer_comments" %>
+  <%= javascript_include_tag "comments" %>
+  <%= javascript_include_tag "answer_comments" %>
 
 </div>
