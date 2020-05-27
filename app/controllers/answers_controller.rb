@@ -55,7 +55,8 @@ class AnswersController < ApplicationController
 
   private def ensure_question_is_published
     if @answer.question.draft?
-      redirect_back, fallback_location: root_path, notice: t('.question_not_published')
+      redirect_back fallback_location: root_path, notice: t('.question_not_published')
+    end
   end
 
   private def answer_params
