@@ -5,7 +5,7 @@
     <div class="form-field question-field">
       <%= f.text_field :title, placeholder: "title", class: "form-control" %>
     </div>
-    
+
     <div class="form-field question-field" >
       <%= f.text_area :content, placeholder: "content", class: "form-control" %>
     </div>
@@ -30,7 +30,8 @@
       <%= f.submit "Draft", class: "btn btn-primary" %>
     <% end %>
 
+  <% #FIXME_AB: lets start using content_for :js to include all js in head -%>
     <%= javascript_include_tag "question" %>
-  
+
   <% end %>
 </div>

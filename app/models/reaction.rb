@@ -26,7 +26,6 @@ class Reaction < ApplicationRecord
   end
 
   private def ensure_question_is_published
-    #FIXME_AB: better way to do this is reactable.is_a? Question
     if reactable.is_a? Question
       if reactable.draft?
         errors.add(:base, "cannot react to unpublished question")

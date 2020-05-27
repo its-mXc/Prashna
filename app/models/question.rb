@@ -27,9 +27,6 @@ class Question < ApplicationRecord
   after_mark_published :generate_url_slug
   after_mark_published :generate_notifications
 
-  #FIXME_AB: should be class method
-
-
   def self.search(term)
     published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten
   end
