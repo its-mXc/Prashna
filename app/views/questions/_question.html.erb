@@ -5,7 +5,6 @@
   </p>
     <%= question.content  %>
   <p>
-  <% #FIXME_AB: question.posted_by?(user)  -%>
   <% if logged_in? && !question.posted_by?(current_user) %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
       <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count %>
@@ -28,7 +27,13 @@
           <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
         <% end %><br>
     </p>
-  <p><%= question.answers.count %> answers</p>
-  <p><%= question.comments.count %> comments</p>
+  <p>
+    <button type="button" class="btn btn-dark">
+      Answers <span class="badge badge-light"><%= question.answers.size %></span>
+    </button>
+    <button type="button" class="btn btn-dark">
+      Comments <span class="badge badge-light"><%= question.comments.size %></span>
+    </button>
+  </p>
 </div>
 <hr class="my-2 border-danger">

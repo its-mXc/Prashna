@@ -1,8 +1,9 @@
-  <li id="comment-<%= comment.id %>">
+  <li class='list-group-item border-left pl-4 border-warning  m-2' id="comment-<%= comment.id %>">
+    <% #FIXME_AB: comment.posted_by?(current_user) -%>
     <% if current_user == comment.user %>
-    <strong><%= link_to "#{comment.user.name}🎙", comment.user, class: "text-danger" %></strong><br>
+      <strong><%= link_to "#{comment.user.name}🎙", comment.user, class: "text-danger" %></strong><br>
     <% else %>
-    <strong><%= link_to comment.user.name, comment.user, class: "text-success" %></strong><br>
+      <strong><%= link_to comment.user.name, comment.user, class: "text-success" %></strong><br>
     <% end %>
     <%= comment.body %> -
     <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
@@ -16,13 +17,13 @@
      <p><strong>Votes : </strong><%= comment.reaction_count %></p>
     <% end %>
 
-   
+
     <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>
-      <div class="reply-btn nested pre-filled text-success">Reply</div>
+      <div class="btn btn-warning reply-btn nested pre-filled ">Reply</div>
     <% else %>
-      <div class="reply-btn nested text-success">Reply</div>
+      <div class="btn btn-warning reply-btn nested ">Reply</div>
     <% end %>
-    <div class="reply-form">
+    <div class="reply-form m-2 ">
       <%= form_for [comment, Comment.new] do |f| %>
         <div class="form-group">
           <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>

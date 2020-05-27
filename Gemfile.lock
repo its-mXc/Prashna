@@ -93,6 +93,9 @@ GEM
     concurrent-ruby (1.1.6)
     crass (1.0.6)
     erubi (1.9.0)
+    exception_notification (4.4.0)
+      actionmailer (>= 4.0, < 7)
+      activesupport (>= 4.0, < 7)
     ffi (1.12.2)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -251,6 +254,7 @@ DEPENDENCIES
   capistrano-rails (= 1.4.0)
   capistrano-rails-console
   capybara (>= 2.15)
+  exception_notification
   figaro (>= 1.1.1)
   jbuilder (~> 2.7)
   jquery-rails

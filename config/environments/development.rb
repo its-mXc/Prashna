@@ -60,19 +60,27 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.action_mailer.delivery_method = :smtp
-  
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "gmail.com",
-    authentication: "plain",
-    user_name: "udaynayakgkv",
-    password: "pkcscaigserazcrw",
-    enable_starttls_auto: true
-  }
+  # config.action_mailer.delivery_method = :smtp
+
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: "gmail.com",
+  #   authentication: "plain",
+  #   user_name: "udaynayakgkv",
+  #   password: "pkcscaigserazcrw",
+  #   enable_starttls_auto: true
+  # }
 
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  email: {
+    # deliver_with: :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
+    email_prefix: '[ExceptionNotification] ',
+    sender_address: %{"notifier" <notifier@example.com>},
+    exception_recipients: %w{exceptions@example.com}
+  }
 
 end

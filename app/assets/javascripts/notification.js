@@ -1,4 +1,5 @@
-$(document).ready(function() { 
+// FIXME_AB: make all turbolink events
+$(document).ready(function() {
 
   let notifications_collapsible_options = {
     clickableElement: $("#notification-bell"),

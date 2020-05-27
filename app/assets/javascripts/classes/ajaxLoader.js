@@ -1,7 +1,7 @@
 //= require gasparesganga-jquery-loading-overlay
 class AjaxLoader {
   constructor(defaultSelector) {
-    this.$document = $(document);
+    this.$document = $('#page-body');
   }
   init() {
     this.$document.on('ajax:beforeSend', (event) => {

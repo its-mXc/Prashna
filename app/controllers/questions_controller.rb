@@ -5,8 +5,8 @@
     before_action :ensure_valid_commit_values, only: [:create, :update, :draft_update, :draft_publish_update]
     before_action :find_published_question, only: [:show, :reaction, :update]
     before_action :find_question, only: [:edit, :draft_update, :draft_publish_update, :publish]
-    before_action :ensure_has_not_been_interacted, only: [:edit, :update]
     before_action :ensure_is_author_of_question, only: [:edit, :update, :publish, :draft_update, :draft_publish_update]
+    before_action :ensure_has_not_been_interacted, only: [:edit, :update]
     before_action :ensure_has_not_been_published, only: [:publish]
     before_action :ensure_positive_balance, only: :publish
     before_action :ensure_not_voting_own_question, only: :reaction
