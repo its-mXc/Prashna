@@ -7,6 +7,8 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'notification' %>
+    <%= javascript_include_tag 'vote' %>
     <%= yield :head %>
   </head>
   <body>
@@ -64,12 +66,5 @@
     <% end %>
 
     <% #FIXME_AB: use content_for :js and include only on required pages -%>
-    <% content_for :head do %>
-      <%= javascript_include_tag 'notification' %>
-    <% end %>
-
-    <% content_for :head do %>
-      <%= javascript_include_tag 'vote' %>
-    <% end %>
   </body>
 </html>

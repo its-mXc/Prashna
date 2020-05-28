@@ -27,7 +27,7 @@
     <%= f.submit "Publish", class: "btn btn-danger" %>
     <%= f.submit "Draft", class: "btn btn-primary" %>
 
-    <%= content_for(:head) do %>
+    <% content_for :head do %>
       <%= javascript_include_tag "question" %>
     <% end %>
     

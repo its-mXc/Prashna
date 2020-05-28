@@ -90,11 +90,11 @@
   </div>
 
   <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
-  <%= content_for(:head) do %>
+  <% content_for :head do %>
     <%= javascript_include_tag "comments" %>
   <% end %>
 
-  <%= content_for(:head) do %>
+  <% content_for :head do %>
     <%= javascript_include_tag "answer_comments" %>
   <% end %>
 
