@@ -268,10 +268,10 @@ DEPENDENCIES
   capistrano-rails (= 1.4.0)
   capistrano-rails-console
   capybara (>= 2.15)
-  exception_notification
+  exception_notification (>= 4.4.0)
   figaro (>= 1.1.1)
   jbuilder (~> 2.7)
-  jquery-rails
+  jquery-rails (>= 4.4.0)
   jquery-ui-rails (>= 6.0.1)
   letter_opener (>= 1.7.0)
   letter_opener_web (~> 1.0)
