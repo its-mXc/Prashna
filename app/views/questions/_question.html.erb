@@ -7,9 +7,9 @@
   <p>
   <% if logged_in? && !question.posted_by?(current_user) %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
-      <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count %>
+      <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count, data: { toggle: "tooltip" } %>
       <span class="reaction_count"><%= question.reaction_count %></span>
-      <%= f.submit :downvote, class: "btn  downvote", title: question.reactions.downvotes.count  %>
+      <%= f.submit :downvote, class: "btn  downvote", title: question.reactions.downvotes.count, data: { toggle: "tooltip" } %>
     <% end %>
   <% else %>
     <p><strong>Votes : </strong><%= question.reaction_count %></p>

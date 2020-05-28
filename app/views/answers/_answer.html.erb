@@ -4,9 +4,9 @@
   <small> Posted by <%= link_to answer.user.name, answer.user, class: "text-success" %> <%= time_ago_in_words(answer.created_at) %> ago</small><br>
   <% if current_user != answer.user && logged_in? %>
     <%= form_for @question , url: reaction_answer_path(answer) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
-      <%= f.submit :upvote, class: "btn  upvote", title: answer.reactions.upvotes.count  %>
+      <%= f.submit :upvote, class: "btn  upvote", title: answer.reactions.upvotes.count, data: { toggle: "tooltip" }  %>
       <span class="reaction_count"><%= answer.reaction_count %></span>
-      <%= f.submit :downvote, class: "btn  downvote", title: answer.reactions.downvotes.count  %>
+      <%= f.submit :downvote, class: "btn  downvote", title: answer.reactions.downvotes.count, data: { toggle: "tooltip" }  %>
     <% end %>
   <% else %>
     <strong>Votes : </strong><%= answer.reaction_count %>
@@ -33,7 +33,7 @@
     </a>
     <div class="comments-answer collapse" id="answer-<%= answer.id %>-comments">
        <% if answer.comments.any?  %>
-        <%= render answer.comments %>
+        <%= render answer.comments.includes(:user) %>
       <% else %>
         <p>No Comments</p>
       <% end %>

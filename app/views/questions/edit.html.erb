@@ -13,9 +13,9 @@
     <div class="form-field question-field">
       <%= f.label :topics %>
       <% if @question.errors.any? %>
-        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names], title: "Comma seperated topics" %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names], title: "Comma seperated topics", data: { toggle: "tooltip" } %>
       <% else %>
-        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, title: "Comma seperated topics"%>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, title: "Comma seperated topics", data: { toggle: "tooltip" } %>
       <% end %>
     </div>
 
@@ -31,7 +31,9 @@
     <% end %>
 
   <% #FIXME_AB: lets start using content_for :js to include all js in head -%>
+  <%= content_for :head do %>
     <%= javascript_include_tag "question" %>
+  <% end %>
 
   <% end %>
 </div>

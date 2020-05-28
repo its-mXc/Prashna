@@ -1,6 +1,6 @@
   <li class='pl-2 border-left border-warning list-unstyled ' id="comment-<%= comment.id %>">
     <% #FIXME_AB: comment.posted_by?(current_user) -%>
-    <% if current_user == comment.user %>
+    <% if comment.posted_by?(current_user) %>
       <strong><%= link_to "#{comment.user.name}🎙", comment.user, class: "text-danger" %></strong><br>
     <% else %>
       <strong><%= link_to comment.user.name, comment.user, class: "text-success" %></strong><br>
@@ -9,9 +9,9 @@
     <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
     <% if logged_in? && current_user != comment.user %>
       <%= form_for @question , url: reaction_comment_path(comment) ,remote: true, method: :get, html: {class: "vote"} do |f| %>
-        <%= f.submit :upvote, class: "btn  upvote", title: comment.reactions.upvotes.count%>
+        <%= f.submit :upvote, class: "btn  upvote", title: comment.reactions.upvotes.count, data: { toggle: "tooltip" } %>
         <span class="reaction_count"><%= comment.reaction_count %></span>
-        <%= f.submit :downvote, class: "btn  downvote", title: comment.reactions.downvotes.count%>
+        <%= f.submit :downvote, class: "btn  downvote", title: comment.reactions.downvotes.count, data: { toggle: "tooltip" } %>
       <% end %>
     <% else %>
      <br><strong>Votes : </strong><%= comment.reaction_count %>
@@ -36,7 +36,7 @@
       <% end %>
     </div>
     <ul class="m-2">
-        <%= render comment.comments %>
+        <%= render comment.comments.includes([:user]) %>
     </ul>
 
   </li>

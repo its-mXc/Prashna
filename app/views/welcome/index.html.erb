@@ -5,4 +5,12 @@
   <% else %>
     <p>No Questions </p>
   <% end %>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <% (1..(Question.count/ENV["questions_per_page"].to_f).ceil).each do |index|  %>
+      <li class="page-item"><%= link_to  index, root_path(page: index), class: "page-link" %></li>
+      <% end %>
+      </li>
+    </ul>
+  </nav>
 </div>

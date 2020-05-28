@@ -110,7 +110,7 @@
     end
 
     private def find_published_question
-      @question = Question.published.find_by_url_slug(params[:id])
+      @question = Question.published.includes([:user]).find_by_url_slug(params[:id])
       unless @question
         redirect_to my_profile_path, notice: t('.cannot_find_question')
       end
