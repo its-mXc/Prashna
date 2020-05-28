@@ -164,7 +164,7 @@
 
       if  params[:question][:topic_names]
         topic_names = params[:question][:topic_names].split(",").map(&:strip)
-
+        
         topics = []
         topic_names.each do |topic_name|
           topic = Topic.find_or_create_by(name: topic_name)
