@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include ReactionRecorder
+  include Posted
   extend ActiveModel::Callbacks
 
   enum status: { draft: 0, published: 1 }
@@ -30,10 +31,6 @@ class Question < ApplicationRecord
 
   def self.search(term)
     (published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten).uniq
-  end
-
-  def posted_by?(user)
-    self.user == user
   end
 
   def generate_url_slug

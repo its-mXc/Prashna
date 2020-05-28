@@ -5,3 +5,4 @@
 //= require_tree ./classes
 //= require_tree ./modules
 //= require loadingOverlay
+//= require tooltip

@@ -66,13 +66,26 @@
 <% #FIXME_AB: add no record string in empty tabs -%>
   <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="questions">
-       <%= render current_user.questions.published %>
+      <% if current_user.questions.any? %>
+        <%= render current_user.questions.published.includes([:file_attachment, :reactions, :topics, :question_topics, :answers, :comments]) %>
+      <% else %>
+        <h6>No Questions</h6>
+        <%= link_to  "Ask Question", new_question_path %>
+      <% end %>
     </div>
     <div class="tab-pane fade" id="drafts">
-       <%= render  "questions/draft", drafts: current_user.questions.draft %>
+      <% if current_user.questions.draft.any? %>
+        <%= render  "questions/draft", drafts: current_user.questions.draft %>
+      <% else %>
+        <h5>No Drafts</h5>
+      <% end %>
     </div>
     <div class="tab-pane fade" id="answers">
-       <%= render "answers/user_answers", user_answers: current_user.answers %>
+      <% if current_user.answers.any? %>
+        <%= render "answers/user_answers", user_answers: current_user.answers %>
+      <% else %>
+        <h5>No Answers</h5>
+      <% end %>
     </div>
     <div class="tab-pane fade" id="transaction-history">
       <table class="table table-hover border-danger">
