@@ -30,7 +30,6 @@
       <%= f.submit "Draft", class: "btn btn-primary" %>
     <% end %>
 
-  <% #FIXME_AB: lets start using content_for :js to include all js in head -%>
   <% content_for :head do %>
     <%= javascript_include_tag "question" %>
   <% end %>
