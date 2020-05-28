@@ -1,6 +1,8 @@
 <div id="answer-<%= answer.id %>">
+  <% #FIXME_AB: make a basic presenter for this. Markdown for question's description and answer.  -%>
+  <% #FIXME_AB: also add a hint below the corrosponding text box with link to markdown syntax doc -%>
   <%= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true).render(answer.body).html_safe %>
-  <br>    
+  <br>
   <small> Posted by <%= link_to answer.user.name, answer.user, class: "text-success" %> <%= time_ago_in_words(answer.created_at) %> ago</small><br>
   <% if current_user != answer.user && logged_in? %>
     <%= form_for @question , url: reaction_answer_path(answer) ,remote: true, method: :get, html: { class: "vote" } do |f| %>

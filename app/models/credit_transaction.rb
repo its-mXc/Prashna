@@ -1,5 +1,4 @@
 class CreditTransaction < ApplicationRecord
-  #FIXME_AB: reverted
   enum transaction_type: { signup: 0, purchase: 1, debit: 2, popular: 3, reverted: 4 }
 
   belongs_to :user
@@ -17,7 +16,6 @@ class CreditTransaction < ApplicationRecord
   end
 
   def reverse_transaction
-    #FIXME_AB: use symbol :reverted
-    CreditTransaction.create(amount: (-1 * self.amount), transaction_type: CreditTransaction.transaction_types["reverted"], user: user, transactable: self)
+    CreditTransaction.reverted.create(amount: (-1 * self.amount), user: user, transactable: self)
   end
 end
