@@ -161,10 +161,19 @@
 
 
     private def question_params
+
       if  params[:question][:topic_names]
         topic_names = params[:question][:topic_names].split(",").map(&:strip)
+
+        topics = []
+        topic_names.each do |topic_name|
+          topic = Topic.find_or_create_by(name: topic_name)
+          unless topic.errors.any?
+            topics << topic
+          end
+        end
         #FIXME_AB: like profile, find or crate
-        params[:question][:topic_ids] = Topic.where(name: topic_names).map(&:id)
+        params[:question][:topic_ids] = topics.map(&:id)
       end
 
       params.require(:question).permit(:title, :content,:file, :search, topic_ids: [])

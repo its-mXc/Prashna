@@ -3,7 +3,7 @@
     <%= link_to  question.title, question %>
   </h3>
   </p>
-    <%= question.content  %>
+    <%= QuestionPresenter.new(question).markdown_content  %>
   <p>
   <% if logged_in? && !question.posted_by?(current_user) %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
@@ -15,8 +15,15 @@
     <p><strong>Votes : </strong><%= question.reaction_count %></p>
   <% end %>
   <% if question.file.attached? %>
-    <%= link_to  question.file.filename, url_for(question.file) %>
+    <% if question.file.blob.content_type =~ /image/ %>
+      <strong>Attached: </strong><%= question.file.filename %><br>
+      <%= link_to  image_tag(question.file, size: "200"), url_for(question.file), target: :_blank %>
+    <% else %>
+      <strong>Attached: </strong><%= link_to  question.file.filename, url_for(question.file), target: :_blank %>
+    <% end %>
   <% end %>
+  <br>
+  <hr class="my-2">
   <% if question.editable? && question.user == current_user %>
     <%= link_to "Edit", edit_question_path(question), class: 'btn btn-warning' %>
   <% end %>

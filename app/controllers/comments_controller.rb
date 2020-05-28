@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       #FIXME_AB: after posting comments should be on comments tab
-      redirect_to question_path(@comment.question), notice: t('.comment_posted')
+      redirect_to @comment, notice: t('.comment_posted')
     else
       redirect_to question_path(@comment.question, parent_commentable_id: @commentable.id, parent_commentable_type: @commentable.class.name, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
     end

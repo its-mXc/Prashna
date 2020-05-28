@@ -70,6 +70,6 @@ gem 'will_paginate-bootstrap4'
 gem 'jquery-rails', '>= 4.4.0'
 gem 'exception_notification', '>= 4.4.0'
 gem 'bootstrap', '~> 4.5.0'
-gem 'redcarpet'
-
+gem 'redcarpet', '>= 3.5.0'
+gem 'basic_presenter'
 #FIXME_AB: lets lock gem versions of all added gems

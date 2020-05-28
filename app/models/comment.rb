@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   include ReactionRecorder
+  include Posted
 
   validate :parent_question_is_published
   validates :body, presence: true
@@ -20,9 +21,6 @@ class Comment < ApplicationRecord
   end
 
   #FIXME_AB: this may be needed in questions and answers. so make it a concern
-  def posted_by?(user)
-    self.user == user
-  end
 
   private def words_in_comment
     body.scan(/\w+/)
