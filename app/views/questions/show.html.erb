@@ -27,7 +27,6 @@
     <% end %>
 
     <p class="mt-4 lead"><%= QuestionPresenter.new(@question).markdown_content  %></p>
-    <% #FIXME_AB: clicking on the attchment, open in a new tab -%>
     <% if @question.file.attached? %>
       <% if @question.file.blob.content_type =~ /image/ %>
         <strong>Attached: </strong><%= @question.file.filename %><br>

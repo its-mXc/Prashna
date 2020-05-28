@@ -1,7 +1,5 @@
 <div id="answer-<%= answer.id %>">
-  <% #FIXME_AB: make a basic presenter for this. Markdown for question's description and answer.  -%>
-  <% #FIXME_AB: also add a hint below the corrosponding text box with link to markdown syntax doc -%>
-  <%= AnswerPresenter.new(answer).markdown_body %>
+  <%= answer.presenter.markdown_body %>
   <br>
   <small> Posted by <%= link_to answer.user.name, answer.user, class: "text-success" %> <%= time_ago_in_words(answer.created_at) %> ago</small><br>
   <% if current_user != answer.user && logged_in? %>

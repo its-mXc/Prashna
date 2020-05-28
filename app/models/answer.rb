@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   include ReactionRecorder
+  include BasicPresenter::Concern
 
   validates :body, presence: true
   validates :question_id, uniqueness: { scope: :user_id }
