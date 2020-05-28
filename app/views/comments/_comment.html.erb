@@ -1,5 +1,4 @@
   <li class='pl-2 border-left border-warning list-unstyled ' id="comment-<%= comment.id %>">
-    <% #FIXME_AB: comment.posted_by?(current_user) -%>
     <% if comment.posted_by?(current_user) %>
       <strong><%= link_to "#{comment.user.name}🎙", comment.user, class: "text-danger" %></strong><br>
     <% else %>

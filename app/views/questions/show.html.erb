@@ -65,36 +65,32 @@
         </div>
         <div class="tab-pane fade show" id="comments">
             <% if logged_in? %>
-            <%= form_for [@question, Comment.new] do |f| %>
-              <div class="form-group">
-                <% if params[:parent_commentable_id].to_i == @question.id && params[:parent_commentable_type] == "Question"  %>
-                  <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field", value: params[:comment_body] %>
-                <% else %>
-                  <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field" %>
-                <% end %>
-              </div>
-              <% #FIXME_AB: I18n -%>
-              <%= f.submit "Add Comment", class: "btn btn-primary" %>
-            <% end %>
+              <%= form_for [@question, Comment.new] do |f| %>
+                <div class="form-group">
+                  <% if params[:parent_commentable_id].to_i == @question.id && params[:parent_commentable_type] == "Question"  %>
+                    <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field", value: params[:comment_body] %>
+                  <% else %>
+                    <%= f.text_area :body, placeholder: "Add a comment", class: "form-control question-field" %>
+                  <% end %>
+                </div>
+                <% #FIXME_AB: I18n -%>
+                <%= f.submit "Add Comment", class: "btn btn-primary" %>
+              <% end %>
             <br>
+            <% end %>
             <% if @question.comments.any? %>
               <h3 class="display-5">Comments</h3>
               <ul>
                 <%= render @question.comments.includes([:user]) %>
               </ul>
             <% end %>
-          <% end %>
         </div>
       </div>
     </p>
   </div>
 
-  <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
   <% content_for :head do %>
     <%= javascript_include_tag "comments" %>
-  <% end %>
-
-  <% content_for :head do %>
     <%= javascript_include_tag "answer_comments" %>
   <% end %>
 

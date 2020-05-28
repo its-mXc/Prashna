@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Prashna</title>
+    <% #FIXME_AB: read about these two tags and tell me -%>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -65,6 +66,5 @@
     <%= button_to "Refresh Notification", user_notifications_path(current_user), method: :get, remote: true , class: "refresh-notifications", data: { refresh_time: ENV["notification_refresh_time_secs"]+"000" } %>
     <% end %>
 
-    <% #FIXME_AB: use content_for :js and include only on required pages -%>
   </body>
 </html>

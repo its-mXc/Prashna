@@ -19,6 +19,7 @@ class Comment < ApplicationRecord
     save!
   end
 
+  #FIXME_AB: this may be needed in questions and answers. so make it a concern
   def posted_by?(user)
     self.user == user
   end
