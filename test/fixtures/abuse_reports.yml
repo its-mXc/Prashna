@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  abuseable: 
+  user: one
+
+two:
+  abuseable: 
+  user: two

@@ -18,25 +18,27 @@ Rails.application.routes.draw do
     member do
       get 'publish'
       get 'reaction'
+      get 'report_abuse'
     end
     resources :comments,  only: [:new, :create]
     resources :answers,  only: [:new, :create]
   end
-
+  
   resources :answers,  only: :show do
-      member do
-        get 'reaction'
-      end
-      resources :comments,  only: [:new, :create]
+    member do
+      get 'reaction'
+      get 'report_abuse'
     end
-
-
+    resources :comments,  only: [:new, :create]
+  end
+  
+  
   resources :comments, only: [:new, :create, :show] do
-      resources :comments, only: [:new, :create]
-      member do
-        get 'reaction'
-      end
-
+    resources :comments, only: [:new, :create]
+    member do
+      get 'reaction'
+      get 'report_abuse'
+    end
   end
 
   get "my-profile", to: "users#current_user_profile"

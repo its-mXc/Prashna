@@ -2,8 +2,8 @@ class AnswersController < ApplicationController
   before_action :ensure_logged_in
   before_action :find_published_question, only: [:new, :create]
   before_action :ensure_has_not_been_already_answered, only: [:new, :create]
-  before_action :find_answer, only: [:reaction, :show]
-  before_action :ensure_question_is_published, only: [:show, :reaction]
+  before_action :find_answer, only: [:reaction, :show, :report_abuse]
+  before_action :ensure_question_is_published, only: [:show, :reaction, :report_abuse]
 
   def new
     @answer = Answer.new
@@ -25,6 +25,15 @@ class AnswersController < ApplicationController
     @answer.record_reaction(params[:commit], current_user)
     render json: { reactable: @answer, timestamp: Time.current }
     # redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
+  end
+
+  def report_abuse
+    abuse_report = @answer.abuse_reports.new(user: current_user, details: params[:abuse_report][:details] )
+    if abuse_report.save
+      redirect_to @answer, notice: t('.abuse_reported')
+    else
+      redirect_to @answer, notice: t('.abuse_already_reported')
+    end
   end
 
   private def find_published_question

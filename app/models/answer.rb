@@ -11,11 +11,13 @@ class Answer < ApplicationRecord
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
   has_many :credit_transactions, as: :transactable
+  has_many :abuse_reports, as: :abuseable
 
   after_commit :notify_question_author, on: :create
 
   scope :order_by_vote, -> {order(reaction_count: :desc)}
-
+  scope :published, -> { where(published: true) }
+  
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
     check_popularity
@@ -54,5 +56,14 @@ class Answer < ApplicationRecord
     unless question.user == user
       UserMailer.send_question_answered_mail(self.id).deliver_later
     end
+  end
+  
+  def mark_unpublished!
+    self.published = false
+    save!
+  end
+
+  def reported_by?(user)
+    abuse_reports.find_by(user: user)
   end
 end

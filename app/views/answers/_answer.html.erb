@@ -1,4 +1,9 @@
 <div id="answer-<%= answer.id %>">
+<<<<<<< HEAD
+=======
+  <% #FIXME_AB: make a basic presenter for this. Markdown for question's description and answer.  -%>
+  <% #FIXME_AB: also add a hint below the corrosponding text box with link to markdown syntax doc -%>
+>>>>>>> abuse report
   <%= answer.presenter.markdown_body %>
   <br>
   <small> Posted by <%= link_to answer.user.name, answer.user, class: "text-success" %> <%= time_ago_in_words(answer.created_at) %> ago</small><br>
@@ -10,6 +15,34 @@
     <% end %>
   <% else %>
     <strong>Votes : </strong><%= answer.reaction_count %>
+  <% end %>
+  <br>
+  <% if logged_in? && !answer.reported_by?(current_user) %>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#answer-<%= answer.id %>-report-abuse">
+      Report Abuse
+    </button>
+
+    <div class="modal fade" id="answer-<%= answer.id %>-report-abuse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Report Answer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <%= form_for @question.abuse_reports.new , local: true, url: report_abuse_answer_path(answer), method: :get do |f| %>
+            <div class="modal-body">
+                <%= f.text_area :details, class: "form-control" %>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <%= f.submit "Report", class: "btn btn-primary" %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   <% end %>
   <% if params[:parent_commentable_id].to_i == answer.id && params[:parent_commentable_type] == "Answer" %>
     <div class="reply-btn nested pre-filled text-success">Reply</div>
@@ -32,8 +65,8 @@
       <span class="badge badge-danger p-2 mt-2"><%= answer.comments.size %> Comments</span>
     </a>
     <div class="comments-answer collapse" id="answer-<%= answer.id %>-comments">
-       <% if answer.comments.any?  %>
-        <%= render answer.comments.includes(:user) %>
+       <% if answer.comments.published.any?  %>
+        <%= render answer.comments.published.includes(:user) %>
       <% else %>
         <p>No Comments</p>
       <% end %>
