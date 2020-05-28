@@ -3,7 +3,7 @@
     <%= link_to  question.title, question %>
   </h3>
   </p>
-    <%= QuestionPresenter.new(question).markdown_content  %>
+    <%= question.presenter.markdown_content  %>
   <p>
   <% if logged_in? && !question.posted_by?(current_user) %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>

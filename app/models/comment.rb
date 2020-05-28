@@ -12,8 +12,12 @@ class Comment < ApplicationRecord
   has_many :notifications, as: :notificable
   belongs_to :commentable, polymorphic: true
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
+  has_many :abuse_reports, as: :abuseable
 
   after_save :generate_notifications
+
+  scope :published, -> { where(published: true) }
+
 
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
@@ -37,5 +41,14 @@ class Comment < ApplicationRecord
       errors.add(:base, 'Question is not published')
       throw :abort
     end
+  end
+
+  def mark_unpublished!
+    self.published = false
+    save!
+  end
+
+  def reported_by?(user)
+    abuse_reports.find_by(user: user)
   end
 end

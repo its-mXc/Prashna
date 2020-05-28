@@ -1,9 +1,10 @@
 class Question < ApplicationRecord
   include ReactionRecorder
   include Posted
+  include BasicPresenter::Concern
   extend ActiveModel::Callbacks
 
-  enum status: { draft: 0, published: 1 }
+  enum status: { draft: 0, published: 1, unpublished: 2 }
 
   define_model_callbacks :mark_published, only: :before
   define_model_callbacks :mark_published, only: :after
@@ -23,6 +24,7 @@ class Question < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :restrict_with_error
   has_many :root_comments, class_name: 'Comment', dependent: :restrict_with_error
   has_many :answers, dependent: :restrict_with_error
+  has_many :abuse_reports, as: :abuseable
 
   before_mark_published :has_needed_credit_balance
   before_mark_published :create_question_transaction
@@ -93,7 +95,7 @@ class Question < ApplicationRecord
     run_callbacks :mark_published do
       self.status = self.class.statuses["published"]
       self.published_at = Time.current
-      save
+      save!
     end
   end
 
@@ -110,6 +112,17 @@ class Question < ApplicationRecord
 
   def answered_by_user?(user)
     return !!answers.find_by(user_id: user.id)
+  end
+
+  def mark_unpublished!
+    self.status = self.class.statuses["unpublished"]
+    self.url_slug = nil
+    credit_transaction.reverse_transaction
+    save!
+  end
+
+  def reported_by?(user)
+    abuse_reports.find_by(user: user)
   end
 
 end
