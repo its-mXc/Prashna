@@ -26,8 +26,8 @@
   <hr class="my-2">
   <% if question.editable? && question.user == current_user %>
     <%= link_to "Edit", edit_question_path(question), class: 'btn btn-warning' %>
+    <hr class="my-2 w-50">
   <% end %>
-  <hr class="my-2 w-50">
    <p>
       <span>Posted by <%= link_to question.user.name, question.user %></span> <%= time_ago_in_words(question.published_at)-%> ago in
         <% question.topics.each do |topic|  %>
@@ -36,10 +36,10 @@
     </p>
   <p>
     <button type="button" class="btn btn-dark">
-      <a class="text-white" href="<%= question_path(question) %>#answers">Answers <span class="badge badge-light"><%= question.answers.size %></span></a>
+      <a class="text-white" href="<%= question_path(question) %>#answers">Answers <span class="badge badge-light"><%= question.answers.published.size %></span></a>
     </button>
     <button type="button" class="btn btn-dark text-white">
-      <a class="text-white" href="<%= question_path(question) %>#comments">Comments <span class="badge badge-light"><%= question.root_comments.size %></span></a>
+      <a class="text-white" href="<%= question_path(question) %>#comments">Comments <span class="badge badge-light"><%= question.root_comments.published.size %></span></a>
     </button>
   </p>
 </div>

@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_121056) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "popularity_credits_granted", default: false
-    t.boolean "published", default: false
+    t.boolean "published", default: true
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_121056) do
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
     t.integer "reaction_count", default: 0
-    t.boolean "published", default: false
+    t.boolean "published", default: true
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["question_id"], name: "index_comments_on_question_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
