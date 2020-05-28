@@ -1,5 +1,5 @@
 <div id="answer-<%= answer.id %>">
-  <%= answer.body %>
+  <%= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true).render(answer.body).html_safe %>
   <br>    
   <small> Posted by <%= link_to answer.user.name, answer.user, class: "text-success" %> <%= time_ago_in_words(answer.created_at) %> ago</small><br>
   <% if current_user != answer.user && logged_in? %>
