@@ -1,4 +1,3 @@
-// FIXME_AB: make all turbolink events
 $(document).on('turbolinks:load', function() {
 
   let notifications_collapsible_options = {

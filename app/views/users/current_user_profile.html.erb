@@ -63,7 +63,7 @@
       <a class="nav-link" data-toggle="tab" href="#transaction-history">Transaction History</a>
     </li>
   </ul>
-
+<% #FIXME_AB: add no record string in empty tabs -%>
   <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="questions">
        <%= render current_user.questions.published %>
@@ -92,8 +92,8 @@
       <strong>Credit Balance : <%= current_user.credit_balance %></strong>
     </div>
   </div>
-  
-  
+
+
   <% content_for :head do %>
     <%= javascript_include_tag 'current_user_profile.js' %>
   <% end %>

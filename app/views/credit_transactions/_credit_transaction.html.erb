@@ -15,7 +15,5 @@
   <% else %>
     <td><%= credit_transaction.transactable_type %></td>
   <% end %>
-  <% #FIXME_AB: if it is a question, then show question title with link -%>
-  <% #FIXME_AB: ensure eager load -%>
-  <td><%= credit_transaction.created_at %></td>
+  <td><%= credit_transaction.created_at.to_s(:long) %></td>
 </tr>

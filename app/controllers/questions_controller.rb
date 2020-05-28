@@ -163,6 +163,7 @@
     private def question_params
       if  params[:question][:topic_names]
         topic_names = params[:question][:topic_names].split(",").map(&:strip)
+        #FIXME_AB: like profile, find or crate
         params[:question][:topic_ids] = Topic.where(name: topic_names).map(&:id)
       end
 
