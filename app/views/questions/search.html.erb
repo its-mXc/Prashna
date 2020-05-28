@@ -4,6 +4,7 @@
   <% else %>
   <% #FIXME_AB: show the searched keyword -%>
   <% #FIXME_AB: No question maching "search term" found. <a>Go To all questions</a> -%>
-    <h2>Cannot find questions for keyword </h2>
+    <h2>No question matching '<%= params[:question][:search] %>' found</h2>
+    <%= link_to  "All Questions", root_path %>
   <% end %>
 </div>

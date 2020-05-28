@@ -1,4 +1,4 @@
-$(document).ready(function() {  
+$(document).on('turbolinks:load', function() { 
   let comments_collapsible_options = {
     clickableElement: $(".reply-btn"),
     collapsibleElement: $(".reply-form")
@@ -6,15 +6,7 @@ $(document).ready(function() {
 
   let commentscollapsibleComment = new Collapsible(comments_collapsible_options)
   commentscollapsibleComment.init()
-
-  let answer_comments_collapsible_options = {
-    clickableElement: $(".comments-btn"),
-    collapsibleElement: $(".comments-answers")
-  }
   
-  let answerCommentscollapsibleComment = new Collapsible(answer_comments_collapsible_options)
-  answerCommentscollapsibleComment.init()
-
   let comment_options = {
     scrollableElement: $(window.location.hash)
   }

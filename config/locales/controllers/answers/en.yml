@@ -1,0 +1,15 @@
+en:
+  answers:
+    new:
+      cannot_find_published_question: "Cannot find published question"
+      already_answered: "Question already answered"
+    create:
+      cannot_find_published_question: "Cannot find published question"
+      already_answered: "Question already answered"
+      answer_posted: "Answer posted"
+    show:
+      answer_not_found: "Cannot find answer"
+      question_not_published: "Question not published"
+    reaction:
+      answer_not_found: "Cannot find answer"
+      question_not_published: "Question not published"

@@ -7,9 +7,9 @@
   <p>
   <% if logged_in? && !question.posted_by?(current_user) %>
     <%= form_for question , url: reaction_question_path(question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
-      <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count %>
+      <%= f.submit :upvote, class: "btn  upvote", title: question.reactions.upvotes.count, data: { toggle: "tooltip" } %>
       <span class="reaction_count"><%= question.reaction_count %></span>
-      <%= f.submit :downvote, class: "btn  downvote", title: question.reactions.downvotes.count  %>
+      <%= f.submit :downvote, class: "btn  downvote", title: question.reactions.downvotes.count, data: { toggle: "tooltip" } %>
     <% end %>
   <% else %>
     <p><strong>Votes : </strong><%= question.reaction_count %></p>
@@ -29,10 +29,10 @@
     </p>
   <p>
     <button type="button" class="btn btn-dark">
-      Answers <span class="badge badge-light"><%= question.answers.size %></span>
+      <a class="text-white" href="<%= question_path(question) %>#answers">Answers <span class="badge badge-light"><%= question.answers.size %></span></a>
     </button>
-    <button type="button" class="btn btn-dark">
-      Comments <span class="badge badge-light"><%= question.comments.size %></span>
+    <button type="button" class="btn btn-dark text-white">
+      <a class="text-white" href="<%= question_path(question) %>#comments">Comments <span class="badge badge-light"><%= question.root_comments.size %></span></a>
     </button>
   </p>
 </div>

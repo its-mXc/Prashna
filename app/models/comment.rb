@@ -19,6 +19,10 @@ class Comment < ApplicationRecord
     save!
   end
 
+  def posted_by?(user)
+    self.user == user
+  end
+
   private def words_in_comment
     body.scan(/\w+/)
   end

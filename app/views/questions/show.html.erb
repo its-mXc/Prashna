@@ -18,9 +18,9 @@
     </p>
     <% if logged_in? && !@question.posted_by?(current_user) %>
       <%= form_for @question , url: reaction_question_path(@question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
-        <%= f.submit :upvote, class: "btn  upvote", title: @question.reactions.upvotes.count  %>
+        <%= f.submit :upvote, class: "btn  upvote", title: @question.reactions.upvotes.count, data: { toggle: "tooltip" }  %>
         <span class="reaction_count"><%= @question.reaction_count %></span>
-        <%= f.submit :downvote, class: "btn  downvote", title: @question.reactions.downvotes.count  %>
+        <%= f.submit :downvote, class: "btn  downvote", title: @question.reactions.downvotes.count, data: { toggle: "tooltip" }  %>
       <% end %>
     <% else %>
       <strong>Votes : </strong><%= @question.reaction_count %>
@@ -61,7 +61,7 @@
               <%= f.submit "Answer", class: "btn btn-danger" %>
             <% end %>
           <% end %>
-          <%= render @question.answers.order_by_vote %>
+          <%= render @question.answers.includes([:user, :comments]).order_by_vote %>
         </div>
         <div class="tab-pane fade show" id="comments">
             <% if logged_in? %>
@@ -80,7 +80,7 @@
             <% if @question.comments.any? %>
               <h3 class="display-5">Comments</h3>
               <ul>
-                <%= render @question.comments %>
+                <%= render @question.comments.includes([:user]) %>
               </ul>
             <% end %>
           <% end %>
@@ -90,7 +90,12 @@
   </div>
 
   <% #FIXME_AB: use content_for :js to include this js in page head tag -%>
-  <%= javascript_include_tag "comments" %>
-  <%= javascript_include_tag "answer_comments" %>
+  <% content_for :head do %>
+    <%= javascript_include_tag "comments" %>
+  <% end %>
+
+  <% content_for :head do %>
+    <%= javascript_include_tag "answer_comments" %>
+  <% end %>
 
 </div>

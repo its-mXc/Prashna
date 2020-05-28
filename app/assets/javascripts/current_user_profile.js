@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
   let avatar_auto_submit_options = {
     form: $('#avatar_form'),
     fileFieldId: '#user_avatar'

@@ -10,3 +10,4 @@ minimum_question_char_length: 10
 maximum_question_char_length: 1000
 popular_question_votes: 1
 popular_question_credits: 2
+questions_per_page: 1
