@@ -110,4 +110,11 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   config.action_mailer.delivery_method = :letter_opener_web
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  email: {
+    # deliver_with: :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
+    email_prefix: '[ExceptionNotification] ',
+    sender_address: %{"notifier" <notifier@example.com>},
+    exception_recipients: %w{exceptions@example.com}
+  }
 end

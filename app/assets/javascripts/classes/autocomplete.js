@@ -1,7 +1,6 @@
-require("jquery-ui")
+//= require jquery-ui/widgets/autocomplete
 
-import {split, extractLast} from '../modules/utils'
-export class AutoCompleteInput {
+class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
   }

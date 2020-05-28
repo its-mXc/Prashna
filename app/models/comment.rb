@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   include ReactionRecorder
+  include Posted
 
   validate :parent_question_is_published
   validates :body, presence: true
@@ -18,6 +19,8 @@ class Comment < ApplicationRecord
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
     save!
   end
+
+  #FIXME_AB: this may be needed in questions and answers. so make it a concern
 
   private def words_in_comment
     body.scan(/\w+/)

@@ -1,0 +1,19 @@
+<% if credit_transaction.signup?  %>
+  <tr class="table-success">
+<%  elsif credit_transaction.debit? %>
+  <tr class="table-danger">
+<%  elsif credit_transaction.reverted? %>
+  <tr class="table-warning">
+<% else %>
+  <tr class="table-info">
+<% end %>
+  <td><%= credit_transaction.transaction_type %></td>
+  <td><%= credit_transaction.amount %></td>
+  <td><%= credit_transaction.credit_balance %></td>
+  <% if ["Answer", "Question"].include?(credit_transaction.transactable_type) %>
+    <td><%= link_to  credit_transaction.transactable_type, credit_transaction.transactable %></td>
+  <% else %>
+    <td><%= credit_transaction.transactable_type %></td>
+  <% end %>
+  <td><%= credit_transaction.created_at.to_s(:long) %></td>
+</tr>

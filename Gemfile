@@ -44,6 +44,7 @@ group :development do
   gem 'capistrano-rails',           '1.4.0'
   gem 'capistrano-passenger',       '0.2.0'
   gem 'capistrano-rails-console', require: false
+  gem 'bullet'
 end
 
 group :test do
@@ -65,3 +66,10 @@ gem 'jquery-ui-rails', '>= 6.0.1'
 gem 'letter_opener_web', '~> 1.0'
 gem "letter_opener", '>= 1.7.0'
 gem 'will_paginate', '~> 3.3.0'
+gem 'will_paginate-bootstrap4'
+gem 'jquery-rails', '>= 4.4.0'
+gem 'exception_notification', '>= 4.4.0'
+gem 'bootstrap', '~> 4.5.0'
+gem 'redcarpet', '>= 3.5.0'
+gem 'basic_presenter'
+#FIXME_AB: lets lock gem versions of all added gems

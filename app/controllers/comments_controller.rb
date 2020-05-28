@@ -15,9 +15,10 @@ class CommentsController < ApplicationController
     @comment.question = @question
 
     if @comment.save
-      redirect_to question_path(@comment.question), notice: t('.comment_posted')
+      #FIXME_AB: after posting comments should be on comments tab
+      redirect_to @comment, notice: t('.comment_posted')
     else
-      redirect_to question_path(@comment.question, parent_comment_id: @commentable.id, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
+      redirect_to question_path(@comment.question, parent_commentable_id: @commentable.id, parent_commentable_type: @commentable.class.name, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
     end
   end
 
@@ -28,7 +29,8 @@ class CommentsController < ApplicationController
 
   def reaction
     @comment.record_reaction(params[:commit], current_user)
-    redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
+    render json: { reactable: @comment, timestamp: Time.current }
+    # redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
   end
 
 
@@ -43,6 +45,9 @@ class CommentsController < ApplicationController
     elsif params[:question_id]
       @commentable = Question.published.find_by_url_slug(params[:question_id])
       @question = @commentable
+    elsif params[:answer_id]
+      @commentable = Answer.find_by_id(params[:answer_id])
+      @question = @commentable.question
     end
   end
 

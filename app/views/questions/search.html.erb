@@ -1,0 +1,8 @@
+<div class="question-container">
+  <% if @questions.any? %>
+    <%= render @questions %>
+  <% else %>
+    <h2>No question matching '<%= params[:question][:search] %>' found</h2>
+    <%= link_to  "All Questions", root_path %>
+  <% end %>
+</div>

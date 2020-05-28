@@ -5,17 +5,17 @@
     <div class="form-field question-field">
       <%= f.text_field :title, placeholder: "title", class: "form-control" %>
     </div>
-    
+
     <div class="form-field question-field" >
-      <%= f.text_area :content, placeholder: "content", class: "form-control" %>
+      <%= f.text_area :content, placeholder: "content", class: "form-control", title: "Markdown Format", data: { toggle: "tooltip" }  %>
     </div>
 
     <div class="form-field question-field">
       <%= f.label :topics %>
       <% if @question.errors.any? %>
-        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names], title: "Comma seperated topics" %>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, value: params[:question][:topic_names], title: "Comma seperated topics", data: { toggle: "tooltip" } %>
       <% else %>
-        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, title: "Comma seperated topics"%>
+        <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path}, title: "Comma seperated topics", data: { toggle: "tooltip" } %>
       <% end %>
     </div>
 
@@ -30,7 +30,9 @@
       <%= f.submit "Draft", class: "btn btn-primary" %>
     <% end %>
 
-    <%= javascript_pack_tag "question" %>
-  
+  <% content_for :head do %>
+    <%= javascript_include_tag "question" %>
+  <% end %>
+
   <% end %>
 </div>

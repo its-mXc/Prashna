@@ -1,5 +1,4 @@
-import { AutoCompleteInput } from "../classes/autocomplete";
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
   let questions_topics_autocomplete_options = {
     inputElement: $( "#tag-autocomplete" ),
   }

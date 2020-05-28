@@ -21,4 +21,16 @@ class UserMailer < ApplicationMailer
       logger.error "Cannot find user, id = #{user_id}"
     end
   end
+
+  def send_question_answered_mail(answer_id)
+    @answer = Answer.find_by_id(answer_id)
+
+    @user = @answer.question.user
+
+    if @user
+      mail to: @user.email, subject: 'Question answered'
+    else
+      logger.error "Cannot find user, id = #{user_id}"
+    end
+  end
 end

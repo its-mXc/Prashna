@@ -1,6 +1,4 @@
-import { Collapsible } from "../classes/collapsible"
-import {PersistentAction} from "../classes/persistent_action"
-$(document).ready(function() { 
+$(document).on('turbolinks:load', function() {
 
   let notifications_collapsible_options = {
     clickableElement: $("#notification-bell"),
@@ -16,4 +14,5 @@ $(document).ready(function() {
 
   let persisistnetNotification = new PersistentAction(persisistnetNotificationOptions)
   persisistnetNotification.init()
+
 })

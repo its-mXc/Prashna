@@ -1,12 +1,12 @@
   class QuestionsController < ApplicationController
     VALID_COMMIT_BUTTON_VALUES = [:Publish, :Update, :Draft]
 
-    before_action :ensure_logged_in, except: :show
+    before_action :ensure_logged_in, except: [:show, :search]
     before_action :ensure_valid_commit_values, only: [:create, :update, :draft_update, :draft_publish_update]
     before_action :find_published_question, only: [:show, :reaction, :update]
     before_action :find_question, only: [:edit, :draft_update, :draft_publish_update, :publish]
-    before_action :ensure_has_not_been_interacted, only: [:edit, :update]
     before_action :ensure_is_author_of_question, only: [:edit, :update, :publish, :draft_update, :draft_publish_update]
+    before_action :ensure_has_not_been_interacted, only: [:edit, :update]
     before_action :ensure_has_not_been_published, only: [:publish]
     before_action :ensure_positive_balance, only: :publish
     before_action :ensure_not_voting_own_question, only: :reaction
@@ -32,7 +32,6 @@
             format.html { redirect_to publish_question_path(@question.id), notice: t('.question_posted') }
           end
         else
-          #FIXME_AB: topics field should be filled with entered values
           format.html { render :new }
         end
       end
@@ -94,7 +93,12 @@
 
     def reaction
       @question.record_reaction(params[:commit], current_user)
-      redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
+      render json: { reactable: @question, timestamp: Time.current }
+      # redirect_back fallback_location: root_path, notice: t('.reaction_submitted')
+    end
+
+    def search
+      @questions = Question.search(question_params[:search])
     end
 
     private def ensure_positive_balance
@@ -106,7 +110,7 @@
     end
 
     private def find_published_question
-      @question = Question.published.find_by_url_slug(params[:id])
+      @question = Question.published.includes([:user]).find_by_url_slug(params[:id])
       unless @question
         redirect_to my_profile_path, notice: t('.cannot_find_question')
       end
@@ -157,9 +161,21 @@
 
 
     private def question_params
-      topic_names = params[:question][:topic_names].split(",").map(&:strip)
-      params[:question][:topic_ids] = Topic.where(name: topic_names).map(&:id)
 
-      params.require(:question).permit(:title, :content,:file, topic_ids: [])
+      if  params[:question][:topic_names]
+        topic_names = params[:question][:topic_names].split(",").map(&:strip)
+        
+        topics = []
+        topic_names.each do |topic_name|
+          topic = Topic.find_or_create_by(name: topic_name)
+          unless topic.errors.any?
+            topics << topic
+          end
+        end
+        #FIXME_AB: like profile, find or crate
+        params[:question][:topic_ids] = topics.map(&:id)
+      end
+
+      params.require(:question).permit(:title, :content,:file, :search, topic_ids: [])
     end
   end

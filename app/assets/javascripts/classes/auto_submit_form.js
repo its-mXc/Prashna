@@ -1,4 +1,4 @@
-export class AutoSubmitForm {
+class AutoSubmitForm {
   constructor(options) {
     this.form = options['form']
     this.fileField = this.form.find(options['fileFieldId'])

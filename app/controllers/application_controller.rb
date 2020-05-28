@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
+  before_action :prepare_exception_notifier
 
   def current_user
       if cookies.signed[:user_id]
@@ -26,5 +27,11 @@ class ApplicationController < ActionController::Base
     unless logged_in?
       redirect_to login_url, notice: t('not_logged_in')
     end
+  end
+
+  private def prepare_exception_notifier
+    request.env["exception_notifier.exception_data"] = {
+      current_user: current_user
+    }
   end
 end

@@ -1,4 +1,4 @@
-export class Collapsible {
+class Collapsible {
   constructor(options) {
     this.clickableElement = options["clickableElement"]
     this.collapsibleElement = options["collapsibleElement"]
@@ -9,6 +9,7 @@ export class Collapsible {
       this.clickableElement.next(this.collapsibleElement).hide()
       this.clickableElement.filter('.pre-filled').next(this.collapsibleElement).show()
       this.clickableElement.on('click', (event) => {
+        console.log($(event.target))
         $(event.target).next(this.collapsibleElement).toggle()
       })
     }

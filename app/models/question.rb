@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include ReactionRecorder
+  include Posted
   extend ActiveModel::Callbacks
 
   enum status: { draft: 0, published: 1 }
@@ -7,23 +8,30 @@ class Question < ApplicationRecord
   define_model_callbacks :mark_published, only: :before
   define_model_callbacks :mark_published, only: :after
 
+  validates :title, presence: true
   validates :title, uniqueness: { case_sensitive: true }
   validates :content, presence: true
-  validates :content, length:{ minimum: ENV["minimum_question_char_length"].to_i, maximum: ENV["maximum_question_char_length"].to_i }
+  validates :content, length:{ minimum: ENV["minimum_question_char_length"].to_i, maximum: ENV["maximum_question_char_length"].to_i }, unless: -> {self.content.blank?}
+  validates :topics, presence: true
 
   belongs_to :user
   has_one_attached :file
   has_many :question_topics, dependent: :destroy
+  has_one :credit_transaction, as: :transactable
   has_many :topics, through: :question_topics
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :root_comments, class_name: 'Comment', dependent: :restrict_with_error
+  has_many :answers, dependent: :restrict_with_error
 
   before_mark_published :has_needed_credit_balance
   before_mark_published :create_question_transaction
   after_mark_published :generate_url_slug
   after_mark_published :generate_notifications
 
-
+  def self.search(term)
+    (published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten).uniq
+  end
 
   def generate_url_slug
     self.url_slug = title.downcase.gsub(REGEXP[:special_characters], "-")
@@ -43,8 +51,7 @@ class Question < ApplicationRecord
   end
 
   private def create_question_transaction
-    #FIXME_AB: should be -1 * ENV['question_post_debit']
-    if user.credit_transactions.create(amount: -ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"])
+    if user.credit_transactions.create(amount: -ENV['question_post_debit'].to_i, transaction_type: CreditTransaction.transaction_types["debit"], transactable: self)
     else
       throw :abort
     end
@@ -59,6 +66,10 @@ class Question < ApplicationRecord
   def interacted?
     # done like this to see code coverage when we write test
     if self.reactions.any?
+      return true
+    end
+
+    if self.answers.any?
       return true
     end
 
@@ -95,6 +106,10 @@ class Question < ApplicationRecord
 
   def editable?
     !interacted?
+  end
+
+  def answered_by_user?(user)
+    return !!answers.find_by(user_id: user.id)
   end
 
 end

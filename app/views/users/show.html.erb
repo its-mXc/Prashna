@@ -1,0 +1,71 @@
+<div class="container-fluid user-container">
+  <%= render 'shared/notice' %>
+  <%= render 'shared/errors', object: @user %>
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-3">
+          <% if @user.avatar.attached? %>
+            <%= image_tag(@user.avatar, class: "rounded-circle", size: "200") %>
+          <% end %>
+        </div>
+
+        <div class="col-md-3"></div>
+
+        <div class="col-md-4" style="margin-top:20px;">
+          <div class="row user-info">
+            <strong>Name:</strong>
+            <%= @user.name %>
+          </div>
+          <div class="row user-info">
+            <strong>Email:</strong>
+            <%= @user.email %>
+          </div>
+
+          <div class="row user-info">
+            <strong>Followers count:</strong>
+            <%= @user.followers_count %>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+  <hr class="my-4 border-white">
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#questions">Questions</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#answers">Answers</a>
+    </li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade show active" id="questions">
+      <% if @user.questions.published.any? %>
+        <%= render @user.questions.published.includes([:file_attachment, :reactions, :topics, :question_topics, :answers, :comments]) %>
+      <% else %>
+        <h6>No Questions</h6>
+      <% end %>
+    </div>
+    <div class="tab-pane fade" id="answers">
+      <div class="tab-pane fade show active" id="questions">
+      <% if @user.answers.any? %>
+        <%= render "answers/user_answers", user_answers: @user.answers %>
+      <% else %>
+        <h6>No Answers</h6>
+      <% end %>
+    </div>
+  </div>
+  
+  
+
+
+</div>

@@ -1,5 +1,4 @@
-import {Notification} from'../classes/notifications'
-export class PersistentAction {
+class PersistentAction {
   constructor(options) {
     this.persistentElement = options["persistentElement"]
     this.refershTime = this.persistentElement.data("refresh-time")
@@ -8,12 +7,12 @@ export class PersistentAction {
   init() {
     this.persistentElement.hide();
 
-    this.persistentElement.parent('form').on('ajax:success', function(event){
+    this.persistentElement.parent('form').on('ajax:success', function(event, data, type){
       let notifications_options = {
         displayElement: $("#notifications")
       }
       let notifications = new Notification(notifications_options)
-      notifications.init(event.detail[0]["notifications"])
+      notifications.init(data.notifications)
 
     });
 

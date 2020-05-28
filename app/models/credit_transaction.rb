@@ -1,7 +1,8 @@
 class CreditTransaction < ApplicationRecord
-  enum transaction_type: { signup: 0, purchase: 1, debit: 2 }
+  enum transaction_type: { signup: 0, purchase: 1, debit: 2, popular: 3, reverted: 4 }
 
   belongs_to :user
+  belongs_to :transactable, polymorphic: true
 
   before_save :set_transaction_credit_balance
   after_commit :set_user_credit_balance
@@ -14,4 +15,7 @@ class CreditTransaction < ApplicationRecord
     user.refresh_credits!
   end
 
+  def reverse_transaction
+    CreditTransaction.reverted.create(amount: (-1 * self.amount), user: user, transactable: self)
+  end
 end

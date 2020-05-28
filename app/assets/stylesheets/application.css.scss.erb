@@ -21,13 +21,17 @@ input.upvote{
     font-size:0;
     width:50px;
     height:50px;
-    background-image: asset_url('upvote.png');
+
+    background-image: url(asset_path('upvote.png'));
+
     background-size: 50px;
     margin-bottom: 5px;
 }
 
 input.downvote{
-    background-image: asset_url('downvote.png');
+
+    background-image: url(asset_path('downvote.png'));
+
     background-size: 50px;
     font-size:0;
     width:50px;
@@ -40,3 +44,10 @@ hr {
     text-align: left;
     margin-left: 0px;
 }
+
+
+#searchbar input {
+    border-radius: 10px;
+    padding: 3px 10px 3px 10px
+}
+

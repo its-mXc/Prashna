@@ -1,0 +1,14 @@
+Figaro.require_keys(
+ "comment_word_length",
+ "from_email",
+ "host",
+ "maximum_question_char_length",
+ "minimum_question_char_length",
+ "notification_refresh_time_secs",
+ "password_token_expiry_time",
+ "popular_question_credits",
+ "popular_question_votes",
+ "question_post_debit",
+ "remember_me_expiry_days",
+ "signup_credits"
+ )

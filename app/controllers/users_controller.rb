@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update, :destroy, :questions]
+  before_action :set_user, only: [:update, :destroy, :questions, :show]
   before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics]
   before_action :ensure_not_logged_in, only:[:new, :create, :verify]
 
@@ -19,6 +19,10 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show
+    
   end
 
   def current_user_profile
@@ -52,11 +56,14 @@ class UsersController < ApplicationController
 
     topics = []
     topic_names.each do |topic_name|
-      topics << Topic.find_or_create_by(name: topic_name)
+      topic = Topic.find_or_create_by(name: topic_name)
+      unless topic.errors.any?
+        topics << topic
+      end
     end
 
     current_user.topics = topics
-    if topic_names.any?
+    if topics.any?
       redirect_to my_profile_path, notice: t('.topics_added')
     else
       redirect_to my_profile_path, notice: t('.topics_removed')

@@ -14,14 +14,15 @@
         <strong>Attached: </strong><%= link_to draft.file.filename, url_for(draft.file) %>
       <% end %>
     <% end %><br>
-    <% draft.topic_names.each do |topic_name|  %>
-    <% #FIXME_AB: each topic should be a link, which should show questions of this topic -%>
-      <span class="badge badge-primary"><%= topic_name %></span>
-    <% end %><br>
-    <small>Submitted <%= time_ago_in_words(draft.created_at) %> ago</small><br>
+     <p>
+      Created <%= time_ago_in_words(draft.created_at)-%> ago in 
+        <% draft.topics.each do |topic|  %>
+          <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
+        <% end %><br>
+    </p>
 
-    <%= link_to  "Post", publish_question_path(draft), class: "text-success" %>
+    <%= link_to  "Publish", publish_question_path(draft), class: "text-success" %>
     <%= link_to  "Edit", edit_question_path(draft), class: "text-danger" %>
   </div>
-  <hr class="my-4">
+  <hr class="my-4 border-danger">
 <% end %>

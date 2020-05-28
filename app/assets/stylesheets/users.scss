@@ -96,7 +96,11 @@
 }
 
 .logo {
-  width: 80vw;
+  width: 30vw;
+}
+
+#searchbar{
+  width: 50vw;
 }
 
 .user-info {
@@ -115,4 +119,8 @@
 .nav-link-not-logged {
   width: 14vw;
   text-align: end;
+}
+
+#transaction-history {
+  max-width: 70%;
 }

@@ -1,15 +1,12 @@
-import {Collapsible} from '../classes/collapsible'
-import {ScrollIntoView} from '../classes/scroll_into_view'
-$(document).ready(function() {  
-  
+$(document).on('turbolinks:load', function() { 
   let comments_collapsible_options = {
     clickableElement: $(".reply-btn"),
     collapsibleElement: $(".reply-form")
   }
 
-  let collapsibleComment = new Collapsible(comments_collapsible_options)
-  collapsibleComment.init()
-
+  let commentscollapsibleComment = new Collapsible(comments_collapsible_options)
+  commentscollapsibleComment.init()
+  
   let comment_options = {
     scrollableElement: $(window.location.hash)
   }
