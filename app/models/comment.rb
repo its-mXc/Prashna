@@ -51,7 +51,7 @@ class Comment < ApplicationRecord
   end
 
   private def unpublish_if_marked_abusive
-    if self.marked_abused
+    if marked_abused && published
       self.published = false
       self.save
     end

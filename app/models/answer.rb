@@ -66,7 +66,7 @@ class Answer < ApplicationRecord
   end
 
   private def unpublish_if_marked_abusive
-    if self.marked_abused
+    if marked_abused && published
       self.published = false
       if popularity_credits_granted
         self.popularity_credits_granted = false
