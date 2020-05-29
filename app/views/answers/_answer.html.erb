@@ -12,7 +12,7 @@
     <strong>Votes : </strong><%= answer.reaction_count %>
   <% end %>
   <br>
-  <% if logged_in? && !answer.reported_by?(current_user) %>
+  <% if logged_in? && !answer.reported_by?(current_user) && !answer.posted_by?(current_user) %>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#answer-<%= answer.id %>-report-abuse">
       Report Abuse
     </button>

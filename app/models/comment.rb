@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
   include ReactionRecorder
   include Posted
+  include Reported
 
   validate :parent_question_is_published
   validates :body, presence: true
@@ -47,10 +48,6 @@ class Comment < ApplicationRecord
   def mark_abusive!
     self.marked_abused = true
     save!
-  end
-
-  def reported_by?(user)
-    abuse_reports.find_by(user: user)
   end
 
   private def unpublish_if_marked_abusive

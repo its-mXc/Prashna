@@ -39,7 +39,7 @@
     <hr class="my-2">
 
 
-    <% if logged_in? && !@question.reported_by?(current_user) %>
+    <% if logged_in? && !@question.reported_by?(current_user) && !@question.posted_by?(current_user) %>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#question-report-abuse">
         Report Abuse
       </button>

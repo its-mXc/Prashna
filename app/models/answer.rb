@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   include ReactionRecorder
+  include Reported
   include BasicPresenter::Concern
 
   validates :body, presence: true
@@ -62,10 +63,6 @@ class Answer < ApplicationRecord
   def mark_abusive!
     self.marked_abused = true
     save!
-  end
-
-  def reported_by?(user)
-    abuse_reports.find_by(user: user)
   end
 
   private def unpublish_if_marked_abusive

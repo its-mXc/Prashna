@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   include ReactionRecorder
   include Posted
+  include Reported
   include BasicPresenter::Concern
   extend ActiveModel::Callbacks
 
@@ -118,10 +119,6 @@ class Question < ApplicationRecord
     self.status = self.class.statuses["mark_abused"]
     credit_transaction.reverse_transaction
     save!
-  end
-
-  def reported_by?(user)
-    abuse_reports.find_by(user: user)
   end
 
 end
