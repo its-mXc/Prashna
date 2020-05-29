@@ -5,6 +5,8 @@ class Question < ApplicationRecord
   include BasicPresenter::Concern
   extend ActiveModel::Callbacks
 
+  #FIXME_AB: unpublished
+  #FIXME_AB: also add a check that unpublished can not be published if marked abused
   enum status: { draft: 0, published: 1, mark_abused: 2 }
 
   define_model_callbacks :mark_published, only: :before

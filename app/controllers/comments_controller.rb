@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:reaction, :show, :report_abuse]
   before_action :ensure_not_voting_own_comment, only: :reaction
   before_action :validate_commit_param, only: :reaction
+  #FIXME_AB: same as answers
 
   def new
     @comment = Comment.new

@@ -1,3 +1,4 @@
+<% #FIXME_AB: split in partials section wise -%>
 <div>
   <div class="jumbotron question-container">
     <%= render  "shared/notice", object: @question %>
@@ -27,8 +28,9 @@
     <% end %>
 
     <p class="mt-4 lead"><%= @question.presenter.markdown_content  %></p>
-    <% #FIXME_AB: clicking on the attchment, open in a new tab -%>
+
     <% if @question.file.attached? %>
+      <% #FIXME_AB: image? -%>
       <% if @question.file.blob.content_type =~ /image/ %>
         <strong>Attached: </strong><%= @question.file.filename %><br>
         <%= link_to  image_tag(@question.file, size: "200"), url_for(@question.file), target: :_blank %>

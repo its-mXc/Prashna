@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :ensure_has_not_been_already_answered, only: [:new, :create]
   before_action :find_answer, only: [:reaction, :show, :report_abuse]
   before_action :ensure_question_is_published, only: [:show, :reaction, :report_abuse]
+  #FIXME_AB: check for self
 
   def new
     @answer = Answer.new

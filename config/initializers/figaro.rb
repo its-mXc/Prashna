@@ -10,5 +10,6 @@ Figaro.require_keys(
  "popular_question_votes",
  "question_post_debit",
  "remember_me_expiry_days",
- "signup_credits"
+ "signup_credits",
+ "abuse_reports_unpublish_no"
  )

@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   include ReactionRecorder
   include Reported
+  include Posted
   include BasicPresenter::Concern
 
   validates :body, presence: true
@@ -15,11 +16,16 @@ class Answer < ApplicationRecord
   has_many :abuse_reports, as: :abuseable
 
   after_commit :notify_question_author, on: :create
+
+  #FIXME_AB: lets not do this in callback, move it to mark abusive method
   after_save :unpublish_if_marked_abusive
 
   scope :order_by_vote, -> {order(reaction_count: :desc)}
+  #FIXME_AB: default scope for answers and comments
   scope :published, -> { where(published: true) }
-  
+
+  #FIXME_AB: add a check that answer can not be marked published if already marked abusive, same with qustion and comment
+
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
     check_popularity
@@ -59,8 +65,9 @@ class Answer < ApplicationRecord
       UserMailer.send_question_answered_mail(self.id).deliver_later
     end
   end
-  
+
   def mark_abusive!
+    #FIXME_AB: Do this in one db transation. Read how to do transactions in active record
     self.marked_abused = true
     save!
   end
@@ -68,7 +75,7 @@ class Answer < ApplicationRecord
   private def unpublish_if_marked_abusive
     if marked_abused && published
       self.published = false
-      if popularity_credits_granted
+      if popularity_credits_granted?
         self.popularity_credits_granted = false
         revert_credits
       end

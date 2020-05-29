@@ -16,7 +16,7 @@ class AbuseReport < ApplicationRecord
 
   private def ensure_not_reporting_own_abuseable
     if abuseable.user == user
-      errors.add(:base, "Cannor report your own abuseable")
+      errors.add(:base, "Cannot report your own content")
       throw :abort
     end
   end

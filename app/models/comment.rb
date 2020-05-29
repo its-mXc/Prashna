@@ -5,6 +5,8 @@ class Comment < ApplicationRecord
 
   validate :parent_question_is_published
   validates :body, presence: true
+
+  #FIXME_AB: use new syntax
   validates_length_of :words_in_comment, minimum: ENV["comment_word_length"].to_i
 
   belongs_to :user
@@ -45,6 +47,7 @@ class Comment < ApplicationRecord
     end
   end
 
+  #FIXME_AB: same as answered
   def mark_abusive!
     self.marked_abused = true
     save!

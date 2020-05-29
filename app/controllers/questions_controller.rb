@@ -105,8 +105,11 @@
     def report_abuse
       abuse_report = @question.abuse_reports.new(user: current_user, details: params[:abuse_report][:details] )
       if abuse_report.save
+        #FIXME_AB: #FIXME_AB: question not found, if unpublished. so basically reload question and check if is published or not. accordingly redirect to question page or home
+        #FIXME_AB: translations
         redirect_to @question, notice: t('.abuse_reported')
       else
+        #FIXME_AB: error
         redirect_to @question, notice: t('.abuse_already_reported')
       end
     end
@@ -168,7 +171,7 @@
         redirect_back fallback_location: @question, notice: t('.cannot_vote_own_question')
       end
     end
-    
+
     private def ensure_not_reporting_own_question
       if current_user == @question.user
         redirect_back fallback_location: @question, notice: t('.cannot_report_own_question')
