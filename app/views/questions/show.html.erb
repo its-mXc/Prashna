@@ -89,7 +89,10 @@
               <%= f.submit "Answer", class: "btn btn-danger" %>
             <% end %>
           <% end %>
+          <hr class="my-2">
           <% if @question.answers.published.any? %>
+            <h5>Answers</h5>
+            <hr class="my-2 border-danger w-50">
             <%= render @question.answers.published.includes([:user, :comments]).order_by_vote %>
           <% else %>
             <h5>No Answers</h5>

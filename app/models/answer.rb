@@ -14,6 +14,7 @@ class Answer < ApplicationRecord
   has_many :abuse_reports, as: :abuseable
 
   after_commit :notify_question_author, on: :create
+  after_save :unpublish_if_marked_abusive
 
   scope :order_by_vote, -> {order(reaction_count: :desc)}
   scope :published, -> { where(published: true) }
@@ -58,12 +59,23 @@ class Answer < ApplicationRecord
     end
   end
   
-  def mark_unpublished!
-    self.published = false
+  def mark_abusive!
+    self.marked_abused = true
     save!
   end
 
   def reported_by?(user)
     abuse_reports.find_by(user: user)
+  end
+
+  private def unpublish_if_marked_abusive
+    if self.marked_abused
+      self.published = false
+      if popularity_credits_granted
+        self.popularity_credits_granted = false
+        revert_credits
+      end
+      self.save
+    end
   end
 end

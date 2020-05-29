@@ -4,7 +4,7 @@ class Question < ApplicationRecord
   include BasicPresenter::Concern
   extend ActiveModel::Callbacks
 
-  enum status: { draft: 0, published: 1, unpublished: 2 }
+  enum status: { draft: 0, published: 1, mark_abused: 2 }
 
   define_model_callbacks :mark_published, only: :before
   define_model_callbacks :mark_published, only: :after
@@ -114,9 +114,8 @@ class Question < ApplicationRecord
     return !!answers.find_by(user_id: user.id)
   end
 
-  def mark_unpublished!
-    self.status = self.class.statuses["unpublished"]
-    self.url_slug = nil
+  def mark_abusive!
+    self.status = self.class.statuses["mark_abused"]
     credit_transaction.reverse_transaction
     save!
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_28_121056) do
+ActiveRecord::Schema.define(version: 2020_05_29_050444) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_121056) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "popularity_credits_granted", default: false
     t.boolean "published", default: true
+    t.boolean "marked_abused", default: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_121056) do
     t.bigint "question_id", null: false
     t.integer "reaction_count", default: 0
     t.boolean "published", default: true
+    t.boolean "marked_abused", default: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["question_id"], name: "index_comments_on_question_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -115,6 +117,7 @@ ActiveRecord::Schema.define(version: 2020_05_28_121056) do
     t.integer "status"
     t.integer "reaction_count", default: 0
     t.timestamp "published_at"
+    t.boolean "marked_abused", default: false
     t.index ["url_slug"], name: "index_questions_on_url_slug", unique: true
     t.index ["user_id"], name: "index_questions_on_user_id"
   end

@@ -15,6 +15,7 @@ class Comment < ApplicationRecord
   has_many :abuse_reports, as: :abuseable
 
   after_save :generate_notifications
+  after_save :unpublish_if_marked_abusive
 
   scope :published, -> { where(published: true) }
 
@@ -43,12 +44,19 @@ class Comment < ApplicationRecord
     end
   end
 
-  def mark_unpublished!
-    self.published = false
+  def mark_abusive!
+    self.marked_abused = true
     save!
   end
 
   def reported_by?(user)
     abuse_reports.find_by(user: user)
+  end
+
+  private def unpublish_if_marked_abusive
+    if self.marked_abused
+      self.published = false
+      self.save
+    end
   end
 end
