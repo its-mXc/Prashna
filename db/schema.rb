@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_050444) do
+ActiveRecord::Schema.define(version: 2020_05_29_072924) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -160,6 +160,8 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
     t.string "confirmation_token"
     t.string "password_reset_token"
     t.datetime "password_token_expire_at"
+    t.string "auth_token"
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email", "confirmation_token"], name: "index_users_on_email_and_confirmation_token", unique: true
     t.index ["password_reset_token"], name: "index_users_on_password_reset_token"
     t.index ["password_token_expire_at"], name: "index_users_on_password_token_expire_at"

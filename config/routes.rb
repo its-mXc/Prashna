@@ -72,6 +72,11 @@ Rails.application.routes.draw do
     get :verify
   end
 
+  namespace :api do
+    resources :feed, only: [:index]
+    resources :topics, only: [:show]
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 end

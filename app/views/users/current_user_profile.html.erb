@@ -29,6 +29,10 @@
             <strong>Followers count:</strong>
             <%= current_user.followers_count %>
           </div>
+          <div class="row user-info">
+            <strong>Authentication token:</strong>
+            <%= current_user.auth_token %>
+          </div>
 
           <div class="row user-info">
             <%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
