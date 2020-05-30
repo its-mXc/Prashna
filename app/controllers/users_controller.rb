@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update, :destroy, :questions, :show]
-  before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics]
+  before_action :set_user, only: [:update, :destroy, :questions, :show, :follow, :unfollow]
+  before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics, :follow, :unfollow]
   before_action :ensure_not_logged_in, only:[:new, :create, :verify]
 
   def new
@@ -72,6 +72,16 @@ class UsersController < ApplicationController
 
   def questions
     @questions = @user.questions.published
+  end
+
+  def follow
+    current_user.follow!(@user)
+    redirect_to @user, notice: t('.user_followed')
+  end
+  
+  def unfollow
+    current_user.unfollow!(@user) 
+    redirect_to @user, notice: t('.user_unfollowed')
   end
 
   private def set_user

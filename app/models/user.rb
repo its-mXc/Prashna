@@ -22,7 +22,12 @@ class User < ApplicationRecord
     assoc.has_many :notifications
     assoc.has_many :topics, through: :user_topics
     assoc.has_many :answers
+    assoc.has_many :user_follows, foreign_key: "follower_id"
+    assoc.has_many :reverse_user_follows, foreign_key: "followed_id", class_name: "UserFollow"
   end
+  has_many :followed_users, through: :user_follows, source: :followed
+  has_many :followers, through: :reverse_user_follows
+
 
   with_options dependent: :restrict_with_error do |assoc|
     assoc.has_many :credit_transactions
@@ -79,6 +84,18 @@ class User < ApplicationRecord
     if notification
       notification.mark_viewed!
     end
+  end
+
+  def following?(other_user)
+    user_follows.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    user_follows.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    user_follows.find_by_followed_id(other_user.id).destroy
   end
 
 end
