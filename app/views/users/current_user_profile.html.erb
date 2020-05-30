@@ -69,6 +69,12 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#transaction-history">Transaction History</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#following">Following</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#followers">Followers</a>
+    </li>
   </ul>
   <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="questions">
@@ -118,6 +124,12 @@
         </tbody>
       </table>
       <strong>Credit Balance : <%= current_user.credit_balance %></strong>
+    </div>
+    <div class="tab-pane fade" id="following">
+      <%= render current_user.followed_users %>
+    </div>
+    <div class="tab-pane fade" id="followers">
+      <%= render current_user.followers %>
     </div>
   </div>
 
