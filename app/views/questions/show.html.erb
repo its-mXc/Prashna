@@ -17,58 +17,16 @@
         <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning' %>
         <% end %>
     </p>
-    <% if logged_in? && !@question.posted_by?(current_user) %>
-      <%= form_for @question , url: reaction_question_path(@question) ,remote: true, method: :get, html: { class: "vote" } do |f| %>
-        <%= f.submit :upvote, class: "btn  upvote", title: @question.reactions.upvotes.count, data: { toggle: "tooltip" }  %>
-        <span class="reaction_count"><%= @question.reaction_count %></span>
-        <%= f.submit :downvote, class: "btn  downvote", title: @question.reactions.downvotes.count, data: { toggle: "tooltip" }  %>
-      <% end %>
-    <% else %>
-      <strong>Votes : </strong><%= @question.reaction_count %>
-    <% end %>
+
+    <%= render  "shared/vote", question: @question %>
 
     <p class="mt-4 lead"><%= @question.presenter.markdown_content  %></p>
 
-    <% if @question.file.attached? %>
-      <% #FIXME_AB: image? -%>
-      <% if @question.file.blob.content_type =~ /image/ %>
-        <strong>Attached: </strong><%= @question.file.filename %><br>
-        <%= link_to  image_tag(@question.file, size: "200"), url_for(@question.file), target: :_blank %>
-      <% else %>
-        <strong>Attached: </strong><%= link_to  @question.file.filename, url_for(@question.file), target: :_blank %>
-      <% end %>
-    <% end %><br>
+    <%= render  "shared/attachment", file: @question.file %>
+
     <hr class="my-2">
 
-
-    <% if logged_in? && !@question.reported_by?(current_user) && !@question.posted_by?(current_user) %>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#question-report-abuse">
-        Report Abuse
-      </button>
-
-      <div class="modal fade" id="question-report-abuse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Report Question</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <%= form_for @question.abuse_reports.new , local: true, url: report_abuse_question_path(@question), method: :get do |f| %>
-              <div class="modal-body">
-                  <%= f.text_area :details, class: "form-control" %>
-              </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <%= f.submit "Report", class: "btn btn-primary" %>
-            </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
+    <%= render  "shared/report", abuseable: @question, message: "Report Question" %>
 
     <p class="lead">
       <br>

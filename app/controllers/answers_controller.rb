@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :ensure_has_not_been_already_answered, only: [:new, :create]
   before_action :find_answer, only: [:reaction, :show, :report_abuse]
   before_action :ensure_question_is_published, only: [:show, :reaction, :report_abuse]
+  before_action :ensure_not_reporting_own_comment, only: :report_abuse
   #FIXME_AB: check for self
 
   def new
@@ -60,6 +61,12 @@ class AnswersController < ApplicationController
   private def ensure_question_is_published
     if @answer.question.draft?
       redirect_back fallback_location: root_path, notice: t('.question_not_published')
+    end
+  end
+
+  private def ensure_not_reporting_own_answer
+    if current_user == @answer.user
+      redirect_back fallback_location: @question, notice: t('.cannot_report_own_question')
     end
   end
 

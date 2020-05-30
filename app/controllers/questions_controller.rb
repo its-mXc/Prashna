@@ -105,12 +105,16 @@
     def report_abuse
       abuse_report = @question.abuse_reports.new(user: current_user, details: params[:abuse_report][:details] )
       if abuse_report.save
+        if @question.reload.marked_abused
+          redirect_to root_path, notice: t('.question_unpublished')
+        else
+          redirect_to @question, notice: t('.abuse_reported')
+        end
         #FIXME_AB: #FIXME_AB: question not found, if unpublished. so basically reload question and check if is published or not. accordingly redirect to question page or home
         #FIXME_AB: translations
-        redirect_to @question, notice: t('.abuse_reported')
       else
         #FIXME_AB: error
-        redirect_to @question, notice: t('.abuse_already_reported')
+        redirect_to @question, notice: t('.abuse_not_reported')
       end
     end
 

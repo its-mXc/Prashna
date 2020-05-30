@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:reaction, :show, :report_abuse]
   before_action :ensure_not_voting_own_comment, only: :reaction
   before_action :validate_commit_param, only: :reaction
+  before_action :ensure_not_reporting_own_comment, only: :report_abuse
   #FIXME_AB: same as answers
 
   def new
@@ -69,6 +70,12 @@ class CommentsController < ApplicationController
   private def ensure_not_voting_own_comment
     if current_user == @comment.user
       redirect_back fallback_location: root_path, notice: t('.cannot_vote_own_comment')
+    end
+  end
+
+  private def ensure_not_reporting_own_comment
+    if current_user == @comment.user
+      redirect_back fallback_location: @question, notice: t('.cannot_report_own_question')
     end
   end
 

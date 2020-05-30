@@ -7,6 +7,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates :question_id, uniqueness: { scope: :user_id }
   validate :question_is_published
+  validate :not_published_if_marked_abusive
 
   belongs_to :user
   belongs_to :question
@@ -18,7 +19,6 @@ class Answer < ApplicationRecord
   after_commit :notify_question_author, on: :create
 
   #FIXME_AB: lets not do this in callback, move it to mark abusive method
-  after_save :unpublish_if_marked_abusive
 
   scope :order_by_vote, -> {order(reaction_count: :desc)}
   #FIXME_AB: default scope for answers and comments
@@ -68,18 +68,22 @@ class Answer < ApplicationRecord
 
   def mark_abusive!
     #FIXME_AB: Do this in one db transation. Read how to do transactions in active record
-    self.marked_abused = true
-    save!
-  end
-
-  private def unpublish_if_marked_abusive
-    if marked_abused && published
+    self.transaction do
+      self.marked_abused = true
       self.published = false
       if popularity_credits_granted?
         self.popularity_credits_granted = false
         revert_credits
       end
-      self.save
+      save!
     end
   end
+
+  private def not_published_if_marked_abusive
+    if marked_abused && published
+      errors.add(:base, 'Cannot be published marked abused')
+      throw :abort
+    end
+  end
+
 end

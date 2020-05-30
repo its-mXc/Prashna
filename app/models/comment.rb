@@ -8,6 +8,7 @@ class Comment < ApplicationRecord
 
   #FIXME_AB: use new syntax
   validates_length_of :words_in_comment, minimum: ENV["comment_word_length"].to_i
+  validate :not_published_if_marked_abusive
 
   belongs_to :user
   belongs_to :question
@@ -18,7 +19,6 @@ class Comment < ApplicationRecord
   has_many :abuse_reports, as: :abuseable
 
   after_save :generate_notifications
-  after_save :unpublish_if_marked_abusive
 
   scope :published, -> { where(published: true) }
 
@@ -50,13 +50,14 @@ class Comment < ApplicationRecord
   #FIXME_AB: same as answered
   def mark_abusive!
     self.marked_abused = true
+    self.published = false
     save!
   end
 
-  private def unpublish_if_marked_abusive
+  private def not_published_if_marked_abusive
     if marked_abused && published
-      self.published = false
-      self.save
+      errors.add(:base, 'Cannot be published marked abused')
+      throw :abort
     end
   end
 end

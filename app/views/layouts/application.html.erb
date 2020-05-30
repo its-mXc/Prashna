@@ -15,19 +15,10 @@
   </head>
   <body>
     <div id = 'page-body'>
-
-
-
-
-
-
-
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark top-navbar">
         <div class="logo">
           <%= link_to  "Prashna", root_path, class: "navbar-brand" %>
         </div>
-
-
 
         <div id="searchbar">
           <%= form_with scope: :question, url: search_questions_url , local: true, method: :get do |f| %>

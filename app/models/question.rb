@@ -7,7 +7,7 @@ class Question < ApplicationRecord
 
   #FIXME_AB: unpublished
   #FIXME_AB: also add a check that unpublished can not be published if marked abused
-  enum status: { draft: 0, published: 1, mark_abused: 2 }
+  enum status: { draft: 0, published: 1, unpublished: 2 }
 
   define_model_callbacks :mark_published, only: :before
   define_model_callbacks :mark_published, only: :after
@@ -30,6 +30,7 @@ class Question < ApplicationRecord
   has_many :abuse_reports, as: :abuseable
 
   before_mark_published :has_needed_credit_balance
+  before_mark_published :not_published_if_marked_abusive
   before_mark_published :create_question_transaction
   after_mark_published :generate_url_slug
   after_mark_published :generate_notifications
@@ -118,9 +119,17 @@ class Question < ApplicationRecord
   end
 
   def mark_abusive!
-    self.status = self.class.statuses["mark_abused"]
+    self.marked_abused = true
+    self.status = self.class.statuses["unpublished"]
     credit_transaction.reverse_transaction
     save!
+  end
+
+  private def not_published_if_marked_abusive
+    if marked_abused && published?
+      errors.add(:base, 'Cannot be published marked abused')
+      throw :abort
+    end
   end
 
 end

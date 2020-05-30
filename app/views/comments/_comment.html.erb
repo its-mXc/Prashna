@@ -16,33 +16,8 @@
      <br><strong>Votes : </strong><%= comment.reaction_count %>
     <% end %>
     <br>
-    <% if logged_in? && !comment.reported_by?(current_user) && !comment.posted_by?(current_user) %>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#comment-<%= comment.id %>-report-abuse">
-        Report Abuse
-      </button>
 
-      <div class="modal fade" id="comment-<%= comment.id %>-report-abuse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Report Comment</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <%= form_for @question.abuse_reports.new , local: true, url: report_abuse_comment_path(comment), method: :get do |f| %>
-              <div class="modal-body">
-                  <%= f.text_area :details, class: "form-control" %>
-              </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <%= f.submit "Report", class: "btn btn-primary" %>
-            </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <%= render  "shared/report", abuseable: comment, message: "Report Comment" %>
 
 
     <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>
