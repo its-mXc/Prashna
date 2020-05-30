@@ -20,7 +20,7 @@ class Comment < ApplicationRecord
 
   after_save :generate_notifications
 
-  scope :published, -> { where(published: true) }
+  default_scope { where(published: true) }
 
 
   def refresh_votes!

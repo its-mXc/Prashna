@@ -22,7 +22,7 @@ class Answer < ApplicationRecord
 
   scope :order_by_vote, -> {order(reaction_count: :desc)}
   #FIXME_AB: default scope for answers and comments
-  scope :published, -> { where(published: true) }
+  default_scope { where(published: true) }
 
   #FIXME_AB: add a check that answer can not be marked published if already marked abusive, same with qustion and comment
 

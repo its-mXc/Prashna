@@ -1,0 +1,2 @@
+class FeedActivity < ApplicationRecord
+end

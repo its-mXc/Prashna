@@ -50,10 +50,10 @@
             <% end %>
           <% end %>
           <hr class="my-2">
-          <% if @question.answers.published.any? %>
+          <% if @question.answers.any? %>
             <h5>Answers</h5>
             <hr class="my-2 border-danger w-50">
-            <%= render @question.answers.published.includes([:user, :comments]).order_by_vote %>
+            <%= render @question.answers.includes([:user, :comments]).order_by_vote %>
           <% else %>
             <h5>No Answers</h5>
           <% end %>
@@ -73,10 +73,10 @@
               <% end %>
             <% end %>
             <br>
-            <% if @question.comments.published.any? %>
+            <% if @question.comments.any? %>
               <h3 class="display-5">Comments</h3>
               <ul>
-                <%= render @question.comments.published.includes([:user]) %>
+                <%= render @question.comments.includes([:user]) %>
               </ul>
             <% else %>
               <h5>No Comments</h5>

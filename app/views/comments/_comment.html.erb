@@ -38,7 +38,7 @@
       <% end %>
     </div>
     <ul class="m-2">
-        <%= render comment.comments.published.includes([:user]) %>
+        <%= render comment.comments.includes([:user]) %>
     </ul>
 
   </li>

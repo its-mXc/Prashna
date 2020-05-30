@@ -60,8 +60,8 @@
       <span class="badge badge-danger p-2 mt-2"><%= answer.comments.size %> Comments</span>
     </a>
     <div class="comments-answer collapse" id="answer-<%= answer.id %>-comments">
-       <% if answer.comments.published.any?  %>
-        <%= render answer.comments.published.includes(:user) %>
+       <% if answer.comments.any?  %>
+        <%= render answer.comments.includes(:user) %>
       <% else %>
         <p>No Comments</p>
       <% end %>

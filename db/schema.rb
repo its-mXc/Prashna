@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_072924) do
+ActiveRecord::Schema.define(version: 2020_05_30_070400) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -85,6 +85,13 @@ ActiveRecord::Schema.define(version: 2020_05_29_072924) do
     t.bigint "transactable_id"
     t.index ["transactable_type", "transactable_id"], name: "transactable_index"
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
+  end
+
+  create_table "feed_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "ip"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

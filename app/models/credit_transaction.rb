@@ -7,6 +7,8 @@ class CreditTransaction < ApplicationRecord
   before_save :set_transaction_credit_balance
   after_commit :set_user_credit_balance
 
+  scope reverse_chronological: -> {order(created_at: :desc)}
+
   private def set_transaction_credit_balance
     self.credit_balance = self.user.credit_balance + self.amount
   end
