@@ -38,6 +38,7 @@ class User < ApplicationRecord
       credit_transactions.create(amount: ENV['signup_credits'].to_i, transaction_type: CreditTransaction.transaction_types["signup"], transactable: self)
       self.verified_at = Time.current
       self.confirmation_token = nil
+      self.auth_token = SecureRandom.urlsafe_base64.to_s
       save!
     end
   end
