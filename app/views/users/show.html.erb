@@ -55,14 +55,14 @@
       <a class="nav-link" data-toggle="tab" href="#answers">Answers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#following">Following</a>
+      <a class="nav-link" data-toggle="tab" href="#following">Following <span class="badge badge-dark"><%= @user.followed_users.size %></span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#followers">Followers</a>
+      <a class="nav-link" data-toggle="tab" href="#followers">Followers <span class="badge badge-dark"><%= @user.followers.size %></span></a>
     </li>
   </ul>
 
-  <div id="myTabContent" class="tab-content">
+  <div id="myTabContent" class="tab-content mt-2">
     <div class="tab-pane fade show active" id="questions">
       <% if @user.questions.published.any? %>
         <%= render @user.questions.published.includes([:file_attachment, :reactions, :topics, :question_topics, :answers, :comments]) %>
