@@ -70,13 +70,13 @@
       <a class="nav-link" data-toggle="tab" href="#transaction-history">Transaction History</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#following">Following</a>
+      <a class="nav-link" data-toggle="tab" href="#following">Following <span class="badge badge-dark"><%= current_user.followed_users.size %></span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#followers">Followers</a>
+      <a class="nav-link" data-toggle="tab" href="#followers">Followers <span class="badge badge-dark"><%= current_user.followers.size %></span></a>
     </li>
   </ul>
-  <div id="myTabContent" class="tab-content">
+  <div id="myTabContent" class="tab-content mt-1">
     <div class="tab-pane fade show active" id="questions">
       <% if current_user.questions.published.any? %>
         <%= render current_user.questions.published.includes([:file_attachment, :reactions, :topics, :question_topics, :answers, :comments]) %>
