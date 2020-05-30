@@ -49,6 +49,8 @@ Rails.application.routes.draw do
       post :set_avatar
       post :set_topics
       get :questions
+      get :follow
+      get :unfollow
     end
   end
 

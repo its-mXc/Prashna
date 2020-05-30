@@ -27,6 +27,15 @@
             <%= @user.followers_count %>
           </div>
 
+          <% if logged_in? && @user != current_user && !current_user.following?(@user) %>
+            <%= button_to  "Follow", follow_user_path(@user), method: :get %>
+          <% end %>
+
+          <% if logged_in? && @user != current_user && current_user.following?(@user) %>
+            <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get %>
+          <% end %>
+
+
         </div>
       </div>
 
@@ -45,6 +54,12 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#answers">Answers</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#following">Following</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#followers">Followers</a>
+    </li>
   </ul>
 
   <div id="myTabContent" class="tab-content">
@@ -62,6 +77,13 @@
       <% else %>
         <h6>No Answers</h6>
       <% end %>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="following">
+      <%= render @user.followed_users %>
+    </div>
+    <div class="tab-pane fade" id="followers">
+      <%= render @user.followers %>
     </div>
   </div>
   
