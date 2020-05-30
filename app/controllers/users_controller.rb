@@ -75,13 +75,21 @@ class UsersController < ApplicationController
   end
 
   def follow
-    current_user.follow!(@user)
-    redirect_to @user, notice: t('.user_followed')
+    if current_user.following?(@user)
+      redirect_back fallback_location: @user, notice: t('.user_already_followed')
+    else
+      current_user.follow!(@user)
+      redirect_back fallback_location: @user, notice: t('.user_followed')
+    end
   end
   
   def unfollow
-    current_user.unfollow!(@user) 
-    redirect_to @user, notice: t('.user_unfollowed')
+    if current_user.following?(@user)
+      current_user.unfollow!(@user) 
+      redirect_back fallback_location: @user, notice: t('.user_unfollowed')
+    else
+      redirect_back fallback_location: @user, notice: t('.user_not_followed')
+    end
   end
 
   private def set_user

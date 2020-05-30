@@ -1,3 +1,22 @@
-<div>
-  <%= user.name %>
+<div class="row">
+  <div class="col-1">
+    <% if user.avatar.attached? %>
+      <%= image_tag(user.avatar, class: "rounded-circle", size: "50") %>
+    <% end %>
+  </div>
+
+  <div class="col-2 my-auto">
+    <%= link_to user.name, user %>
+  </div>
+
+  <div class="col-2 my-auto">
+    <% if logged_in? && user != current_user && !current_user.following?(user) %>
+      <%= button_to  "Follow", follow_user_path(user), method: :get, class: "btn btn-success" %>
+    <% end %>
+
+    <% if logged_in? && user != current_user && current_user.following?(user) %>
+      <%= button_to  "Unfollow", unfollow_user_path(user), method: :get, class: "btn btn-danger" %>
+    <% end %>
+  </div>
 </div>
+<hr class="my-2 border-danger w-50">
