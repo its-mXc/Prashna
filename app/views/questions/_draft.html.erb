@@ -1,28 +1,32 @@
-<% drafts.each do |draft| %>
-  <div>
-    <h3>
-      <%= draft.title %>
-    </h3>
-    </p>
-      <%= draft.content  %>
-    <p>
-    <% if draft.file.attached? %>
-      <% if draft.file.attachment.image? %>
-        <strong>Attached: </strong><%= draft.file.filename %><br>
-        <%= image_tag(draft.file, size: "200") %>
-      <% else %>
-        <strong>Attached: </strong><%= link_to draft.file.filename, url_for(draft.file) %>
-      <% end %>
-    <% end %><br>
-     <p>
-      Created <%= time_ago_in_words(draft.created_at)-%> ago in 
-        <% draft.topics.each do |topic|  %>
-          <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
-        <% end %><br>
-    </p>
+<% if drafts.any? %>
+  <% drafts.each do |draft| %>
+    <div>
+      <h3>
+        <%= draft.title %>
+      </h3>
+      </p>
+        <%= draft.content  %>
+      <p>
+      <% if draft.file.attached? %>
+        <% if draft.file.attachment.image? %>
+          <strong>Attached: </strong><%= draft.file.filename %><br>
+          <%= image_tag(draft.file, size: "200") %>
+        <% else %>
+          <strong>Attached: </strong><%= link_to draft.file.filename, url_for(draft.file) %>
+        <% end %>
+      <% end %><br>
+      <p>
+        Created <%= time_ago_in_words(draft.created_at)-%> ago in 
+          <% draft.topics.each do |topic|  %>
+            <span class="badge badge-danger p-2"><%= link_to topic.name, questions_topic_path(topic), class: "text-white" %></span>
+          <% end %><br>
+      </p>
 
-    <%= link_to  "Publish", publish_question_path(draft), class: "text-success" %>
-    <%= link_to  "Edit", edit_question_path(draft), class: "text-danger" %>
-  </div>
-  <hr class="my-4 border-danger">
+      <%= link_to  "Publish", publish_question_path(draft), class: "text-success" %>
+      <%= link_to  "Edit", edit_question_path(draft), class: "text-danger" %>
+    </div>
+    <hr class="my-4 border-danger">
+  <% end %>
+<% else %>
+  <h5>No Drafts</h5>
 <% end %>

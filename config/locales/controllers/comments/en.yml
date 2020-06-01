@@ -8,3 +8,9 @@ en:
       reaction_submitted: "Reaction Submitted"
       cannot_find_comment: "Cannot find comment"
       invalid_commmit_params: "Inavlid comment commit params"
+    report_abuse:
+      abuse_reported: "Comment marked as abuse"
+      abuse_not_reported: "Error in reporting comment as abuse"
+      cannot_report_own_comment: "Cannot report own comment"
+      cannot_find_comment: "Cannot find answer"
+      marked_as_abused: "Marked as abused"

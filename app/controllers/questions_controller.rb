@@ -99,7 +99,7 @@
     end
 
     def search
-      @questions = Question.search(question_params[:search])
+      @questions = Question.with_attached_file.includes(:reactions, :user, :topics).search(question_params[:search])
     end
 
     def report_abuse

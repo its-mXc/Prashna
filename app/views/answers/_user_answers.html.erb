@@ -1,9 +1,13 @@
-<% user_answers.each do |answer| %>
-  <div id="answer-<%= answer.id %>" onClick="location.href='<%= answer_path(answer) %>'">
-    <%= link_to  answer.body, answer %>
-    <br>    
-    <strong>Votes : </strong><%= answer.reaction_count %><br>
-  <small>Answered <%= time_ago_in_words(answer.created_at) %> ago</small><br>
-  </div>
-  <hr class="my-4 border-success">
+<% if user_answers.any? %>
+  <% user_answers.each do |answer| %>
+    <div id="answer-<%= answer.id %>" onClick="location.href='<%= answer_path(answer) %>'">
+      <%= link_to  answer.body, answer %>
+      <br>    
+      <strong>Votes : </strong><%= answer.reaction_count %><br>
+    <small>Answered <%= time_ago_in_words(answer.created_at) %> ago</small><br>
+    </div>
+    <hr class="my-4 border-success">
+  <% end %>
+<% else %>
+  <h5>No Answers</h5>
 <% end %>

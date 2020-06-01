@@ -17,7 +17,11 @@ class CommentsController < ApplicationController
     @comment.question = @question
 
     if @comment.save
-      redirect_to @comment, notice: t('.comment_posted')
+      if @comment.reload.marked_abused
+        redirect_to @comment.question, notice: t('.marked_as_abused')
+      else
+        redirect_to @comment, notice: t('.comment_posted')
+      end
     else
       redirect_to question_path(@comment.question, parent_commentable_id: @commentable.id, parent_commentable_type: @commentable.class.name, comment_body: comment_params[:body]), notice: t('.minimum_words', word_count: ENV['comment_word_length'])
     end
@@ -36,9 +40,13 @@ class CommentsController < ApplicationController
   def report_abuse
     abuse_report = @comment.abuse_reports.new(user: current_user, details: params[:abuse_report][:details] )
     if abuse_report.save
-      redirect_to @comment, notice: t('.abuse_reported')
+      if @comment.reload.marked_abused
+        redirect_to @comment, notice: t('.marked_as_abused')
+      else
+        redirect_to @comment, notice: t('.abuse_reported')
+      end
     else
-      redirect_to @comment, notice: t('.abuse_already_reported')
+      redirect_to @comment, notice: t('.abuse_not_reported')
     end
   end
 
@@ -75,7 +83,7 @@ class CommentsController < ApplicationController
 
   private def ensure_not_reporting_own_comment
     if current_user == @comment.user
-      redirect_back fallback_location: @question, notice: t('.cannot_report_own_question')
+      redirect_back fallback_location: @question, notice: t('.cannot_report_own_comment')
     end
   end
 

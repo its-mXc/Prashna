@@ -1,4 +1,4 @@
-desc 'Make a new admin'
+desc 'Add auth token to users'
 task add_auth_token: :environment do
 
   User.find_each do |user|
