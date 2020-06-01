@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_093116) do
+ActiveRecord::Schema.define(version: 2020_06_01_063620) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -170,7 +170,6 @@ ActiveRecord::Schema.define(version: 2020_05_30_093116) do
     t.string "email"
     t.integer "user_type", default: 0
     t.integer "credit_balance", default: 0
-    t.integer "followers_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "verified_at"
