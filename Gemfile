@@ -73,4 +73,5 @@ gem 'exception_notification', '>= 4.4.0'
 gem 'bootstrap', '~> 4.5.0'
 gem 'redcarpet', '>= 3.5.0'
 gem 'basic_presenter'
+gem 'clipboard-rails'
 #FIXME_AB: lets lock gem versions of all added gems

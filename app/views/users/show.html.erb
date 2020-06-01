@@ -22,11 +22,6 @@
             <%= @user.email %>
           </div>
 
-          <div class="row user-info">
-            <strong>Followers count:</strong>
-            <%= @user.followers_count %>
-          </div>
-
           <% if logged_in? && @user != current_user && !current_user.following?(@user) %>
             <%= button_to  "Follow", follow_user_path(@user), method: :get, class: "btn btn-success" %>
           <% end %>

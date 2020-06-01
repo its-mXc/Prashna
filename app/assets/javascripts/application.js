@@ -2,7 +2,9 @@
 //= require popper
 //= require bootstrap
 //= require jquery_ujs
+//= require clipboard
 //= require_tree ./classes
 //= require_tree ./modules
 //= require loadingOverlay
 //= require tooltip
+//= require click_to_copy
