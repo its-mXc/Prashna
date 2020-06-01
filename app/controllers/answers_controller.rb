@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   before_action :ensure_has_not_been_already_answered, only: [:new, :create]
   before_action :find_answer, only: [:reaction, :show, :report_abuse]
   before_action :ensure_question_is_published, only: [:show, :reaction, :report_abuse]
-  before_action :ensure_not_reporting_own_comment, only: :report_abuse
+  before_action :ensure_not_reporting_own_answer, only: :report_abuse
   #FIXME_AB: check for self
 
   def new
@@ -32,9 +32,13 @@ class AnswersController < ApplicationController
   def report_abuse
     abuse_report = @answer.abuse_reports.new(user: current_user, details: params[:abuse_report][:details] )
     if abuse_report.save
-      redirect_to @answer, notice: t('.abuse_reported')
+      if @answer.reload.marked_abused
+        redirect_to @answer.question, notice: t('.marked_as_abused')
+      else
+        redirect_to @answer, notice: t('.abuse_reported')
+      end
     else
-      redirect_to @answer, notice: t('.abuse_already_reported')
+      redirect_to @answer, notice: t('.abuse_not_reported')
     end
   end
 
@@ -66,7 +70,7 @@ class AnswersController < ApplicationController
 
   private def ensure_not_reporting_own_answer
     if current_user == @answer.user
-      redirect_back fallback_location: @question, notice: t('.cannot_report_own_question')
+      redirect_back fallback_location: @question, notice: t('.cannot_report_own_answer')
     end
   end
 

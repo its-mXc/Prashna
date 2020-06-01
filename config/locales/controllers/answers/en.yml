@@ -13,3 +13,10 @@ en:
     reaction:
       answer_not_found: "Cannot find answer"
       question_not_published: "Question not published"
+    report_abuse:
+      abuse_reported: "Answer marked as abuse"
+      abuse_not_reported: "Error in reporting answer as abuse"
+      cannot_report_own_answer: "Cannot report own answer"
+      answer_not_found: "Cannot find answer"
+      question_not_published: "Question not published"
+      marked_as_abused: "Marked as abused"

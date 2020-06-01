@@ -28,11 +28,11 @@
           </div>
 
           <% if logged_in? && @user != current_user && !current_user.following?(@user) %>
-            <%= button_to  "Follow", follow_user_path(@user), method: :get %>
+            <%= button_to  "Follow", follow_user_path(@user), method: :get, class: "btn btn-success" %>
           <% end %>
 
           <% if logged_in? && @user != current_user && current_user.following?(@user) %>
-            <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get %>
+            <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get, class: "btn btn-danger" %>
           <% end %>
 
 
