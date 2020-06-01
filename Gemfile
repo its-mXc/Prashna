@@ -72,6 +72,6 @@ gem 'jquery-rails', '>= 4.4.0'
 gem 'exception_notification', '>= 4.4.0'
 gem 'bootstrap', '~> 4.5.0'
 gem 'redcarpet', '>= 3.5.0'
-gem 'basic_presenter'
-gem 'clipboard-rails'
+gem 'basic_presenter', '~> 0.0.4'
+gem 'clipboard-rails', '~> 1.7.1'
 #FIXME_AB: lets lock gem versions of all added gems

@@ -267,7 +267,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  basic_presenter
+  basic_presenter (~> 0.0.4)
   bcrypt (>= 3.1.13)
   bootsnap (>= 1.4.2)
   bootstrap (~> 4.5.0)
@@ -279,7 +279,7 @@ DEPENDENCIES
   capistrano-rails-console
   capistrano-rails-logs-tail (~> 1.0)
   capybara (>= 2.15)
-  clipboard-rails
+  clipboard-rails (~> 1.7.1)
   exception_notification (>= 4.4.0)
   figaro (>= 1.1.1)
   jbuilder (~> 2.7)
