@@ -1,0 +1,8 @@
+ <% if file.attached? %>
+  <% if file.image? %>
+    <strong>Attached: </strong><%= file.filename %><br>
+    <%= link_to  image_tag(file, size: "200"), url_for(file), target: :_blank %>
+  <% else %>
+    <strong>Attached: </strong><%= link_to  file.filename, url_for(file), target: :_blank %>
+  <% end %>
+<% end %>

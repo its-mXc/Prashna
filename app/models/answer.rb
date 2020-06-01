@@ -1,20 +1,26 @@
 class Answer < ApplicationRecord
   include ReactionRecorder
+  include Reported
+  include Posted
   include BasicPresenter::Concern
 
   validates :body, presence: true
   validates :question_id, uniqueness: { scope: :user_id }
   validate :question_is_published
+  validate :not_published_if_marked_abusive
 
   belongs_to :user
   belongs_to :question
   has_many :reactions, as: :reactable, dependent: :restrict_with_error
   has_many :comments, as: :commentable, dependent: :restrict_with_error
   has_many :credit_transactions, as: :transactable
+  has_many :abuse_reports, as: :abuseable
 
   after_commit :notify_question_author, on: :create
 
+
   scope :order_by_vote, -> {order(reaction_count: :desc)}
+  scope :published, -> { where(published: true) }
 
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
@@ -55,4 +61,24 @@ class Answer < ApplicationRecord
       UserMailer.send_question_answered_mail(self.id).deliver_later
     end
   end
+
+  def mark_abusive!
+    self.transaction do
+      self.marked_abused = true
+      self.published = false
+      if popularity_credits_granted?
+        self.popularity_credits_granted = false
+        revert_credits
+      end
+      save!
+    end
+  end
+
+  private def not_published_if_marked_abusive
+    if marked_abused && published
+      errors.add(:base, 'Cannot be published marked abused')
+      throw :abort
+    end
+  end
+
 end

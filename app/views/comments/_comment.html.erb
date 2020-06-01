@@ -15,6 +15,9 @@
     <% else %>
      <br><strong>Votes : </strong><%= comment.reaction_count %>
     <% end %>
+    <br>
+
+    <%= render  "shared/report", abuseable: comment, message: "Report Comment" %>
 
 
     <% if params[:parent_commentable_id].to_i == comment.id && ["Comment", "Answer"].include?(params[:parent_commentable_type]) %>
@@ -35,7 +38,7 @@
       <% end %>
     </div>
     <ul class="m-2">
-        <%= render comment.comments.includes([:user]) %>
+        <%= render comment.comments.published.includes([:user]) %>
     </ul>
 
   </li>

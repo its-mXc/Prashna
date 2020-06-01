@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Prashna</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <% #FIXME_AB: read about these two tags and tell me -%>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,11 +19,13 @@
         <div class="logo">
           <%= link_to  "Prashna", root_path, class: "navbar-brand" %>
         </div>
+
         <div id="searchbar">
           <%= form_with scope: :question, url: search_questions_url , local: true, method: :get do |f| %>
           <%= f.search_field :search, class: "w-50", placeholder: "Type and enter to search" , value: params.dig(:question, :search) %>
           <% end %>
         </div>
+
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav mr-auto">
             <% if logged_in? %>
@@ -40,6 +43,9 @@
             <% end%>
           </ul>
         </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </nav>
       <div class="container-fluid">
         <div class="row">

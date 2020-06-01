@@ -1,9 +1,11 @@
 class Question < ApplicationRecord
   include ReactionRecorder
   include Posted
+  include Reported
+  include BasicPresenter::Concern
   extend ActiveModel::Callbacks
 
-  enum status: { draft: 0, published: 1 }
+  enum status: { draft: 0, published: 1, unpublished: 2 }
 
   define_model_callbacks :mark_published, only: :before
   define_model_callbacks :mark_published, only: :after
@@ -23,8 +25,10 @@ class Question < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :restrict_with_error
   has_many :root_comments, class_name: 'Comment', dependent: :restrict_with_error
   has_many :answers, dependent: :restrict_with_error
+  has_many :abuse_reports, as: :abuseable
 
   before_mark_published :has_needed_credit_balance
+  before_mark_published :not_published_if_marked_abusive
   before_mark_published :create_question_transaction
   after_mark_published :generate_url_slug
   after_mark_published :generate_notifications
@@ -93,7 +97,7 @@ class Question < ApplicationRecord
     run_callbacks :mark_published do
       self.status = self.class.statuses["published"]
       self.published_at = Time.current
-      save
+      save!
     end
   end
 
@@ -110,6 +114,21 @@ class Question < ApplicationRecord
 
   def answered_by_user?(user)
     return !!answers.find_by(user_id: user.id)
+  end
+
+  def mark_abusive!
+    #FIXME_AB: should be in single transaction
+    self.marked_abused = true
+    self.status = self.class.statuses["unpublished"]
+    credit_transaction.reverse_transaction
+    save!
+  end
+
+  private def not_published_if_marked_abusive
+    if marked_abused && published?
+      errors.add(:base, 'Cannot be published marked abused')
+      throw :abort
+    end
   end
 
 end
