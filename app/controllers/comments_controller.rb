@@ -5,7 +5,6 @@ class CommentsController < ApplicationController
   before_action :ensure_not_voting_own_comment, only: :reaction
   before_action :validate_commit_param, only: :reaction
   before_action :ensure_not_reporting_own_comment, only: :report_abuse
-  #FIXME_AB: same as answers
 
   def new
     @comment = Comment.new

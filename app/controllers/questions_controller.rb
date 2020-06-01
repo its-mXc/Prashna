@@ -110,10 +110,7 @@
         else
           redirect_to @question, notice: t('.abuse_reported')
         end
-        #FIXME_AB: #FIXME_AB: question not found, if unpublished. so basically reload question and check if is published or not. accordingly redirect to question page or home
-        #FIXME_AB: translations
       else
-        #FIXME_AB: error
         redirect_to @question, notice: t('.abuse_not_reported')
       end
     end

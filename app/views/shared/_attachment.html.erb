@@ -1,5 +1,4 @@
  <% if file.attached? %>
-  <% #FIXME_AB: image? -%>
   <% if file.image? %>
     <strong>Attached: </strong><%= file.filename %><br>
     <%= link_to  image_tag(file, size: "200"), url_for(file), target: :_blank %>

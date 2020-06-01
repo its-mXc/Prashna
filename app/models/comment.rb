@@ -47,7 +47,6 @@ class Comment < ApplicationRecord
     end
   end
 
-  #FIXME_AB: same as answered
   def mark_abusive!
     self.marked_abused = true
     self.published = false
