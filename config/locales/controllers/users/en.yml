@@ -14,6 +14,8 @@ en:
     follow:
       user_already_followed: "User is already followed"
       user_followed: "User followed"
+      cannot_follow_or_unfollow_self: "Cannot follow or unfollow self"
     unfollow:
       user_unfollowed: "User unfollowed"
       user_not_followed: "user not followed"
+      cannot_follow_or_unfollow_self: "Cannot follow or unfollow self"
