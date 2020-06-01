@@ -11,3 +11,9 @@ en:
       topics_removed: "Topics Removed"
     update:
       user_doesnt_exist: "Sorry. User does not exist"
+    follow:
+      user_already_followed: "User is already followed"
+      user_followed: "User followed"
+    unfollow:
+      user_unfollowed: "User unfollowed"
+      user_not_followed: "user not followed"

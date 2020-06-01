@@ -3,7 +3,6 @@ class AbuseReport < ApplicationRecord
   belongs_to :user
 
   validates :user_id, uniqueness: {scope: [:abuseable_id, :abuseable_type]}
-  validates :details, presence: true
   validate :ensure_not_reporting_own_abuseable
 
   after_save :check_should_abusable_be_unpublished
