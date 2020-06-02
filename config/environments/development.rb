@@ -91,4 +91,7 @@ Rails.application.configure do
     Bullet.add_footer = true
   end
 
+  config.stripe.secret_key = ENV["stripe_secret_key"]
+  config.stripe.publishable_key = ENV["stripe_publishable_key"]
+
 end

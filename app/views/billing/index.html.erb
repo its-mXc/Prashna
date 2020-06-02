@@ -1,0 +1,6 @@
+<div class="display-container">
+  <%= render  "shared/notice" %>
+  <%= form_tag create_payment_method_path, id: "billing-create-payment-method" do  %>
+    <%= link_to "Add Card", add_payment_method_path, remote: true, class: "btn btn-primary" %>
+  <% end %>
+</div>
