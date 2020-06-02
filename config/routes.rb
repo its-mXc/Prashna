@@ -87,6 +87,7 @@ Rails.application.routes.draw do
   resources :billing, only: :index
   get '/card/new' => 'billing#new_card', as: :add_payment_method
   post "/card" => "billing#create_card", as: :create_payment_method
+  get 'browse', to: "users#browse"
 
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

@@ -1,0 +1,10 @@
+<div class="container-fluid user-container">
+  <%= render 'shared/notice' %>
+  <h3>Questions posted by followed users</h3>
+  <hr class="my-3 w*50 border-danger">
+  <% if @questions.any? %>
+    <%= render  @questions %>
+  <% else %>
+    <h5>No Questions</h5>
+  <% end %>
+</div>

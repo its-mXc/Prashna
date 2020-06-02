@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :questions, :show, :follow, :unfollow]
-  before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics, :follow, :unfollow]
+  before_action :ensure_logged_in, only:[:current_user_profile, :set_avatar, :set_topics, :follow, :unfollow, :browse]
   before_action :ensure_not_logged_in, only:[:new, :create, :verify]
   before_action :cannot_follow_or_unfollow_self, only: [:follow, :unfollow]
 
@@ -23,7 +23,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    
   end
 
   def current_user_profile
@@ -91,6 +90,10 @@ class UsersController < ApplicationController
     else
       redirect_back fallback_location: @user, notice: t('.user_not_followed')
     end
+  end
+
+  def browse
+    @questions = current_user.followed_users.map { |user| user.questions.published.includes(:reactions, :topics, :file_attachment) }.flatten
   end
 
   private def set_user
