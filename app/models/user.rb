@@ -6,7 +6,6 @@ class User < ApplicationRecord
 
   validates :email, presence: true
   validates :email, uniqueness: {case_sensitive: false}, if: -> { email.present? }
-  validates :followers_count, numericality: { greater_than_or_equal_to: 0 }
   validates :password, length: {minimum: 6}, unless: -> { password.blank? }
   validates :password, presence: true, on: :password_entered
   validates :name, presence: true

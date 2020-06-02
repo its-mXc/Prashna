@@ -79,6 +79,16 @@ Rails.application.routes.draw do
     resources :topics, only: [:show]
   end
 
+  resources :buy, only: [:index] do
+    collection do
+      post :subscribe
+    end
+  end
+  resources :billing, only: :index
+  get '/card/new' => 'billing#new_card', as: :add_payment_method
+  post "/card" => "billing#create_card", as: :create_payment_method
+
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   mount LetterOpenerWeb::Engine, at: "/letter_opener"
 end
