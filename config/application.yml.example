@@ -13,3 +13,10 @@ popular_question_credits: 2
 questions_per_page: 1
 abuse_reports_unpublish_no: 2
 topic_api_question_amount: 5
+topic_requests_per_hour: 5
+stripe_publishable_key: ""
+stripe_secret_key: ""
+10_dollar_pack_id: "price_HNz1NzK3zbNEja"
+10_dollar_pack_credits: 5
+15_dollar_pack_id: "price_HNz2rFZ5hgYnZK"
+15_dollar_pack_credits: 15
