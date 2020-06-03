@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: credit_transactions
+#
+#  id                :bigint           not null, primary key
+#  user_id           :bigint           not null
+#  amount            :integer
+#  transaction_type  :integer
+#  credit_balance    :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  transactable_type :string(255)
+#  transactable_id   :bigint
+#
 class CreditTransaction < ApplicationRecord
   enum transaction_type: { signup: 0, purchase: 1, debit: 2, popular: 3, reverted: 4 }
 

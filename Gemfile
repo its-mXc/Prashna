@@ -76,3 +76,5 @@ gem 'basic_presenter', '~> 0.0.4'
 gem 'clipboard-rails', '~> 1.7.1'
 gem 'stripe-rails'
 #FIXME_AB: lets lock gem versions of all added gems
+
+gem "annotate", "~> 3.1"

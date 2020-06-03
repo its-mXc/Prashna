@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: answers
+#
+#  id                         :bigint           not null, primary key
+#  body                       :text(65535)
+#  user_id                    :bigint           not null
+#  question_id                :bigint           not null
+#  reaction_count             :integer          default(0)
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  popularity_credits_granted :boolean          default(FALSE)
+#  published                  :boolean          default(TRUE)
+#  marked_abused              :boolean          default(FALSE)
+#
 class Answer < ApplicationRecord
   include ReactionRecorder
   include Reported
@@ -18,13 +33,9 @@ class Answer < ApplicationRecord
 
   after_commit :notify_question_author, on: :create
 
-  #FIXME_AB: lets not do this in callback, move it to mark abusive method
-
   scope :order_by_vote, -> {order(reaction_count: :desc)}
-  #FIXME_AB: default scope for answers and comments
   default_scope { where(published: true) }
 
-  #FIXME_AB: add a check that answer can not be marked published if already marked abusive, same with qustion and comment
 
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
@@ -67,7 +78,6 @@ class Answer < ApplicationRecord
   end
 
   def mark_abusive!
-    #FIXME_AB: Do this in one db transation. Read how to do transactions in active record
     self.transaction do
       self.marked_abused = true
       self.published = false

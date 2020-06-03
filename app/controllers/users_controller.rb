@@ -82,10 +82,10 @@ class UsersController < ApplicationController
       redirect_back fallback_location: @user, notice: t('.user_followed')
     end
   end
-  
+
   def unfollow
     if current_user.following?(@user)
-      current_user.unfollow!(@user) 
+      current_user.unfollow!(@user)
       redirect_back fallback_location: @user, notice: t('.user_unfollowed')
     else
       redirect_back fallback_location: @user, notice: t('.user_not_followed')
@@ -93,6 +93,9 @@ class UsersController < ApplicationController
   end
 
   def browse
+    #FIXME_AB: optimize Question.published.by_users(users).includes.order by publish
+    #FIXME_AB: current_user.questions_by_my_followed_user
+
     @questions = current_user.followed_users.map { |user| user.questions.published.includes(:reactions, :topics, :file_attachment) }.flatten
   end
 

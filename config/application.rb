@@ -20,7 +20,10 @@ module Prashna
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     # config.routes.default_url_options[:host] = "prashna"
+    config.stripe.secret_key = ENV["stripe_secret_key"]
+    config.stripe.publishable_key = ENV["stripe_publishable_key"]
   end
+
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['host']

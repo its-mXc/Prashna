@@ -30,7 +30,7 @@
             <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get, class: "btn btn-danger m-2" %>
           <% end %>
 
-          <% unless @user.disabled && current_user.admin? %>
+          <% if !@user.disabled && current_user.admin? %>
             <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
           <% end %>
 
@@ -85,8 +85,8 @@
       <%= render @user.followers %>
     </div>
   </div>
-  
-  
+
+
 
 
 </div>

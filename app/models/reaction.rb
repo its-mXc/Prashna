@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: reactions
+#
+#  id             :bigint           not null, primary key
+#  user_id        :bigint           not null
+#  reaction_type  :integer
+#  reactable_type :string(255)
+#  reactable_id   :bigint
+#
 class Reaction < ApplicationRecord
   enum reaction_type: { upvote: 0, downvote: 1 }
 

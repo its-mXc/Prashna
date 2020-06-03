@@ -1,7 +1,8 @@
+#FIXME_AB: api related templates should be inside api namespace
 json.questions @questions do |question|
   json.title question.title
   json.content question.content
-  json.reaction_count question.reaction_count
+  json.votes question.reaction_count
   json.published_at question.published_at
   json.partial! 'comments/comments', comments: question.comments
   # json.comments question.comments do |comment|
@@ -23,4 +24,4 @@ json.questions @questions do |question|
     json.created_at answer.created_at
   end
   json.topics question.topics, :name
-end 
+end

@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                       :bigint           not null, primary key
+#  name                     :string(255)
+#  password_digest          :string(255)
+#  email                    :string(255)
+#  user_type                :integer          default("user")
+#  credit_balance           :integer          default(0)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  verified_at              :datetime
+#  confirmation_token       :string(255)
+#  password_reset_token     :string(255)
+#  password_token_expire_at :datetime
+#  auth_token               :string(255)
+#  stripe_id                :string(255)
+#  disabled                 :boolean          default(FALSE)
+#
 class User < ApplicationRecord
   enum user_type: { user: 0, admin: 1 }
 
@@ -42,6 +62,7 @@ class User < ApplicationRecord
       credit_transactions.create(amount: ENV['signup_credits'].to_i, transaction_type: CreditTransaction.transaction_types["signup"], transactable: self)
       self.verified_at = Time.current
       self.confirmation_token = nil
+      #FIXME_AB: make this a function
       self.auth_token = SecureRandom.urlsafe_base64.to_s
       save!
     end
@@ -94,7 +115,7 @@ class User < ApplicationRecord
   end
 
   def unfollow!(other_user)
-    user_follows.find_by_followed_id(other_user.id).destroy
+    user_follows.find_by_followed_id(other_user.id).destroy!
   end
 
 end
