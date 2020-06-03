@@ -16,6 +16,9 @@
      <br><strong>Votes : </strong><%= comment.reaction_count %>
     <% end %>
     <br>
+     <% if logged_in? && current_user.admin? && comment.published %>
+      <span class="btn btn-danger"><%= link_to  "Unpublish", unpublish_admin_comment_path(comment), class: "text-white" %></span>
+    <% end %>
 
     <%= render  "shared/report", abuseable: comment, message: "Report Comment" %>
 
