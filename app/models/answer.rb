@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: answers
+#
+#  id                         :bigint           not null, primary key
+#  body                       :text(65535)
+#  user_id                    :bigint           not null
+#  question_id                :bigint           not null
+#  reaction_count             :integer          default(0)
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  popularity_credits_granted :boolean          default(FALSE)
+#  published                  :boolean          default(TRUE)
+#  marked_abused              :boolean          default(FALSE)
+#
 class Answer < ApplicationRecord
   include ReactionRecorder
   include Reported

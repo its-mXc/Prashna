@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resources :comments,  only: [:new, :create]
     resources :answers,  only: [:new, :create]
   end
-  
+
   resources :answers,  only: :show do
     member do
       get 'reaction'
@@ -31,8 +31,8 @@ Rails.application.routes.draw do
     end
     resources :comments,  only: [:new, :create]
   end
-  
-  
+
+
   resources :comments, only: [:new, :create, :show] do
     resources :comments, only: [:new, :create]
     member do
@@ -78,7 +78,7 @@ Rails.application.routes.draw do
     resources :feed, only: [:index]
     resources :topics, only: [:show]
   end
-  
+
   resources :buy, only: [:index] do
     collection do
       post :subscribe
@@ -88,7 +88,7 @@ Rails.application.routes.draw do
   get '/card/new' => 'billing#new_card', as: :add_payment_method
   post "/card" => "billing#create_card", as: :create_payment_method
   get 'browse', to: "users#browse"
-  
+
   namespace :admin do
     resources :users, only: [:index] do
       member do

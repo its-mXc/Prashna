@@ -21,6 +21,9 @@ module Prashna
     # the framework and any gems in your application.
     # config.routes.default_url_options[:host] = "prashna"
   end
+
+  config.stripe.secret_key = ENV["stripe_secret_key"]
+  config.stripe.publishable_key = ENV["stripe_publishable_key"]
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['host']
