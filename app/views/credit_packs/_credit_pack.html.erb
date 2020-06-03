@@ -1,0 +1,18 @@
+<div class="col-3">
+  <div class="card mb-3 bg-success text-white">
+    <h3 class="card-header"><%= credit_pack.name %></h3>
+    <div class="bg-white p-2">
+      <center><%= image_tag  "basic.png", width: "200" %></center>
+    </div>
+    <div class="card-body">
+      <p class="card-text text-center"><%= credit_pack.credits %> credits for INR <%= credit_pack.price %></p>
+    </div>
+    <div class="bg-white p-2">
+      <center>
+        <%= form_tag subscribe_buy_index_path, id: "billing-create-payment-method" do  %>
+          <%= link_to  "Buy", charge_buy_index_path(pack_id: credit_pack.id), class: "btn btn-success", remote: true  %>
+        <% end %>
+      </center>
+    </div>
+  </div>
+</div>

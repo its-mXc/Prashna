@@ -203,9 +203,6 @@ GEM
       ffi (~> 1.0)
     redcarpet (3.5.0)
     regexp_parser (1.7.0)
-    responders (3.0.1)
-      actionpack (>= 5.0)
-      railties (>= 5.0)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
@@ -238,10 +235,6 @@ GEM
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
     stripe (5.22.0)
-    stripe-rails (1.10.1)
-      rails (>= 3)
-      responders
-      stripe (>= 1.36.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -308,7 +301,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
-  stripe-rails
+  stripe (~> 5.22.0)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

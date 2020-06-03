@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_123508) do
+ActiveRecord::Schema.define(version: 2020_06_03_105146) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -72,6 +72,14 @@ ActiveRecord::Schema.define(version: 2020_06_02_123508) do
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["question_id"], name: "index_comments_on_question_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "credit_packs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.integer "price"
+    t.integer "credits"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "credit_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

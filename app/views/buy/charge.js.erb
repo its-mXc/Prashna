@@ -1,5 +1,5 @@
 var handler = StripeCheckout.configure({
-    key: '<%= Rails.application.config.stripe[:publishable_key] %>',
+    key: '<%= ENV["stripe_publishable_key"] %>',
     //get a publishable key that we put in editor depending on environment: production or development
     locale: 'auto',
     //handle translation
@@ -15,8 +15,13 @@ var handler = StripeCheckout.configure({
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'stripeToken');
         hiddenInput.setAttribute('value', token.id);
+        var hiddenInput1 = document.createElement('input');
+        hiddenInput1.setAttribute('type', 'hidden');
+        hiddenInput1.setAttribute('name', 'pack_id');
+        hiddenInput1.setAttribute('value', '<%= @credit_pack.id %>');
         //creating an <input type="hidden" name="stripeToken" value="<id>"/>. We will need this information in the next steps to link a user to his card 
         form.appendChild(hiddenInput);
+        form.appendChild(hiddenInput1);
         //adding this input when we use a form.
         form.submit();
     }

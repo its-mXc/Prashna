@@ -74,7 +74,7 @@ gem 'bootstrap', '~> 4.5.0'
 gem 'redcarpet', '>= 3.5.0'
 gem 'basic_presenter', '~> 0.0.4'
 gem 'clipboard-rails', '~> 1.7.1'
-gem 'stripe-rails'
+gem 'stripe', '~>5.22.0'
 #FIXME_AB: lets lock gem versions of all added gems
 
 gem "annotate", "~> 3.1"

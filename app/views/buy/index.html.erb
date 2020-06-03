@@ -2,34 +2,6 @@
   <%= render  "shared/notice" %>
   <h2>Select your credit pack to buy</h2>
   <div class="row mt-3">
-    <div class="col-3">
-      <div class="card mb-3 bg-success text-white">
-        <h3 class="card-header">Basic Pack</h3>
-        <div class="bg-white p-2">
-          <center><%= image_tag  "basic.png", width: "200" %></center>
-        </div>
-        <div class="card-body">
-          <p class="card-text text-center"><%= ENV["10_dollar_pack_credits"] %> credits for INR 10</p>
-        </div>
-        <div class="bg-white p-2">
-          <center><%= button_to  "Buy", subscribe_buy_index_path, params: { plan_id: ENV["10_dollar_pack_id"]}, class: "btn btn-success"  %></center>
-        </div>
-      </div>
-    </div>
-    <div class="col-1"></div>
-    <div class="col-3">
-      <div class="card mb-3 bg-danger text-white">
-        <h3 class="card-header">Normal Pack</h3>
-         <div class="bg-white p-2">
-          <center><%= image_tag  "medium.png", width: "200" %></center>
-        </div>
-        <div class="card-body">
-          <p class="card-text text-center"><%= ENV["15_dollar_pack_credits"] %> credits for INR 15</p>
-        </div>
-        <div class="bg-white p-2">
-          <center><%= button_to  "Buy", subscribe_buy_index_path, params: {plan_id: ENV["15_dollar_pack_id"]}, class: "btn btn-danger" %></center>
-        </div>
-      </div>
-    </div>
+    <%= render @packs %>    
   </div>
 </div>

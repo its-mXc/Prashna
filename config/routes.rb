@@ -81,12 +81,13 @@ Rails.application.routes.draw do
 
   resources :buy, only: [:index] do
     collection do
+      get :charge
       post :subscribe
     end
   end
-  resources :billing, only: :index
-  get '/card/new' => 'billing#new_card', as: :add_payment_method
-  post "/card" => "billing#create_card", as: :create_payment_method
+  # resources :billing, only: :index
+  # get '/card/new' => 'billing#new_card', as: :add_payment_method
+  # post "/card" => "billing#create_card", as: :create_payment_method
   get 'browse', to: "users#browse"
 
   namespace :admin do
