@@ -1,0 +1,8 @@
+<div class="display-container">
+  <%= render  "shared/notice" %>
+  Total Answers : <span class="badge badge-dark"><%= @answers.size %></span><br>
+  Total Published Answers : <span class="badge badge-dark"><%= @answers.where(published: true).size %></span><br>
+  Total Unpublished Answers : <span class="badge badge-dark"><%= @answers.where(published: false).size %></span>
+  <hr class="my-3 border-danger w-75">
+  <%= render @answers %>
+</div>

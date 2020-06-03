@@ -23,11 +23,15 @@
           </div>
 
           <% if logged_in? && @user != current_user && !current_user.following?(@user) %>
-            <%= button_to  "Follow", follow_user_path(@user), method: :get, class: "btn btn-success" %>
+            <%= button_to  "Follow", follow_user_path(@user), method: :get, class: "btn btn-success m-2" %>
           <% end %>
 
           <% if logged_in? && @user != current_user && current_user.following?(@user) %>
-            <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get, class: "btn btn-danger" %>
+            <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get, class: "btn btn-danger m-2" %>
+          <% end %>
+
+          <% unless @user.disabled && current_user.admin? %>
+            <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
           <% end %>
 
 

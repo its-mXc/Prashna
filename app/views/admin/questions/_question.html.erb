@@ -1,0 +1,13 @@
+<div>
+  <h3><%= link_to  question.title, question %></h3>
+  <p>
+    <%= question.presenter.markdown_content  %>
+  <p>
+  <% unless question.unpublished? %>
+    <span class="btn btn-danger mt-2"><%= link_to  "Unpublish", unpublish_admin_question_path(question), class: "text-white" %></span>
+  <% else %>
+    <span class="badge badge-dark mt-2">Unpublished</span>
+  <% end %>
+</div>
+<hr class="my-2 border-success w-25">
+  

@@ -78,7 +78,7 @@ Rails.application.routes.draw do
     resources :feed, only: [:index]
     resources :topics, only: [:show]
   end
-
+  
   resources :buy, only: [:index] do
     collection do
       post :subscribe
@@ -88,7 +88,30 @@ Rails.application.routes.draw do
   get '/card/new' => 'billing#new_card', as: :add_payment_method
   post "/card" => "billing#create_card", as: :create_payment_method
   get 'browse', to: "users#browse"
-
+  
+  namespace :admin do
+    resources :users, only: [:index] do
+      member do
+        get :disable
+      end
+    end
+    resources :questions, only: [:index] do
+      member do
+        get :unpublish
+      end
+    end
+    resources :answers, only: [:index] do
+      member do
+        get :unpublish
+      end
+    end
+    resources :comments, only: [:index] do
+      member do
+        get :unpublish
+      end
+    end
+  end
+  get 'admin', to: "admin#index"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   mount LetterOpenerWeb::Engine, at: "/letter_opener"

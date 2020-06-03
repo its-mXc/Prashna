@@ -15,6 +15,7 @@ namespace :admin do
                     user_type: "admin",
                     verified_at: Time.current )
     if user.save
+      user.verify!
       puts "Admin created with #{user.email}"
     else
       p user.errors
