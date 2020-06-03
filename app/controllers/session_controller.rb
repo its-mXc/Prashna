@@ -8,8 +8,16 @@ class SessionController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user.try(:authenticate, params[:password])
+
+      #FIXME_AB: try to reduce if-else nesting
+      #FIXME_AB: if user.verified? && user.disabled?
+                    #   rediredt
+                    #   return
+                    # end
+
+
       if user.verified?
-        if user.disabled
+        if user.disabled?
           redirect_to login_path, notice: "Your account is disabled"
         else
           session[:user_id] = user.id

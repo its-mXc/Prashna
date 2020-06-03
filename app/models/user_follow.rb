@@ -15,6 +15,8 @@ class UserFollow < ApplicationRecord
   validates :follower_id, presence: true
   validates :followed_id, presence: true
 
+  #FIXME_AB: two uniqueness validations
+
   validate :not_following_self
 
   private def not_following_self
