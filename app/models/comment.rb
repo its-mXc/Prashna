@@ -44,8 +44,6 @@ class Comment < ApplicationRecord
     save!
   end
 
-  #FIXME_AB: this may be needed in questions and answers. so make it a concern
-
   private def words_in_comment
     body.scan(/\w+/)
   end

@@ -5,7 +5,6 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: [:reaction, :show, :report_abuse]
   before_action :ensure_question_is_published, only: [:show, :reaction, :report_abuse]
   before_action :ensure_not_reporting_own_answer, only: :report_abuse
-  #FIXME_AB: check for self
 
   def new
     @answer = Answer.new

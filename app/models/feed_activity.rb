@@ -9,5 +9,8 @@
 #  updated_at :datetime         not null
 #
 class FeedActivity < ApplicationRecord
+  scope :by_ip, ->(ip) { where(ip: ip) }
+  scope :by_url, ->(url) { where(url: url) }
+  scope :in_past, ->(time) { where("created_at >= ? ", time.ago) }
 
 end

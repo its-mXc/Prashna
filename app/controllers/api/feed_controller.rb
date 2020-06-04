@@ -1,16 +1,11 @@
 module Api
   class FeedController < ApiBaseController
+    before_action :authorize
 
     def index
       #FIXME_AB: what if params[:token] is blank? it fill find the user with token null
-      user = current_user_from_token(params[:auth_token])
-      if user
         #FIXME_AB: eager loading. check bullet log
-        @questions = user.questions.published
-      else
-        #FIXME_AB: set status always with error
-        render json: { error: "No such user exist" }
-      end
+        @questions = current_user_from_token(params[:auth_token]).questions.published.includes([:comments, :answers, :topics])
     end
 
   end

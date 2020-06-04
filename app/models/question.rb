@@ -21,8 +21,6 @@ class Question < ApplicationRecord
   include BasicPresenter::Concern
   extend ActiveModel::Callbacks
 
-  #FIXME_AB: unpublished
-  #FIXME_AB: also add a check that unpublished can not be published if marked abused
   enum status: { draft: 0, published: 1, unpublished: 2 }
 
   define_model_callbacks :mark_published, only: :before
@@ -52,6 +50,7 @@ class Question < ApplicationRecord
   after_mark_published :generate_notifications
 
   scope :recent, -> { order(published_at: :desc) }
+  scope :by_users, ->(users) { where(user: users) }
 
   def self.search(term)
     (published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten).uniq

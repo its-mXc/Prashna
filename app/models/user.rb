@@ -30,7 +30,7 @@ class User < ApplicationRecord
   validates :password, presence: true, on: :password_entered
   validates :name, presence: true
   validates :password, format: { with: REGEXP[:password_format], message: "should have at-least one number, one uppercase character, one lowercase character and one special character." }, unless: -> { password.blank? }
-
+  validates :auth_token, uniqueness: {case_sensitive: false}, if: -> { auth_token.present? }
 
 
   has_one_attached :avatar
@@ -57,15 +57,22 @@ class User < ApplicationRecord
   before_create :generate_confirmation_token
   after_commit :send_confirmation_mail, on: :create
 
+  scope :verified, -> { where.not(verified_at: nil) }
+  scope :without_authtoken, -> { where(auth_token: nil) }
+
   def verify!
     unless self.verified_at
       credit_transactions.create(amount: ENV['signup_credits'].to_i, transaction_type: CreditTransaction.transaction_types["signup"], transactable: self)
       self.verified_at = Time.current
       self.confirmation_token = nil
       #FIXME_AB: make this a function
-      self.auth_token = SecureRandom.urlsafe_base64.to_s
+      generate_auth_token
       save!
     end
+  end
+  
+  def generate_auth_token
+    self.auth_token = SecureRandom.urlsafe_base64.to_s
   end
 
   def generate_password_token
@@ -116,6 +123,10 @@ class User < ApplicationRecord
 
   def unfollow!(other_user)
     user_follows.find_by_followed_id(other_user.id).destroy!
+  end
+
+  def followed_users_questions
+    Question.published.by_users(followed_users).includes([:reactions, :topics, :file_attachment]).order(published_at: :desc)
   end
 
 end

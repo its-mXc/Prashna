@@ -2,11 +2,10 @@ var handler = StripeCheckout.configure({
     key: '<%= ENV["stripe_publishable_key"] %>',
     //get a publishable key that we put in editor depending on environment: production or development
     locale: 'auto',
-    //handle translation
-    name: "upload.express",
-    description: "Add your credit card information",
+    name: "<%= @credit_pack.name %>",
+    description: "Add your card information",
     email: "<%= current_user.email %>",
-    panelLabel: "Add payment method",
+    panelLabel: "Pay",
     allowRememberMe: false,
     token: function (token) {
         var form = document.getElementById('billing-create-payment-method');

@@ -14,6 +14,8 @@ class UserFollow < ApplicationRecord
 
   validates :follower_id, presence: true
   validates :followed_id, presence: true
+  validates :followed_id, uniqueness: {scope: :follower_id}
+  validates :follower_id, uniqueness: {scope: :followed_id}
 
   #FIXME_AB: two uniqueness validations
 
