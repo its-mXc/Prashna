@@ -8,3 +8,4 @@
 //= link notification.js
 //= link question.js
 //= link vote.js
+//= link autoLoad.js
