@@ -15,8 +15,5 @@ Figaro.require_keys(
  "topic_api_question_amount",
  "topic_requests_per_hour",
  "stripe_publishable_key",
- "stripe_secret_key",
- "10_dollar_pack_id",
- "10_dollar_pack_credits",
- "15_dollar_pack_credits"
+ "stripe_secret_key"
 )
