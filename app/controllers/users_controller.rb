@@ -96,7 +96,7 @@ class UsersController < ApplicationController
     #FIXME_AB: optimize Question.published.by_users(users).includes.order by publish
     #FIXME_AB: current_user.questions_by_my_followed_user
 
-    @questions = current_user.followed_users_questions
+    @questions = current_user.followed_users_questions.paginate(page: params[:page], per_page: ENV["questions_per_page"].to_i)
   end
 
   private def set_user

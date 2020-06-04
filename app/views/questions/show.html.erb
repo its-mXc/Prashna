@@ -15,7 +15,7 @@
         <% if @question.editable? && @question.user == current_user %>
         <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning' %>
         <% end %>
-        <% if current_user.admin? && !@question.unpublished?  %>
+        <% if logged_in? && current_user.admin? && !@question.unpublished?  %>
           <span class="btn btn-danger mt-2"><%= link_to  "Unpublish", unpublish_admin_question_path(@question), class: "text-white" %></span>
         <% end %>
     </p>

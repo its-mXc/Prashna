@@ -36,7 +36,7 @@
           <div class="row user-info">
             <%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
               <%= f.label :topics %>
-              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path }, value: current_user.topics.map(&:name).join(", "), title: "Comma seperated topics", data: { toggle: "tooltip" } %>
+              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path, toggle: "tooltip" }, value: current_user.topics.map(&:name).join(", "), title: "Comma seperated topics" %>
               <%= f.submit "Add Topics"%>
             <% end %>
           </div>

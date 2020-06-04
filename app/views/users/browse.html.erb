@@ -7,4 +7,9 @@
   <% else %>
     <h5>No Questions</h5>
   <% end %>
+  <nav aria-label="Page navigation example">
+    <div class="pagination justify-content-center">
+      <%= will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </div>
+  </nav>
 </div>
