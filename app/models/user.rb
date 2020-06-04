@@ -52,6 +52,7 @@ class User < ApplicationRecord
     assoc.has_many :credit_transactions
     assoc.has_many :reactions
     assoc.has_many :questions
+    assoc.has_many :payment_transactions
   end
 
   before_create :generate_confirmation_token

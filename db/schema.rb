@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_105146) do
+ActiveRecord::Schema.define(version: 2020_06_04_060808) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -113,6 +113,19 @@ ActiveRecord::Schema.define(version: 2020_06_03_105146) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "payment_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "credit_pack_id", null: false
+    t.string "status"
+    t.string "card_token"
+    t.json "response"
+    t.boolean "paid", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["credit_pack_id"], name: "index_payment_transactions_on_credit_pack_id"
+    t.index ["user_id"], name: "index_payment_transactions_on_user_id"
+  end
+
   create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "topic_id", null: false
@@ -202,6 +215,8 @@ ActiveRecord::Schema.define(version: 2020_06_03_105146) do
   add_foreign_key "comments", "users"
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payment_transactions", "credit_packs"
+  add_foreign_key "payment_transactions", "users"
   add_foreign_key "question_topics", "questions"
   add_foreign_key "question_topics", "topics"
   add_foreign_key "reactions", "users"

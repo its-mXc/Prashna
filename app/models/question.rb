@@ -132,7 +132,7 @@ class Question < ApplicationRecord
   end
 
   def answered_by_user?(user)
-    return !!answers.find_by(user_id: user.id)
+    return !!answers.unscoped.find_by(user_id: user.id)
   end
 
   def mark_abusive!

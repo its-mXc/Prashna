@@ -14,7 +14,10 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
-      redirect_to @question, notice: t('.answer_posted')
+      redirect_to @answer, notice: t('.answer_posted')
+    else
+      p @answer.errors
+      redirect_to @question, notice: t('.answer_not_posted')
     end
   end
 

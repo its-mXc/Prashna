@@ -81,16 +81,14 @@ Rails.application.routes.draw do
 
   resources :buy, only: [:index] do
     collection do
-      get :charge
-      post :subscribe
+      get :payment
+      post :charge
     end
   end
-  # resources :billing, only: :index
-  # get '/card/new' => 'billing#new_card', as: :add_payment_method
-  # post "/card" => "billing#create_card", as: :create_payment_method
   get 'browse', to: "users#browse"
 
   namespace :admin do
+    resources :credit_packs, only: [:index, :new, :create, :edit, :update]
     resources :users, only: [:index] do
       member do
         get :disable
@@ -111,6 +109,7 @@ Rails.application.routes.draw do
         get :unpublish
       end
     end
+
   end
   get 'admin', to: "admin#index"
 

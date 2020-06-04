@@ -9,12 +9,12 @@ task add_auth_token: :environment do
       logger.tagged('Rake task add auth token') { 
         user.generate_auth_token
         if user.save
-          logger,info "Token added"
+          logger.info "Token added"
           logger.info user
         else
           p "erorrs"
           p user.errors
-          logger,info "Token could not be added"
+          logger.info "Token could not be added"
           logger.info user.errors
         end
       }         

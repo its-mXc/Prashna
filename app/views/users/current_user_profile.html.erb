@@ -73,9 +73,6 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#followers">Followers <span class="badge badge-dark"><%= current_user.followers.size %></span></a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#billing">Billing</a>
-    </li>
     <% if current_user.admin? %>
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#admin">Admin</a>
@@ -131,15 +128,11 @@
       <%= render current_user.followers %>
     </div>
 
-    <div class="tab-pane fade" id="billing">
-    </div>
-
     <% if current_user.admin? %>
       <div class="tab-pane fade mt-3" id="admin">
         <span class="btn btn-primary mr-3"><%= link_to  "Manage Users", admin_users_path, class: "text-white" %></span>
         <span class="btn btn-danger mr-3"><%= link_to  "Manage Questions", admin_questions_path, class: "text-white" %></span>
-        <span class="btn btn-dark mr-3"><%= link_to  "Manage Answers", admin_answers_path, class: "text-white" %></span>
-        <span class="btn btn-success mr-3"><%= link_to  "Manage Comments", admin_comments_path, class: "text-white" %></span>
+        <span class="btn btn-dark mr-3"><%= link_to  "Manage Credit Packs", admin_credit_packs_path, class: "text-white" %></span>
       </div>
     <% end %>
   </div>

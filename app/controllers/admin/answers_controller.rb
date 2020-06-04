@@ -4,10 +4,6 @@ module Admin
     before_action :find_answer, only: [:unpublish]
     before_action :answer_not_unpublished, only: [:unpublish]
 
-    def index
-      @answers = Answer.unscoped
-    end
-
     def unpublish
       @answer.published = false
       if @answer.popularity_credits_granted?

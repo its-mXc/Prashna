@@ -4,10 +4,6 @@ module Admin
     before_action :find_comment, only: [:unpublish]
     before_action :comment_not_unpublished, only: [:unpublish]
 
-    def index
-      @comments = Comment.unscoped
-    end
-
     def unpublish
       @comment.published = false
       if @comment.save

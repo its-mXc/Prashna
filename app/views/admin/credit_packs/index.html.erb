@@ -1,0 +1,15 @@
+<div class="display-container">
+  <%= render "shared/notice" %>
+  <table class="table table-hover table-primary w-50">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Credits</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @credit_packs %>
+    </tbody>
+  </table>
+</div>
