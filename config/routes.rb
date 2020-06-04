@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do
       get 'drafts'
       get 'search'
+      get 'refresh'
     end
     member do
       get 'publish'

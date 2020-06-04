@@ -3,9 +3,7 @@ class NotificationsController < ApplicationController
 
   def index
     @notifications = current_user.notifications.not_viewed.distinct
-    respond_to do |format|
-      format.json {render json: { notifications: @notifications, timestamp: Time.current }, status: :ok}
-    end
+    render json: { notifications: @notifications, timestamp: Time.current }, status: :ok
   end
 
 end
