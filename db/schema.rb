@@ -120,6 +120,8 @@ ActiveRecord::Schema.define(version: 2020_06_04_060808) do
     t.string "card_token"
     t.json "response"
     t.boolean "paid", default: false
+    t.integer "price"
+    t.integer "credits"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["credit_pack_id"], name: "index_payment_transactions_on_credit_pack_id"

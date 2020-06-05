@@ -7,6 +7,8 @@ class CreatePaymentTransactions < ActiveRecord::Migration[6.0]
       t.string :card_token
       t.json :response
       t.boolean :paid, default: false
+      t.integer :price
+      t.integer :credits
 
       t.timestamps
     end
