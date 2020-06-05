@@ -96,11 +96,11 @@
 }
 
 .logo {
-  width: 30vw;
+  width: 25vw;
 }
 
 #searchbar{
-  width: 42vw;
+  width: 44vw;
 }
 
 .user-info {
@@ -117,7 +117,11 @@
 }
 
 .nav-link-not-logged {
-  width: 20vw;
+  width: 23vw;
+  text-align: end;
+}
+.nav-link-not-admin {
+  width: 3vw;
   text-align: end;
 }
 
