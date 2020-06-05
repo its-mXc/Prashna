@@ -116,7 +116,7 @@
     end
 
     def refresh
-      render json: {new_questions_size: Question.where("published_at >= ?",ENV["question_refresh_time_secs"].to_i.seconds.ago).size, timestamp: Time.current }
+      render json: {new_questions_size: Question.in_last(ENV["question_refresh_time_secs"].to_i.seconds).size, timestamp: Time.current }
     end
 
     private def ensure_positive_balance
