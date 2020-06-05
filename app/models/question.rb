@@ -139,9 +139,18 @@ class Question < ApplicationRecord
   def mark_abusive!
     #FIXME_AB: should be in single transaction
     self.marked_abused = true
+    unpublish!
+  end
+
+  def unpublish!
     self.status = self.class.statuses["unpublished"]
     credit_transaction.reverse_transaction
+    delete_notification
     save!
+  end
+
+  def delete_notification
+    Notification.where(notificable: self).destroy_all
   end
 
   private def not_published_if_marked_abusive

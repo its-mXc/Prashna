@@ -100,12 +100,12 @@ Rails.application.routes.draw do
         get :unpublish
       end
     end
-    resources :answers, only: [:index] do
+    resources :answers, only: [] do
       member do
         get :unpublish
       end
     end
-    resources :comments, only: [:index] do
+    resources :comments, only: [] do
       member do
         get :unpublish
       end

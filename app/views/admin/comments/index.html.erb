@@ -1,8 +1,0 @@
-<div class="display-container">
-  <%= render  "shared/notice" %>
-  Total Comments : <span class="badge badge-dark"><%= @comments.size %></span><br>
-  Total Published Comments : <span class="badge badge-dark"><%= @comments.where(published: true).size %></span><br>
-  Total Unpublished Comments : <span class="badge badge-dark"><%= @comments.where(published: false).size %></span>
-  <hr class="my-3 border-danger w-75">
-  <%= render @comments %>
-</div>

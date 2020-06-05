@@ -9,8 +9,7 @@ module Admin
     end
 
     def unpublish
-      @question.status  = Question.statuses["unpublished"]
-      if @question.save
+      if @question.unpublish!
         redirect_to admin_questions_path, notice: "Question unpublished"
       else
         redirect_to admin_questions_path, notice: "Question could not be unpublished"
