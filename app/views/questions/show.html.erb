@@ -15,6 +15,9 @@
         <% if @question.editable? && @question.user == current_user %>
         <%= link_to "Edit", edit_question_path(@question), class: 'btn btn-warning' %>
         <% end %>
+        <% if logged_in? && current_user.admin? && !@question.unpublished?  %>
+          <span class="btn btn-danger mt-2"><%= link_to  "Unpublish", unpublish_admin_question_path(@question), class: "text-white" %></span>
+        <% end %>
     </p>
 
     <%= render  "shared/vote", question: @question %>
@@ -49,10 +52,10 @@
             <% end %>
           <% end %>
           <hr class="my-2">
-          <% if @question.answers.published.any? %>
+          <% if @question.answers.any? %>
             <h5>Answers</h5>
             <hr class="my-2 border-danger w-50">
-            <%= render @question.answers.published.includes([:user, :comments]).order_by_vote %>
+            <%= render @question.answers.includes([:user, :comments]).order_by_vote %>
           <% else %>
             <h5>No Answers</h5>
           <% end %>
@@ -72,10 +75,10 @@
               <% end %>
             <% end %>
             <br>
-            <% if @question.comments.published.any? %>
+            <% if @question.comments.any? %>
               <h3 class="display-5">Comments</h3>
               <ul>
-                <%= render @question.comments.published.includes([:user]) %>
+                <%= render @question.comments.includes([:user]) %>
               </ul>
             <% else %>
               <h5>No Comments</h5>

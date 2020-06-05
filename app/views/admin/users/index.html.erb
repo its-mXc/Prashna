@@ -1,0 +1,8 @@
+<div class="display-container">
+  <%= render  "shared/notice" %>
+  Total Users : <span class="badge badge-dark mt-2"><%= @users.size %></span><br>
+  Total Active Users : <span class="badge badge-dark mt-2"><%= @users.where(disabled: false).size %></span><br>
+  Total Disabled Users : <span class="badge badge-dark mt-2"><%= @users.where(disabled: true).size %></span><br>
+  <hr class="my-3 border-danger w-75">
+  <%= render  @users %>
+</div>

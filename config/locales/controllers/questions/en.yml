@@ -23,3 +23,9 @@ en:
     reaction:
       cannot_vote_own_question: "Cannot vote your own question"
       reaction_submitted: "Reaction Submitted"
+    report_abuse:
+      question_unpublished: "Question unpublished"
+      abuse_reported: "Question reported as abused"
+      abuse_not_reported: "Error in reporting question as abuse"
+      cannot_report_own_question: "Cannot report own question"
+      cannot_find_question: "No such question exist"

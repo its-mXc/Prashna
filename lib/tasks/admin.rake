@@ -12,9 +12,9 @@ namespace :admin do
                     email: get_attr_value(:email),
                     password: STDIN.getpass("Password:"),
                     password_confirmation: STDIN.getpass("Confirm Password:"),
-                    user_type: "admin",
-                    verified_at: Time.current )
+                    user_type: "admin")
     if user.save
+      user.verify!
       puts "Admin created with #{user.email}"
     else
       p user.errors

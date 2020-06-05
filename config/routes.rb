@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resources :comments,  only: [:new, :create]
     resources :answers,  only: [:new, :create]
   end
-  
+
   resources :answers,  only: :show do
     member do
       get 'reaction'
@@ -31,8 +31,8 @@ Rails.application.routes.draw do
     end
     resources :comments,  only: [:new, :create]
   end
-  
-  
+
+
   resources :comments, only: [:new, :create, :show] do
     resources :comments, only: [:new, :create]
     member do
@@ -49,6 +49,8 @@ Rails.application.routes.draw do
       post :set_avatar
       post :set_topics
       get :questions
+      get :follow
+      get :unfollow
     end
   end
 
@@ -71,6 +73,45 @@ Rails.application.routes.draw do
   controller :users do
     get :verify
   end
+
+  namespace :api do
+    resources :feed, only: [:index]
+    resources :topics, only: [:show]
+  end
+
+  resources :buy, only: [:index] do
+    collection do
+      get :payment
+      post :charge
+    end
+  end
+  get 'browse', to: "users#browse"
+
+  namespace :admin do
+    resources :credit_packs, only: [:index, :new, :create, :edit, :update]
+    resources :users, only: [:index] do
+      member do
+        get :disable
+      end
+    end
+    resources :questions, only: [:index] do
+      member do
+        get :unpublish
+      end
+    end
+    resources :answers, only: [:index] do
+      member do
+        get :unpublish
+      end
+    end
+    resources :comments, only: [:index] do
+      member do
+        get :unpublish
+      end
+    end
+
+  end
+  get 'admin', to: "admin#index"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   mount LetterOpenerWeb::Engine, at: "/letter_opener"

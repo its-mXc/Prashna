@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id               :bigint           not null, primary key
+#  body             :text(65535)
+#  commentable_type :string(255)      not null
+#  commentable_id   :bigint           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  user_id          :bigint           not null
+#  question_id      :bigint           not null
+#  reaction_count   :integer          default(0)
+#  published        :boolean          default(TRUE)
+#  marked_abused    :boolean          default(FALSE)
+#
 class Comment < ApplicationRecord
   include ReactionRecorder
   include Posted
@@ -20,15 +36,13 @@ class Comment < ApplicationRecord
 
   after_save :generate_notifications
 
-  scope :published, -> { where(published: true) }
+  default_scope { where(published: true) }
 
 
   def refresh_votes!
     self.reaction_count = reactions.upvotes.count -  reactions.downvotes.count
     save!
   end
-
-  #FIXME_AB: this may be needed in questions and answers. so make it a concern
 
   private def words_in_comment
     body.scan(/\w+/)

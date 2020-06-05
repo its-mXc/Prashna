@@ -11,5 +11,9 @@ Figaro.require_keys(
  "question_post_debit",
  "remember_me_expiry_days",
  "signup_credits",
- "abuse_reports_unpublish_no"
- )
+ "abuse_reports_unpublish_no",
+ "topic_api_question_amount",
+ "topic_requests_per_hour",
+ "stripe_publishable_key",
+ "stripe_secret_key"
+)

@@ -24,17 +24,19 @@
             <strong>Email:</strong>
             <%= current_user.email %>
           </div>
-
+  
           <div class="row user-info">
-            <strong>Followers count:</strong>
-            <%= current_user.followers_count %>
+            <strong>Authentication token:</strong>
+            <span class="clipboard-btn badge badge-danger" data-toggle="tooltip" title="Click to copy" data-clipboard-action="copy" data-clipboard-target="#auth-token">
+            <span id="auth-token"><%= current_user.auth_token %></span>
+            </span>
           </div>
+
 
           <div class="row user-info">
             <%= form_for :user, url: set_topics_user_path(@current_user.id), local: true do |f| %>
               <%= f.label :topics %>
-              <% #FIXME_AB: use basic presenter gem for current user so that you can do current_user.presenter.topics_list -%>
-              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path }, value: current_user.topics.map(&:name).join(", "), title: "Comma seperated topics", data: { toggle: "tooltip" } %>
+              <%= f.text_field :topic_names, id: "tag-autocomplete", data: {jsonurl: topic_index_path, toggle: "tooltip" }, value: current_user.topics.map(&:name).join(", "), title: "Comma seperated topics" %>
               <%= f.submit "Add Topics"%>
             <% end %>
           </div>
@@ -65,8 +67,20 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#transaction-history">Transaction History</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#following">Following <span class="badge badge-dark"><%= current_user.followed_users.size %></span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#followers">Followers <span class="badge badge-dark"><%= current_user.followers.size %></span></a>
+    </li>
+    <% if current_user.admin? %>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#admin">Admin</a>
+      </li>
+    <% end %>
   </ul>
-  <div id="myTabContent" class="tab-content">
+  
+  <div id="myTabContent" class="tab-content mt-1">
     <div class="tab-pane fade show active" id="questions">
       <% if current_user.questions.published.any? %>
         <%= render current_user.questions.published.includes([:file_attachment, :reactions, :topics, :question_topics, :answers, :comments]) %>
@@ -82,20 +96,13 @@
         <h5>No Unpublished Questions</h5>
       <% end %>
     </div>
+
     <div class="tab-pane fade" id="drafts">
-      <% if current_user.questions.draft.any? %>
-        <%= render  "questions/draft", drafts: current_user.questions.draft %>
-      <% else %>
-        <h5>No Drafts</h5>
-      <% end %>
+      <%= render  "questions/draft", drafts: current_user.questions.draft %>
     </div>
+
     <div class="tab-pane fade" id="answers">
-      <% #FIXME_AB: move this if else inside partial -%>
-      <% if current_user.answers.any? %>
-        <%= render "answers/user_answers", user_answers: current_user.answers.published %>
-      <% else %>
-        <h5>No Answers</h5>
-      <% end %>
+      <%= render "answers/user_answers", user_answers: current_user.answers %>
     </div>
     <div class="tab-pane fade" id="transaction-history">
       <table class="table table-hover border-danger">
@@ -109,12 +116,25 @@
           </tr>
         </thead>
         <tbody>
-          <% #FIXME_AB: make a scope in credit transactions .reverse_chronological -%>
-          <%= render current_user.credit_transactions.includes([:transactable]).reverse %>
+          <%= render current_user.credit_transactions.includes([:transactable]).reverse_chronological %>
         </tbody>
       </table>
       <strong>Credit Balance : <%= current_user.credit_balance %></strong>
     </div>
+    <div class="tab-pane fade" id="following">
+      <%= render current_user.followed_users %>
+    </div>
+    <div class="tab-pane fade" id="followers">
+      <%= render current_user.followers %>
+    </div>
+
+    <% if current_user.admin? %>
+      <div class="tab-pane fade mt-3" id="admin">
+        <span class="btn btn-primary mr-3"><%= link_to  "Manage Users", admin_users_path, class: "text-white" %></span>
+        <span class="btn btn-danger mr-3"><%= link_to  "Manage Questions", admin_questions_path, class: "text-white" %></span>
+        <span class="btn btn-dark mr-3"><%= link_to  "Manage Credit Packs", admin_credit_packs_path, class: "text-white" %></span>
+      </div>
+    <% end %>
   </div>
 
 

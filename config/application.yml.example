@@ -10,5 +10,9 @@ minimum_question_char_length: 10
 maximum_question_char_length: 1000
 popular_question_votes: 1
 popular_question_credits: 2
-questions_per_page: 1
+questions_per_page: 5
 abuse_reports_unpublish_no: 2
+topic_api_question_amount: 5
+topic_requests_per_hour: 5
+stripe_publishable_key: "pk_test_FNjupGMml7i075BEbtkGRq5000Pt8LLrUq"
+stripe_secret_key: "sk_test_KKykr3YUhQwPQy728XIXk6ad00WI5Po5j8"

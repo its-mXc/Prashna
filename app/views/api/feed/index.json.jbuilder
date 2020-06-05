@@ -1,0 +1,1 @@
+json.partial! 'api/questions/questions', questions: @questions

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_050444) do
+ActiveRecord::Schema.define(version: 2020_06_04_060808) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -74,6 +74,14 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "credit_packs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.integer "price"
+    t.integer "credits"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "credit_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "amount"
@@ -87,6 +95,13 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
+  create_table "feed_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "ip"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "viewed", default: false
@@ -96,6 +111,21 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
     t.bigint "notificable_id"
     t.index ["notificable_type", "notificable_id"], name: "index_notifications_on_notificable_type_and_notificable_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "payment_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "credit_pack_id", null: false
+    t.string "status"
+    t.string "card_token"
+    t.json "response"
+    t.boolean "paid", default: false
+    t.integer "price"
+    t.integer "credits"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["credit_pack_id"], name: "index_payment_transactions_on_credit_pack_id"
+    t.index ["user_id"], name: "index_payment_transactions_on_user_id"
   end
 
   create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -138,6 +168,16 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
     t.index ["name"], name: "index_topics_on_name", unique: true
   end
 
+  create_table "user_follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followed_id"], name: "index_user_follows_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_user_follows_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_user_follows_on_follower_id"
+  end
+
   create_table "user_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "topic_id", null: false
@@ -153,13 +193,16 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
     t.string "email"
     t.integer "user_type", default: 0
     t.integer "credit_balance", default: 0
-    t.integer "followers_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "verified_at"
     t.string "confirmation_token"
     t.string "password_reset_token"
     t.datetime "password_token_expire_at"
+    t.string "auth_token"
+    t.string "stripe_id"
+    t.boolean "disabled", default: false
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email", "confirmation_token"], name: "index_users_on_email_and_confirmation_token", unique: true
     t.index ["password_reset_token"], name: "index_users_on_password_reset_token"
     t.index ["password_token_expire_at"], name: "index_users_on_password_token_expire_at"
@@ -174,6 +217,8 @@ ActiveRecord::Schema.define(version: 2020_05_29_050444) do
   add_foreign_key "comments", "users"
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payment_transactions", "credit_packs"
+  add_foreign_key "payment_transactions", "users"
   add_foreign_key "question_topics", "questions"
   add_foreign_key "question_topics", "topics"
   add_foreign_key "reactions", "users"

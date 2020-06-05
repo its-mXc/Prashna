@@ -1,0 +1,10 @@
+<div>
+  <p><%= link_to comment.body, comment %></p>
+  <% if comment.published %>
+    <span class="btn btn-danger"><%= link_to  "Unpublish", unpublish_admin_comment_path(comment), class: "text-white" %></span>
+  <% else %>
+    <span class="badge badge-dark ">Unpublished</span>
+  <% end %>
+</div>
+<hr class="my-2 border-success w-25">
+  

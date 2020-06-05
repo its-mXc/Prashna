@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id             :bigint           not null, primary key
+#  user_id        :bigint
+#  title          :string(255)
+#  content        :text(65535)
+#  url_slug       :string(255)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  status         :integer
+#  reaction_count :integer          default(0)
+#  published_at   :datetime
+#  marked_abused  :boolean          default(FALSE)
+#
 class Question < ApplicationRecord
   include ReactionRecorder
   include Posted
@@ -32,6 +48,9 @@ class Question < ApplicationRecord
   before_mark_published :create_question_transaction
   after_mark_published :generate_url_slug
   after_mark_published :generate_notifications
+
+  scope :recent, -> { order(published_at: :desc) }
+  scope :by_users, ->(users) { where(user: users) }
 
   def self.search(term)
     (published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten).uniq
@@ -113,7 +132,7 @@ class Question < ApplicationRecord
   end
 
   def answered_by_user?(user)
-    return !!answers.find_by(user_id: user.id)
+    return !!answers.unscoped.find_by(user_id: user.id)
   end
 
   def mark_abusive!
