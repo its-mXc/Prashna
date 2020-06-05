@@ -136,6 +136,7 @@ class Question < ApplicationRecord
   end
 
   def mark_abusive!
+    #FIXME_AB: should be in single transaction
     self.marked_abused = true
     self.status = self.class.statuses["unpublished"]
     credit_transaction.reverse_transaction
