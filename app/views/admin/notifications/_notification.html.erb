@@ -1,0 +1,11 @@
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    <% if notification.notificable_type == "Question" %>
+        <%= link_to  "#{notification.notificable.user.name} asked a question '#{notification.notificable.title }'", question_path(notification.notificable) %>
+    <% else %>
+        <% if notification.notificable.commentable_type == "Question" %>
+            <%= link_to  "#{notification.notificable.user.name} replied to your question '#{notification.notificable.commentable.title }'", comment_path(notification.notificable) %>
+        <% else %>
+            <%= link_to  "#{notification.notificable.user.name} replied to your comment '#{notification.notificable.commentable.body }'", comment_path(notification.notificable) %>
+        <% end %>
+    <% end %>
+</li>

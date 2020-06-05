@@ -80,13 +80,17 @@ class Answer < ApplicationRecord
   def mark_abusive!
     self.transaction do
       self.marked_abused = true
-      self.published = false
-      if popularity_credits_granted?
-        self.popularity_credits_granted = false
-        revert_credits
-      end
-      save!
+      unpublish!
     end
+  end
+  
+  def unpublish!
+    self.published = false
+    if popularity_credits_granted?
+      self.popularity_credits_granted = false
+      revert_credits
+    end
+    save!
   end
 
   private def not_published_if_marked_abusive

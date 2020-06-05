@@ -63,8 +63,17 @@ class Comment < ApplicationRecord
 
   def mark_abusive!
     self.marked_abused = true
+    unpublish!
+  end
+  
+  def unpublish!
     self.published = false
+    delete_notifications
     save!
+  end
+
+  def delete_notifications
+    Notification.where(notificable: self).destroy_all
   end
 
   private def not_published_if_marked_abusive
