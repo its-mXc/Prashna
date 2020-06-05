@@ -9,19 +9,18 @@ class BuyController < ApplicationController
 
   def payment
   end
-  
-  #FIXME_AB: make payment transaction model also
-  
+
   def charge
     begin
+      #FIXME_AB: make a payment transtion in pending state
       logger.tagged('Stripe Credit Pack Buy') {
           if current_user.stripe_id.nil?
             logger.info "Creating stripe customer for user #{user}"
-            customer = Stripe::Customer.create({"email": current_user.email}) 
+            customer = Stripe::Customer.create({"email": current_user.email})
             logger.info customer
             current_user.update(stripe_id: customer.id)
         end
-        
+
         card_token = params[:stripeToken]
         logger.info "Creating charge for #{@credit_pack} against card #{card_token}"
         charge = Stripe::Charge.create({
@@ -32,19 +31,23 @@ class BuyController < ApplicationController
           customer: customer
         })
         logger.info charge
+        #FIXME_AB: here will mark is payment_transation.mark_paid!
         current_user.payment_transactions.create(credit_pack: @credit_pack, card_token: card_token, response: charge)
         if charge.paid
+          #FIXME_AB: move this to payment ransactions model in after call of paid
           @credit_pack.create_credit_transaction(current_user)
           redirect_to my_profile_path, notice: "Purchase successful"
           else
             redirect_to my_profile_path, notice: "Purchase unsuccessful"
         end
         }
-    rescue Stripe::CardError
+    rescue Exception => e
+      #FIXME_AB: mark payment transation as failed
+      # debugger
       redirect_to buy_index_path, notice: "Card Declined"
-    end   
+    end
   end
-  
+
   private def set_credit_pack
     @credit_pack = CreditPack.find_by(id: params[:pack_id])
   end

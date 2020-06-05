@@ -1,4 +1,3 @@
-#FIXME_AB: api related templates should be inside api namespace
 json.questions @questions do |question|
   json.title question.title
   json.content question.content

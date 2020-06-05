@@ -2,8 +2,11 @@ module Admin
   class CreditPacksController < AdminController
 
     before_action :find_credit_pack, only: [:edit, :update]
-    
+
     def index
+      #FIXME_AB: show enabled or disabled in view
+      #FIXME_AB: show button to add new pack
+      #FIXME_AB: give option to enable or disable a pack
       @credit_packs = CreditPack.all
     end
 
@@ -13,7 +16,7 @@ module Admin
 
     def create
       @credit_pack = CreditPack.new(credit_pack_params)
-  
+
       if @credit_pack.save
         redirect_to admin_credit_packs_path, notice: 'Credit Pack created'
       else

@@ -1,7 +1,6 @@
 module Api
   class TopicsController < ApiBaseController
     before_action :check_activity_limit
-    #FIXME_AB: make this after action
     after_action :set_activity
 
     def show
@@ -13,7 +12,5 @@ module Api
       end
     end
 
-    #FIXME_AB: move this to api base
-   
   end
 end
