@@ -6,10 +6,13 @@
         <th scope="col">Name</th>
         <th scope="col">Price</th>
         <th scope="col">Credits</th>
+        <th scope="col">Disabled</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
       <%= render @credit_packs %>
     </tbody>
   </table>
+  <%= link_to "Create New Credit Pack", new_admin_credit_pack_path %>
 </div>

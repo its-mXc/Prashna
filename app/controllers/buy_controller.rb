@@ -4,7 +4,7 @@ class BuyController < ApplicationController
   before_action :ensure_stripe_token_exist, only: :charge
 
   def index
-    @packs = CreditPack.all
+    @packs = CreditPack.enabled.includes({cover_image_attachment: [:blob]})
   end
 
   def payment

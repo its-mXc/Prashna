@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
       if cookies.signed[:user_id]
-        @current_user ||= User.includes([:avatar_attachment]).find_by(id: cookies.signed[:user_id])
+        @current_user ||= User.find_by(id: cookies.signed[:user_id])
       elsif session[:user_id]
-        @current_user ||= User.includes([:avatar_attachment]).find_by(id: session[:user_id])
+        @current_user ||= User.find_by(id: session[:user_id])
       else
         @current_user = nil
       end

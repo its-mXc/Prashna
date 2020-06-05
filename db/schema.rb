@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_05_121156) do
+ActiveRecord::Schema.define(version: 2020_06_05_142339) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_121156) do
     t.integer "credits"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "disabled", default: false
   end
 
   create_table "credit_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
