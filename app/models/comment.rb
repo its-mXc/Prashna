@@ -23,7 +23,7 @@ class Comment < ApplicationRecord
   validates :body, presence: true
 
   #FIXME_AB: use new syntax
-  validates_length_of :words_in_comment, minimum: ENV["comment_word_length"].to_i
+  validates :words_in_comment ,length: { minimum: ENV["comment_word_length"].to_i }
   validate :not_published_if_marked_abusive
 
   belongs_to :user
