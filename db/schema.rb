@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_060808) do
+ActiveRecord::Schema.define(version: 2020_06_05_121156) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "abuseable_type"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_060808) do
   create_table "payment_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "credit_pack_id", null: false
-    t.string "status"
+    t.integer "status"
     t.string "card_token"
     t.json "response"
     t.boolean "paid", default: false
@@ -124,7 +124,14 @@ ActiveRecord::Schema.define(version: 2020_06_04_060808) do
     t.integer "credits"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "paid_at"
+    t.datetime "refunded_at"
+    t.string "transaction_id"
+    t.bigint "payment_transaction_id"
+    t.bigint "credit_transaction_id"
     t.index ["credit_pack_id"], name: "index_payment_transactions_on_credit_pack_id"
+    t.index ["credit_transaction_id"], name: "index_payment_transactions_on_credit_transaction_id"
+    t.index ["payment_transaction_id"], name: "index_payment_transactions_on_payment_transaction_id"
     t.index ["user_id"], name: "index_payment_transactions_on_user_id"
   end
 

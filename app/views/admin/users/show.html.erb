@@ -1,0 +1,45 @@
+<div class="display-container">
+  <div class="row">
+    <div class="col-1">
+      <% if @user.avatar.attached? %>
+        <%= image_tag(@user.avatar, class: "rounded-circle", size: "50") %>
+      <% end %>
+    </div>
+
+    <div class="col-1 my-auto">
+      <%= link_to @user.name, @user %>
+    </div>
+
+    <div class="col-2 my-auto">
+      <% unless @user.disabled %>
+        <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
+      <% else %>
+        <span class="badge badge-dark m-2">Disabled</span>
+      <% end %>
+    </div>
+  </div>
+  <hr class="my-4 border-success w-25">
+  <h3>Payment Transactions</h3>
+  <% if @user.payment_transactions.any? %>
+     <table class="table table-hover border-danger w-75">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Credit Pack</th>
+            <th scope="col">Status</th>
+            <th scope="col">Credits</th>
+            <th scope="col">Price</th>
+            <th scope="col">Credit Transaction id</th>
+            <th scope="col">Payment Transaction id</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @user.payment_transactions %>
+        </tbody>
+      </thead>
+  <% else %>
+    <h5>No Payment Transactions</h5>
+  <% end %>
+</div>
+  

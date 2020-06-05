@@ -1,0 +1,14 @@
+<tr>
+  <td><%= payment_transaction.id %></td>
+  <td><%= payment_transaction.credit_pack.name %></td>
+  <td><%= payment_transaction.status %></td>
+  <td><%= payment_transaction.credits %></td>
+  <td><%= payment_transaction.price %></td>
+  <td><%= payment_transaction.credit_transaction_id %></td>
+  <td><%= payment_transaction.payment_transaction_id %></td>
+  <% if payment_transaction.refundable? %>
+    <td><%= link_to "Refund", refund_admin_users_path(payment_transaction_id: payment_transaction.id), class: "badge badge-danger" %></td>
+  <% else %>
+    <td><span class="badge badge-dark">Refunded</span></td>
+  <% end %>
+</tr>

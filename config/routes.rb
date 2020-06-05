@@ -90,7 +90,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :credit_packs, only: [:index, :new, :create, :edit, :update]
-    resources :users, only: [:index] do
+    resources :users, only: [:show, :index] do
+      collection do
+        get :refund
+      end
       member do
         get :disable
       end
