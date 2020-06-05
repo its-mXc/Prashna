@@ -51,6 +51,7 @@ class Question < ApplicationRecord
 
   scope :recent, -> { order(published_at: :desc) }
   scope :by_users, ->(users) { where(user: users) }
+  scope :in_last, ->(time) { where("published_at >= ?", time.ago) }
 
   def self.search(term)
     (published.where("title LIKE ?","%#{term}%") + Topic.search(term).map {|topic| topic.questions.published }.flatten).uniq
