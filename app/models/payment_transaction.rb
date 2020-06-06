@@ -34,7 +34,9 @@ class PaymentTransaction < ApplicationRecord
 
   before_save :set_attributes
   after_mark_paid :create_credit_transaction
+  after_mark_paid :send_purchase_successfull_email
   after_mark_refunded :revert_credit_transaction
+  after_mark_refunded :send_refund_successfull_email
 
   private def set_attributes
     self.price = credit_pack.price
@@ -79,5 +81,13 @@ class PaymentTransaction < ApplicationRecord
   private def revert_credit_transaction
     reverted_credit_transaction = credit_transaction.reverse_transaction
     @payment_transaction.update(credit_transaction: reverted_credit_transaction)
+  end
+
+  private def send_purchase_successfull_email
+    PaymentTransactionMailer.send_purchase_email(self).deliver_later
+  end
+  
+  private def send_refund_successfull_email
+    PaymentTransactionMailer.send_refund_email(@payment_transaction).deliver_later
   end
 end

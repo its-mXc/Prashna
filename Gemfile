@@ -46,6 +46,7 @@ group :development do
   gem "capistrano-rails-logs-tail", "~> 1.0"
   gem 'capistrano-rails-console', require: false
   gem 'bullet'
+  gem 'solargraph'
 end
 
 group :test do

@@ -16,7 +16,7 @@ class BuyController < ApplicationController
       payment_transaction = current_user.payment_transactions.new(credit_pack: @credit_pack)
       logger.tagged('Stripe Credit Pack Buy') {
           if current_user.stripe_id.nil?
-            logger.info "Creating stripe customer for user #{user}"
+            logger.info "Creating stripe customer for user #{current_user}"
             customer = Stripe::Customer.create({"email": current_user.email})
             logger.info customer
             current_user.update(stripe_id: customer.id)
@@ -29,8 +29,9 @@ class BuyController < ApplicationController
           currency: 'inr',
           source: card_token,
           description: @credit_pack.name,
-          customer: customer
         })
+        # charge customer update
+        Stripe::Charge.update(charge.id, { customer: current_user.stripe_id })
         logger.info charge
         #FIXME_AB: here will mark is payment_transation.mark_paid!
         payment_transaction.update(card_token: card_token, response: charge)
@@ -43,7 +44,7 @@ class BuyController < ApplicationController
           redirect_to my_profile_path, notice: "Purchase unsuccessful"
         end
         }
-    rescue Exception => e
+    rescue Stripe::CardError => e
       #FIXME_AB: mark payment transation as failed
       # debugger
       payment_transaction.mark_failed!

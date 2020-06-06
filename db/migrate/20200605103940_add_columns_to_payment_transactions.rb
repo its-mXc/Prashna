@@ -1,4 +1,4 @@
-class ChangeStatusToBeIntegerInPaymentTransactions < ActiveRecord::Migration[6.0]
+class AddColumnsToPaymentTransactions < ActiveRecord::Migration[6.0]
   def change
     change_column :payment_transactions, :status, :integer
     add_column :payment_transactions, :paid_at, :datetime

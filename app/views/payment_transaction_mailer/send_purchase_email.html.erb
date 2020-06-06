@@ -1,0 +1,4 @@
+<h3>Hi <%= @payment_transaction.user.name %></h3>
+
+<p>Credit Pack <%= @payment_transaction.credit_pack.name %> was purchased succesfully.<%= @payment_transaction.credits %> credits have been added to your account.</p>
+<%= link_to "Recepit", @payment_transaction.response["receipt_url"] %>
