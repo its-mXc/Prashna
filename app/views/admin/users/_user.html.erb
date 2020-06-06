@@ -1,24 +1,13 @@
- <div class="row">
-  <div class="col-1">
-    <% if user.avatar.attached? %>
-      <%= image_tag(user.avatar, class: "rounded-circle", size: "50") %>
-    <% end %>
-  </div>
-
-  <div class="col-1 my-auto">
-    <%= link_to user.name, user %>
-  </div>
-
-  <div class="col-1 my-auto">
+<tr>
+  <th><%= link_to user.name, user %></th>
+  <th><%= user.email %></th>
+  <th><%= user.credit_balance %></th>
+  <th>
     <% unless user.disabled %>
-      <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(user), class: "text-white" %></span>
+      <span class="badge badge-success"><%= link_to  "Enabled", disable_admin_user_path(user), class: "text-white", title: "Click to toggle disabled status", data: { toggle: "tooltip" } %></span>
     <% else %>
-      <span class="badge badge-dark m-2">Disabled</span>
+      <span class="badge badge-danger"><%= link_to  "Disabled", enable_admin_user_path(user), class: "text-white", title: "Click to toggle disabled status", data: { toggle: "tooltip" } %></span>
     <% end %>
-  </div>
-  <div class="col-1 my-auto">
-    <%= link_to "Manage", admin_user_path(user)  %>
-  </div>
-</div>
-<hr class="my-2 border-success w-50">
-  
+  </th>
+  <th><%= link_to "Manage", admin_user_path(user), class: "badge badge-primary"  %></th>
+</tr>

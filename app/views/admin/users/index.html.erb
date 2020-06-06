@@ -4,5 +4,18 @@
   Total Active Users : <span class="badge badge-dark mt-2"><%= @users.where(disabled: false).size %></span><br>
   Total Disabled Users : <span class="badge badge-dark mt-2"><%= @users.where(disabled: true).size %></span><br>
   <hr class="my-3 border-danger w-75">
-  <%= render  @users %>
+  <table class="table table-hover border-danger w-75">
+    <thead>
+      <tr class="table-active">
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Credit Balance</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render  @users %>
+    </tbody>
+  </table>
 </div>

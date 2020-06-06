@@ -96,6 +96,7 @@ Rails.application.routes.draw do
       end
       member do
         get :disable
+        get :enable
       end
     end
     resources :questions, only: [:index] do

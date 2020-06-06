@@ -1,20 +1,34 @@
 <div class="display-container">
+  <%= render 'shared/notice' %>
   <div class="row">
-    <div class="col-1">
+    <div class="col-2">
       <% if @user.avatar.attached? %>
-        <%= image_tag(@user.avatar, class: "rounded-circle", size: "50") %>
+        <%= image_tag(@user.avatar, class: "rounded-circle", size: "200") %>
       <% end %>
     </div>
 
-    <div class="col-1 my-auto">
-      <%= link_to @user.name, @user %>
-    </div>
+    <div class="col-md-4" style="margin-top:20px;">
+      <div class="row user-info">
+        <strong>Name:</strong>
+        <%= @user.name %>
+      </div>
+      <div class="row user-info">
+        <strong>Email:</strong>
+        <%= @user.email %>
+      </div>
 
-    <div class="col-2 my-auto">
+      <div class="row user-info">
+        <strong>Authentication token:</strong>
+        <span class="clipboard-btn badge badge-danger" data-toggle="tooltip" title="Click to copy" data-clipboard-action="copy" data-clipboard-target="#auth-token">
+        <span id="auth-token"><%= @user.auth_token %></span>
+        </span>
+      </div>
       <% unless @user.disabled %>
+        <span class="badge badge-success m-2">Enabled</span><br>
         <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
       <% else %>
-        <span class="badge badge-dark m-2">Disabled</span>
+        <span class="badge badge-dark m-2">Disabled</span><br>
+        <span class="btn btn-success m-2"><%= link_to  "Enable", enable_admin_user_path(@user), class: "text-white" %></span>
       <% end %>
     </div>
   </div>
@@ -37,7 +51,7 @@
         <tbody>
           <%= render @user.payment_transactions %>
         </tbody>
-      </thead>
+      </table>
   <% else %>
     <h5>No Payment Transactions</h5>
   <% end %>
