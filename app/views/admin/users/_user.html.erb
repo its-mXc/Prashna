@@ -2,6 +2,7 @@
   <th><%= link_to user.name, user %></th>
   <th><%= user.email %></th>
   <th><%= user.credit_balance %></th>
+  <th><%= user.user_type %></th>
   <th>
     <% unless user.disabled %>
       <span class="badge badge-success"><%= link_to  "Enabled", disable_admin_user_path(user), class: "text-white", title: "Click to toggle disabled status", data: { toggle: "tooltip" } %></span>

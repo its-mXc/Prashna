@@ -19,15 +19,21 @@
 
       <div class="row user-info">
         <strong>Authentication token:</strong>
-        <span class="clipboard-btn badge badge-danger" data-toggle="tooltip" title="Click to copy" data-clipboard-action="copy" data-clipboard-target="#auth-token">
-        <span id="auth-token"><%= @user.auth_token %></span>
+        <span class="clipboard-btn ml-2 p-1 badge badge-primary" data-toggle="tooltip" title="Click to copy" data-clipboard-action="copy" data-clipboard-target="#auth-token">
+        <span id="auth-token" class=""><%= @user.auth_token %></span>
         </span>
       </div>
+
+      <div class="row user-info">
+        <strong>Type: </strong>
+        <%= @user.user_type %>
+      </div>
+     
       <% unless @user.disabled %>
-        <span class="badge badge-success m-2">Enabled</span><br>
+         <strong class="user-info">Status :</strong><span class="badge badge-success">Enabled</span><br>
         <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
       <% else %>
-        <span class="badge badge-dark m-2">Disabled</span><br>
+        <strong class="user-info">Status :</strong><span class="badge badge-dark">Disabled</span><br>
         <span class="btn btn-success m-2"><%= link_to  "Enable", enable_admin_user_path(@user), class: "text-white" %></span>
       <% end %>
     </div>

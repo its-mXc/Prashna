@@ -6,7 +6,7 @@ module Admin
     before_action :user_not_enabled, only: [:enable]
 
     def index
-      @users = User.user
+      @users = User.all
     end
 
     def show
