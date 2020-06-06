@@ -5,7 +5,6 @@ class AutoLoad {
   }
 
   init() {
-    this.persistentElement.hide();
 
     this.persistentElement.parent('form').on('ajax:success', function(event, data, type){
       $('.question-notification').children().remove()

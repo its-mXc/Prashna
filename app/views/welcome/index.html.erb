@@ -12,7 +12,7 @@
     </div>
   </nav>
   <% content_for :head do %>
-    <%= button_to "Refresh Questions", refresh_questions_path, method: :get, remote: true , class: "refresh_question_notification", data: { refresh_time: ENV["question_refresh_time_secs"]+"000" } %>
+    <%= button_to "Refresh Questions", refresh_questions_path, method: :get, remote: true , class: "refresh_question_notification d-none", data: { refresh_time: ENV["question_refresh_time_secs"]+"000" } %>
     <%= javascript_include_tag "autoLoad" %>
   <% end %>
 </div>
