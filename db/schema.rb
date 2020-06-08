@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_06_08_084438) do
 
-  create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "abuse_reports", force: :cascade do |t|
     t.string "abuseable_type"
     t.bigint "abuseable_id"
     t.bigint "user_id", null: false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_abuse_reports_on_user_id"
   end
 
-  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "answers", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id", null: false
     t.bigint "question_id", null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
-  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.text "body"
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "credit_packs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "credit_packs", force: :cascade do |t|
     t.string "name"
     t.integer "price"
     t.integer "credits"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.boolean "disabled", default: false
   end
 
-  create_table "credit_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "credit_transactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "amount"
     t.integer "transaction_type"
@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
-  create_table "feed_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "feed_activities", force: :cascade do |t|
     t.string "ip"
     t.string "url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "notifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "viewed", default: false
     t.datetime "created_at", precision: 6, null: false
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "payment_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "payment_transactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "credit_pack_id", null: false
     t.integer "status"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_payment_transactions_on_user_id"
   end
 
-  create_table "question_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "question_topics", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "topic_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["topic_id"], name: "index_question_topics_on_topic_id"
   end
 
-  create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "questions", force: :cascade do |t|
     t.bigint "user_id"
     t.string "title"
     t.text "content"
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
-  create_table "reactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "reactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "reaction_type"
     t.string "reactable_type"
@@ -170,14 +170,14 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
-  create_table "topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "topics", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_topics_on_name", unique: true
   end
 
-  create_table "user_follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "user_follows", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
     t.datetime "created_at", precision: 6, null: false
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["follower_id"], name: "index_user_follows_on_follower_id"
   end
 
-  create_table "user_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "user_topics", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "topic_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_084438) do
     t.index ["user_id"], name: "index_user_topics_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
     t.string "email"
