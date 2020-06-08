@@ -3,7 +3,6 @@
 class AutoCompleteInput {
   constructor(options) {
     this.inputElement = options["inputElement"]
-    console.log(this.inputElement)
   }
 
   init() {

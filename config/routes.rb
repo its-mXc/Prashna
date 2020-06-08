@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do
       get 'drafts'
       get 'search'
+      get 'refresh'
     end
     member do
       get 'publish'
@@ -89,9 +90,13 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :credit_packs, only: [:index, :new, :create, :edit, :update]
-    resources :users, only: [:index] do
+    resources :users, only: [:show, :index] do
+      collection do
+        get :refund
+      end
       member do
         get :disable
+        get :enable
       end
     end
     resources :questions, only: [:index] do
@@ -99,12 +104,12 @@ Rails.application.routes.draw do
         get :unpublish
       end
     end
-    resources :answers, only: [:index] do
+    resources :answers, only: [] do
       member do
         get :unpublish
       end
     end
-    resources :comments, only: [:index] do
+    resources :comments, only: [] do
       member do
         get :unpublish
       end

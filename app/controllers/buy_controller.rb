@@ -4,7 +4,7 @@ class BuyController < ApplicationController
   before_action :ensure_stripe_token_exist, only: :charge
 
   def index
-    @packs = CreditPack.all
+    @packs = CreditPack.enabled.includes({cover_image_attachment: [:blob]})
   end
 
   def payment
@@ -13,9 +13,10 @@ class BuyController < ApplicationController
   def charge
     begin
       #FIXME_AB: make a payment transtion in pending state
+      payment_transaction = current_user.payment_transactions.new(credit_pack: @credit_pack)
       logger.tagged('Stripe Credit Pack Buy') {
           if current_user.stripe_id.nil?
-            logger.info "Creating stripe customer for user #{user}"
+            logger.info "Creating stripe customer for user #{current_user}"
             customer = Stripe::Customer.create({"email": current_user.email})
             logger.info customer
             current_user.update(stripe_id: customer.id)
@@ -28,23 +29,26 @@ class BuyController < ApplicationController
           currency: 'inr',
           source: card_token,
           description: @credit_pack.name,
-          customer: customer
         })
+        # charge customer update
+        Stripe::Charge.update(charge.id, { customer: current_user.stripe_id })
         logger.info charge
         #FIXME_AB: here will mark is payment_transation.mark_paid!
-        current_user.payment_transactions.create(credit_pack: @credit_pack, card_token: card_token, response: charge)
+        payment_transaction.update(card_token: card_token, response: charge)
         if charge.paid
           #FIXME_AB: move this to payment ransactions model in after call of paid
-          @credit_pack.create_credit_transaction(current_user)
+          payment_transaction.mark_paid!
           redirect_to my_profile_path, notice: "Purchase successful"
-          else
-            redirect_to my_profile_path, notice: "Purchase unsuccessful"
+        else
+          payment_transaction.mark_failed!
+          redirect_to my_profile_path, notice: "Purchase unsuccessful"
         end
         }
-    rescue Exception => e
+    rescue Stripe::CardError => e
       #FIXME_AB: mark payment transation as failed
       # debugger
-      redirect_to buy_index_path, notice: "Card Declined"
+      payment_transaction.mark_failed!
+      redirect_to buy_index_path, notice: e.message
     end
   end
 

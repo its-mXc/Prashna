@@ -1,0 +1,4 @@
+<h3>Hi <%= @payment_transaction.user.name %></h3>
+
+<p>Payment Transaction for id <%= @payment_transaction.response["charge"] %> was refunded succesfully.</p>
+<p><%= @payment_transaction.price %> INR has been refunded</p>

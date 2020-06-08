@@ -23,20 +23,26 @@
 
         <div id="searchbar">
           <%= form_with scope: :question, url: search_questions_url , local: true, method: :get do |f| %>
-          <%= f.search_field :search, class: "w-50", placeholder: "Type and enter to search" , value: params.dig(:question, :search) %>
+            <%= f.search_field :search, class: "w-75", placeholder: "Type and enter to search" , value: params.dig(:question, :search), required:true, pattern: ".*[^ ].*", oninvalid:"this.setCustomValidity('Please enter a term to search')" %>
           <% end %>
         </div>
 
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav mr-auto">
             <% if logged_in? %>
+            <% if current_user.admin? %>
+              <li class="nav-link-admin"></li>
+              <li class="nav-item active"><%= link_to 'Admin', admin_path, class: "nav-link" %></li>
+            <% else %>
+              <li class="nav-link-not-admin"></li>
+            <% end %>
             <li class="nav-item active"><%= link_to 'Buy Credits', buy_index_path, class: "nav-link" %></li>
             <li class="nav-item active"><%= link_to 'Ask Question', new_question_path, class: "nav-link" %></li>
             <li class="nav-item active"><%= link_to 'Drafts', drafts_questions_path, class: "nav-link" %></li>
             <li class="nav-item active"><%= link_to 'Profile', my_profile_path, class: "nav-link" %></li>
             <li class="nav-item active"><%= link_to 'Browse', browse_path, class: "nav-link", data: { toggle: "tooltip" }, title:"Questions posted by followed users" %></li>
             <li class="nav-item active"><%= link_to 'Logout', logout_path, method: :delete, class: "nav-link", data: {confirm: "Are you sure?"} %></li>
-            <li class="nav-item active">
+            <li class="nav-item active mt-1">
               <%= image_tag  "notifications-30.png", id:"notification-bell" %>
             </li>
             <% else %>

@@ -1,0 +1,65 @@
+<div class="display-container">
+  <%= render 'shared/notice' %>
+  <div class="row">
+    <div class="col-2">
+      <% if @user.avatar.attached? %>
+        <%= image_tag(@user.avatar, class: "rounded-circle", size: "200") %>
+      <% end %>
+    </div>
+
+    <div class="col-md-4" style="margin-top:20px;">
+      <div class="row user-info">
+        <strong>Name:</strong>
+        <%= @user.name %>
+      </div>
+      <div class="row user-info">
+        <strong>Email:</strong>
+        <%= @user.email %>
+      </div>
+
+      <div class="row user-info">
+        <strong>Authentication token:</strong>
+        <span class="clipboard-btn ml-2 p-1 badge badge-primary" data-toggle="tooltip" title="Click to copy" data-clipboard-action="copy" data-clipboard-target="#auth-token">
+        <span id="auth-token" class=""><%= @user.auth_token %></span>
+        </span>
+      </div>
+
+      <div class="row user-info">
+        <strong>Type: </strong>
+        <%= @user.user_type %>
+      </div>
+     
+      <% unless @user.disabled %>
+         <strong class="user-info">Status :</strong><span class="badge badge-success">Enabled</span><br>
+        <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
+      <% else %>
+        <strong class="user-info">Status :</strong><span class="badge badge-dark">Disabled</span><br>
+        <span class="btn btn-success m-2"><%= link_to  "Enable", enable_admin_user_path(@user), class: "text-white" %></span>
+      <% end %>
+    </div>
+  </div>
+  <hr class="my-4 border-success w-25">
+  <h3>Payment Transactions</h3>
+  <% if @user.payment_transactions.any? %>
+     <table class="table table-hover border-danger w-75">
+        <thead>
+          <tr class="table-active">
+            <th scope="col">Id</th>
+            <th scope="col">Credit Pack</th>
+            <th scope="col">Status</th>
+            <th scope="col">Credits</th>
+            <th scope="col">Price</th>
+            <th scope="col">Credit Transaction id</th>
+            <th scope="col">Payment Transaction id</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @user.payment_transactions %>
+        </tbody>
+      </table>
+  <% else %>
+    <h5>No Payment Transactions</h5>
+  <% end %>
+</div>
+  

@@ -2,5 +2,6 @@
   <td><%= credit_pack.name %></td>
   <td><%= credit_pack.price %></td>
   <td><%= credit_pack.credits %></td>
-  <td><%= link_to "Edit Pack", edit_admin_credit_pack_path(credit_pack) %></td>
+  <td><%= credit_pack.disabled? %></td>
+  <td><%= link_to "Edit Pack", edit_admin_credit_pack_path(credit_pack), class:"badge-danger badge" %></td>
 </tr>

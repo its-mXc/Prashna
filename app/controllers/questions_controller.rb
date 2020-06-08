@@ -115,6 +115,10 @@
       end
     end
 
+    def refresh
+      render json: {new_questions_size: Question.published.in_last(ENV["question_refresh_time_secs"].to_i.seconds).size, timestamp: Time.current }
+    end
+
     private def ensure_positive_balance
       unless current_user.credit_balance >= ENV['question_post_debit'].to_i
         @question.status = Question.statuses["draft"]

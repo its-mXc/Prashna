@@ -19,6 +19,7 @@ class CreditPack < ApplicationRecord
   validates :credits, numericality: {greater_than_or_equal_to: 1},if: -> {credits.present?}
   validate :cover_image_attached
 
+  scope :enabled, -> { where(disabled: false) }
   has_one_attached :cover_image
 
   def create_credit_transaction(user)

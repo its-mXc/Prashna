@@ -43,7 +43,7 @@ module Admin
     end
 
     private def credit_pack_params
-      params.require(:credit_pack).permit(:name, :price, :credits, :cover_image)
+      params.require(:credit_pack).permit(:name, :price, :credits, :cover_image, :disabled)
     end
   end
 end

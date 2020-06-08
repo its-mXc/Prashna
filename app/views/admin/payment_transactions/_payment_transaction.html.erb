@@ -1,0 +1,22 @@
+<% if payment_transaction.paid? %>
+  <tr class="table-success">
+<% elsif payment_transaction.failed? %>
+  <tr class="table-danger">
+<% elsif payment_transaction.refunded? %>
+  <tr class="table-warning">
+<% else %>
+  <tr class="table-info">
+<% end %>
+  <td><%= payment_transaction.id %></td>
+  <td><%= payment_transaction.credit_pack.name %></td>
+  <td><%= payment_transaction.status %></td>
+  <td><%= payment_transaction.credits %></td>
+  <td><%= payment_transaction.price %></td>
+  <td><%= payment_transaction.credit_transaction_id %></td>
+  <td><%= payment_transaction.payment_transaction_id %></td>
+  <% if payment_transaction.refundable? %>
+    <td><%= link_to "Refund", refund_admin_users_path(payment_transaction_id: payment_transaction.id), class: "badge badge-danger" %></td>
+  <% else %>
+    <td></td>
+  <% end %>
+</tr>

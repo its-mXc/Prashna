@@ -1,5 +1,6 @@
 <div class="question-container">
   <%= render  "shared/notice" %>
+  <div class="question-notification"></div>
   <% if @questions.any? %>
     <%= render @questions %>
   <% else %>
@@ -10,4 +11,8 @@
       <%= will_paginate @questions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
     </div>
   </nav>
+  <% content_for :head do %>
+    <%= button_to "Refresh Questions", refresh_questions_path, method: :get, remote: true , class: "refresh_question_notification d-none", data: { refresh_time: ENV["question_refresh_time_secs"]+"000" } %>
+    <%= javascript_include_tag "autoLoad" %>
+  <% end %>
 </div>
