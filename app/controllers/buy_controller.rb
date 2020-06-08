@@ -40,14 +40,14 @@ class BuyController < ApplicationController
           payment_transaction.mark_paid!
           redirect_to my_profile_path, notice: "Purchase successful"
         else
-          payment_transaction.mark_failed!
+          payment_transaction.mark_failed("Purchase unsuccessful")
           redirect_to my_profile_path, notice: "Purchase unsuccessful"
         end
         }
     rescue Stripe::CardError => e
       #FIXME_AB: mark payment transation as failed
       # debugger
-      payment_transaction.mark_failed!
+      payment_transaction.mark_failed(e.message)
       redirect_to buy_index_path, notice: e.message
     end
   end

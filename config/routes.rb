@@ -92,7 +92,7 @@ Rails.application.routes.draw do
     resources :credit_packs, only: [:index, :new, :create, :edit, :update]
     resources :users, only: [:show, :index] do
       collection do
-        get :refund
+        patch :refund
       end
       member do
         get :disable

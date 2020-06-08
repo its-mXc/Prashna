@@ -34,8 +34,10 @@ module Admin
 
     def refund
       payment_transaction = PaymentTransaction.find_by(id: params[:payment_transaction_id])
-      payment_transaction.refund!
-      redirect_to admin_user_path(payment_transaction.user), notice: "Payment transaction refunded"
+      if payment_transaction
+        payment_transaction.refund(params[:payment_transaction][:message])
+        redirect_to admin_user_path(payment_transaction.user), notice: "Payment transaction refunded"
+      end
     end
 
     private def set_user

@@ -41,7 +41,7 @@
   <hr class="my-4 border-success w-25">
   <h3>Payment Transactions</h3>
   <% if @user.payment_transactions.any? %>
-     <table class="table table-hover border-danger w-75">
+     <table class="table table-hover border-danger payment-transaction">
         <thead>
           <tr class="table-active">
             <th scope="col">Id</th>
@@ -49,8 +49,10 @@
             <th scope="col">Status</th>
             <th scope="col">Credits</th>
             <th scope="col">Price</th>
+            <th scope="col">Transaction id</th>
             <th scope="col">Credit Transaction id</th>
             <th scope="col">Payment Transaction id</th>
+            <th scope="col">Message</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>

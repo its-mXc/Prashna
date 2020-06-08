@@ -55,16 +55,17 @@ class PaymentTransaction < ApplicationRecord
     end
   end
   
-  def mark_failed!
+  def mark_failed(message)
     self.status = PaymentTransaction.statuses["failed"]
+    self.message = message
     save!
   end
   
-  def refund!
+  def refund(message)
     if self.paid?
       run_callbacks :mark_refunded do
         refund = Stripe::Refund.create(charge: transaction_id)
-        @payment_transaction = PaymentTransaction.refunded.create(user: user, credit_pack: credit_pack, response: refund, refunded_at: Time.current,payment_transaction: self)
+        @payment_transaction = PaymentTransaction.refunded.create(user: user, credit_pack: credit_pack, response: refund, refunded_at: Time.current,payment_transaction: self, message: message)
       end
     end
   end
