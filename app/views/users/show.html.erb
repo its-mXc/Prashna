@@ -32,15 +32,15 @@
             <%= button_to  "Unfollow", unfollow_user_path(@user), method: :get, class: "btn btn-danger m-2" %>
           <% end %>
 
-          <% if logged_in?  !@user.disabled && current_user.admin? %>
+          <% if logged_in? &&  !@user.disabled && current_user.admin? %>
             <span class="btn btn-danger m-2"><%= link_to  "Disable", disable_admin_user_path(@user), class: "text-white" %></span>
           <% end %>
 
-          <% if logged_in?  @user.disabled && current_user.admin? %>
+          <% if logged_in? &&  @user.disabled && current_user.admin? %>
             <span class="btn btn-success m-2"><%= link_to  "Enable", enable_admin_user_path(@user), class: "text-white" %></span>
           <% end %>
           
-          <% if logged_in?  current_user.admin? && @user.user? %>
+          <% if logged_in? &&  current_user.admin? && @user.user? %>
             <span class="btn btn-warning m-2"><%= link_to  "Manage User", admin_user_path(@user), class: "text-dark" %></span>
           <% end %>
 
