@@ -1,24 +1,29 @@
-# README
+# Prashna
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a __Quora-clone__ but with credit system, based on Ruby on Rails Framework.
 
-Things you may want to cover:
+* **Rails version**    : 6.0.2.2
+* **Ruby version**     : ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-linux]
+* **Database adapter** : mysql, switch to branch psql for postgresql
 
-* Ruby version
+### Configurations
 
-* System dependencies
+After installing all the dependencies, configure the application.yml and database.yml files.
 
-* Configuration
+> Those '.yml' files have corresponding '.yml.example' files attached
+> with them, to get started with sample configurations.
 
-* Database creation
+### New Admin
 
-* Database initialization
+Make the new admins with the rake task using:
 
-* How to run the test suite
+```sh
+$ rake admin:new
+```
+### Clear IP activity
 
-* Services (job queues, cache servers, search engines, etc.)
+Make the new admins with the rake task using:
 
-* Deployment instructions
-
-* ...
+```sh
+$ rake clean_ip_activity
+```
