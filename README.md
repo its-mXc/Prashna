@@ -40,7 +40,7 @@ $ rake admin:new
 ```
 ### Clear IP activity
 
-Make the new admins with the rake task using:
+Clean ip activities a certain day before(application.yml)
 
 ```sh
 $ rake clean_ip_activity
