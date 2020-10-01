@@ -40,7 +40,7 @@ $ rake admin:new
 ```
 ### Clear IP activity
 
-Clean ip activities a certain day before(application.yml)
+Clean ip activities a certain day before(application.yml):
 
 ```sh
 $ rake clean_ip_activity
