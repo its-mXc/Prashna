@@ -26,7 +26,7 @@ After installing all the dependencies, configure the application.yml and databas
 * **Credit Packs** - User can buy credit packs , which award credits after successfull transaction
 * **Follow** - User can follow other user or unfollow, can also browse other user account, and see thier questions, answers, following and followers. User can browse question, asked by the users they follow
 * **Report Abuse** - User can report questions, answers, comments and if the abuse report for specific enity passes threshold limit(application.yml), and the transaction associated gets reverted
-* **Api** - Two apis are supported, to get feed for specific user(need auth token), or get questions, related answers and comments for specific topic
+* **Api** - Two apis are supported, to get feed for specific user(need auth token) which is rate limited(application.yml), or get questions, related answers and comments for specific topic
 * **Admin** - Admin can disable user, unpublish question, refund transaction and manage credit packs
 * **Notification** - Notifications are generated when someone comments on question, answer. Email notifications are sent when someone answers user question, or after succesful payemnt, reciept is sent by email
 
